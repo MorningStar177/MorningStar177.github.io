@@ -12,4 +12,19 @@
         <tag>测试标签2</tag>
       </tags>
   </entry>
+  <entry>
+    <title>第二篇测试文章</title>
+    <url>/2020/11/17/%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<h1 id="标题2"><a href="#标题2" class="headerlink" title="标题2"></a>标题2</h1><a id="more"></a>
+
+<p>测试内容….</p>
+]]></content>
+      <categories>
+        <category>测试分类2</category>
+      </categories>
+      <tags>
+        <tag>测试标签3</tag>
+        <tag>测试标签4</tag>
+      </tags>
+  </entry>
 </search>
