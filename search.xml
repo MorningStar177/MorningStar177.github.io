@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>hexo更换next主题及部分配置功能的启用</title>
+    <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
+    <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
+<a id="more"></a>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
+<li><p>已经生成hexo博客主页（可以参考我的上一篇博客）</p>
+</li>
+<li><p>代码编辑器（sublime、vscode等）</p>
+</li>
+<li><p>支持MarkDown语言的编辑器（推荐Typora）</p>
+</li>
+</ul>
+<p>注：站点配置文件指的是博客文件夹根目录中的_config.yml，主题配置文件指的是next主题文件夹下的_config.yml</p>
+<h1 id="下载、启用及配置next主题"><a href="#下载、启用及配置next主题" class="headerlink" title="下载、启用及配置next主题"></a>下载、启用及配置next主题</h1><h2 id="下载next主题"><a href="#下载next主题" class="headerlink" title="下载next主题"></a>下载next主题</h2><p>点击链接跳转到github页面下载next主题压缩包<a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
+<p>解压至站点（博客文件夹根目录）的 themes 目录下，并将解压后的文件夹名称更改为next。</p>
+<h2 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h2><p>打开站点配置文件，推荐使用sublime, Ctrl+L快捷键输入theme找到 theme 字段，并将其值更改为 next（保证与themes文件夹下面next主题文件夹名字一致否则主题失效）。</p>
+<p><img src="%E5%90%AF%E7%94%A8next%E4%B8%BB%E9%A2%98.jpg"></p>
+<p>更改后在命令行中Ctrl+C打断正在运行的服务，hexo s重新启动服务器，并在浏览器中刷新输入命令行中的本地地址，当出现下面的页面说明更换主题成功。</p>
+<p><img src="%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F.jpg"></p>
+<p>注：根据个人意愿删除themes文件夹下的landscape主题。</p>
+<h2 id="更改主题配置文件"><a href="#更改主题配置文件" class="headerlink" title="更改主题配置文件"></a>更改主题配置文件</h2><h3 id="更改主题为中文"><a href="#更改主题为中文" class="headerlink" title="更改主题为中文"></a>更改主题为中文</h3><p>在主题配置文件文件中找到language字段修改为zh-CN，如下图  </p>
+<p><img src="zh-CN.jpg"></p>
+<p>按顺序在命令行中执行命令hexo clean、hexo g、hexo s，重启服务器后刷新页面即可生效。</p>
+<p>小小吐槽一下：这步本人遇到了一点小坑，官方网站配置的参考如下图</p>
+<p><img src="%E5%AE%98%E6%96%B9zh.jpg"></p>
+<p>然而配置完成后并没有生效，检查了一下next主题的根目录下的languages，发现有zh-CN.yml语言配置文件，于是值改成zh-CN后中文就生效了…</p>
+<h3 id="增加标签页、分类页"><a href="#增加标签页、分类页" class="headerlink" title="增加标签页、分类页"></a>增加标签页、分类页</h3><p>打开主题配置文件，找到menu字段，将下图白色箭头所示的注释打开（直接删掉前面的#或者注释快捷键都可以），在首页刷新，就可以看到红色箭头所示的效果（但是此时点开标签会报错空内容）。  </p>
+<p><img src="%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE%E9%A1%B5%E3%80%81%E5%88%86%E7%B1%BB%E9%A1%B5.jpg"></p>
+<p>关掉博客服务，然后输入命令hexo n page tags</p>
+<p>命令执行完成后会在source目录下新增一个tags文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
+<p><img src="newtags.jpg"></p>
+<p>再开启服务，刷新后点开首页中的标签就会有内容了。</p>
+<p>关掉服务，输入命令hexo n page categories，命令执行完成后会在source目录下新增一个categories文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
+<p><img src="newcategories.jpg"></p>
+<p>再开启服务，刷新后点开首页中的分类就会有内容了。</p>
+<h3 id="next主题页面布局样式更改"><a href="#next主题页面布局样式更改" class="headerlink" title="next主题页面布局样式更改"></a>next主题页面布局样式更改</h3><p>进入站点配置文件，找到Scheme 字段，根据自己的喜欢更改主题的样式（打开一个，将其他注释），每次修改完成后都可以在浏览器中刷新查看主题样式的变化。</p>
+<p><img src="next%E4%B8%BB%E9%A2%98%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F%E6%9B%B4%E6%94%B9.jpg"></p>
+<h3 id="设置主题的头像"><a href="#设置主题的头像" class="headerlink" title="设置主题的头像"></a>设置主题的头像</h3><p>在主题配置文件中查找avatar，url后面的#号去掉，并按照你自己头像的后缀更改此处的头像名后缀，在主题next下的\source\images文件夹中删掉avatar.gif，替换为你此处在url中的命名图片即可，刷新页面就会有头像显示。  </p>
+<p><img src="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98%E7%9A%84%E5%A4%B4%E5%83%8F.jpg"></p>
+<h3 id="更改标题及作者"><a href="#更改标题及作者" class="headerlink" title="更改标题及作者"></a>更改标题及作者</h3><p>在站点配置文件中找到这几行，按需修改即可</p>
+<p><img src="%E6%9B%B4%E6%94%B9%E6%A0%87%E9%A2%98%E5%8F%8A%E4%BD%9C%E8%80%85.jpg"></p>
+<h3 id="启用左边社交栏链接"><a href="#启用左边社交栏链接" class="headerlink" title="启用左边社交栏链接"></a>启用左边社交栏链接</h3><p>在博客的_config.yml中找到这几行，按需修改即可  </p>
+<p><img src="%E5%90%AF%E7%94%A8%E5%B7%A6%E4%BE%A7%E7%A4%BE%E4%BA%A4%E6%A0%8F%E9%93%BE%E6%8E%A5.jpg"></p>
+<p> 如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo更换主题</tag>
+        <tag>next主题</tag>
+        <tag>next主题配置功能启用</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo框架搭建个人博客</title>
     <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
