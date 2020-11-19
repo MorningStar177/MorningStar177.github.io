@@ -1,6 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>hexo+next主题样式美化</title>
+    <url>/2020/11/18/hexo-next%E4%B8%BB%E9%A2%98%E6%A0%B7%E5%BC%8F%E7%BE%8E%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>首先新建一篇文章，在命令行输入：hexo n “文章名”，就会在博客的根目录的\source_posts下面新增一篇命名的文章，此时就可以使用Typora编辑器写博客了。</p>
+ <a id="more"></a> 
+
+<h1 id="主页设置阅读全文"><a href="#主页设置阅读全文" class="headerlink" title="主页设置阅读全文"></a>主页设置阅读全文</h1><p>目前我在新版的next主题配置文件中还没找到这一项的开启方法，但是可以通过对md文章中增加一个下面的这个标签即可</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;!--more--&gt; </span><br></pre></td></tr></table></figure>
+
+<p>比如：</p>
+<p><img src="%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87.jpg"></p>
+<h1 id="设置动态背景"><a href="#设置动态背景" class="headerlink" title="设置动态背景"></a>设置动态背景</h1><p>在next/layout/_layout.swig的body结束标签之前加入这几行代码  （由于我的博客使用的是next主题，因此next是在博客根目录下themes里面的文件夹）</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.canvas_nest %&#125;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后在主题配置文件中的末尾加入  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">canvas_nest: true</span><br></pre></td></tr></table></figure>
+
+<p>然后分别执行命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>重启服务器后，刷新页面就会出现动态背景的效果  </p>
+<h1 id="添加右上角的fork-Github的小猫"><a href="#添加右上角的fork-Github的小猫" class="headerlink" title="添加右上角的fork Github的小猫"></a>添加右上角的fork Github的小猫</h1><p>在下面的地址中选择好样式后复制右边多行代码，打开next/layout/_layout.swig在</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;headband&quot;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这个标签的下一行黏贴过去，把开头的url换成自己的github地址，然后命令行中输入命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p><img src="Github%E7%9A%84%E5%B0%8F%E7%8C%AB.jpg"></p>
+<h1 id="修改底部标签前面的-样式"><a href="#修改底部标签前面的-样式" class="headerlink" title="修改底部标签前面的#样式"></a>修改底部标签前面的#样式</h1><p>字体图标地址：<a href="https://fontawesome.com/icons?d=gallery&amp;q=fa-">https://fontawesome.com/icons?d=gallery&amp;q=fa-</a></p>
+<p>打开next\layout_macro下面的post.swig，修改此处为i标签类名在网址中根据自己选择（需要在网址中选中并弹出字体图标网页，在图标的下面会有例如   fa fa-tag   字样，选中复制即可）。</p>
+<p><img src="%E4%BF%AE%E6%94%B9%E5%BA%95%E9%83%A8%E6%A0%87%E7%AD%BE%E6%A0%B7%E5%BC%8F.jpg"></p>
+<h1 id="来必力评论系统"><a href="#来必力评论系统" class="headerlink" title="来必力评论系统"></a>来必力评论系统</h1><p>官网：<a href="https://livere.com/">https://livere.com/</a></p>
+<p>在官网注册后，在管理页面的代码管理中，复制一般网站栏代码中的data-uid后面的代码，然后粘贴到主题配置文件中对应的位子即可</p>
+<p><img src="livere_uid.jpg"></p>
+<h1 id="增加搜索功能"><a href="#增加搜索功能" class="headerlink" title="增加搜索功能"></a>增加搜索功能</h1><p>安装 hexo-generator-searchdb，在站点的根目录下执行以下命令：</p>
+<p>npm install hexo-generator-searchdb –save</p>
+<p>编辑根目录下的配置文件，新增以下内容到任意位置：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+
+<p>编辑 主题配置文件，启用本地搜索功能：</p>
+<p><img src="%E5%A2%9E%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD.jpg"></p>
+<h1 id="添加字数统计和阅读时长"><a href="#添加字数统计和阅读时长" class="headerlink" title="添加字数统计和阅读时长"></a>添加字数统计和阅读时长</h1><p>添加字数统计和阅读时长</p>
+<p>命令行cd到根目录下执行     npm install hexo-symbols-count-time –save</p>
+<p>如果安装完报如下提醒，还需安装eslint</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">D:\hexo\blog&gt;npm install hexo-symbols-count-time --save</span><br><span class="line">npm WARN babel-eslint@10.0.1 requires a peer of eslint@&gt;&#x3D; 4.12.1 but none is installed. You must install peer dependencies yourself.</span><br></pre></td></tr></table></figure>
+
+<p>安装eslint      npm install eslint –save</p>
+<p>在站点配置文件添加如下配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  symbols: true                # 文章字数统计</span><br><span class="line">  time: true                   # 文章阅读时长</span><br><span class="line">  total_symbols: true          # 站点总字数统计</span><br><span class="line">  total_time: true             # 站点总阅读时长</span><br><span class="line">  exclude_codeblock: false     # 排除代码字数统计</span><br></pre></td></tr></table></figure>
+
+<p>在NexT主题配置文件添加如下配置（NexT主题已支持该插件，有的话无需再添加）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Post wordcount display settings</span><br><span class="line"># Dependencies: https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-symbols-count-time</span><br><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true     # 是否另起一行（true的话不和发表时间等同一行）</span><br><span class="line">  item_text_post: true     # 首页文章统计数量前是否显示文字描述（本文字数、阅读时长）</span><br><span class="line">  item_text_total: false   # 页面底部统计数量前是否显示文字描述（站点总字数、站点阅读时长）</span><br><span class="line">  awl: 4                   # Average Word Length</span><br><span class="line">  wpm: 275                 # Words Per Minute（每分钟阅读词数）</span><br><span class="line">  suffix: mins.</span><br></pre></td></tr></table></figure>
+
+<p>完成后命令三连即可…</p>
+<h1 id="加载动画"><a href="#加载动画" class="headerlink" title="加载动画"></a>加载动画</h1><p>github地址：<a href="https://github.com/theme-next/theme-next-pace">https://github.com/theme-next/theme-next-pace</a></p>
+<p>先cd到next文件夹下，然后执行</p>
+<p>git clone <a href="https://github.com/theme-next/theme-next-pace">https://github.com/theme-next/theme-next-pace</a> source/lib/pace</p>
+<p>然后在主题的配置文件下设置true开启加载动画</p>
+<p><img src="%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB.jpg"></p>
+<h1 id="隐藏底部的强力驱动"><a href="#隐藏底部的强力驱动" class="headerlink" title="隐藏底部的强力驱动"></a>隐藏底部的强力驱动</h1><p>最新的next主题，在主题配置文件下改power为false即可</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Powered by Hexo &amp; NexT</span><br><span class="line"> powered: false</span><br></pre></td></tr></table></figure>
+
+<h1 id="更换页面的背景图片"><a href="#更换页面的背景图片" class="headerlink" title="更换页面的背景图片"></a>更换页面的背景图片</h1><p>首先在主题配置文件中找到custom_file_path字段，将最后一行的注释解开  </p>
+<p><img src="%E6%9B%B4%E6%8D%A2%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87.jpg"></p>
+<p>在博客的根目录下source文件夹下新建文件夹名为_data，然后在_data文件夹下新建文件styles，将其后缀改为styl，然后将下面代码写入写入此新建文件中，并且在主题文件夹下source的images里面放一张背景图，名为background.jpg（名与下面代码中url中文件名一致）</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line"> 	background:url(<span class="regexp">/images/</span>background.jpg);</span><br><span class="line"> 	background-repeat: no-repeat;</span><br><span class="line">    background-attachment:fixed;</span><br><span class="line">    background-position:<span class="number">50</span>% <span class="number">50</span>%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启服务器即可  </p>
+<p>但是由于我们文章是不透明的，影响了我们的美观，我们还得修改一下透明度（代码如下，依旧放在styles.styl文件内）</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">.content-wrap &#123;</span><br><span class="line">  opacity: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.sidebar &#123;</span><br><span class="line">  opacity: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.header-inner &#123;</span><br><span class="line">  background: rgba(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.popup &#123;</span><br><span class="line">  opacity: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完毕后分别输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<h1 id="回到顶部"><a href="#回到顶部" class="headerlink" title="回到顶部"></a>回到顶部</h1><p>在主题配置文件中搜索back2top:，我们可以看到共有三个可选配置项。其作用分别如下。  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">back2top:</span><br><span class="line">  # 开启右下角的回到顶部箭头</span><br><span class="line">  enable: true</span><br><span class="line">  # 将回到顶部按钮改到侧边栏下方</span><br><span class="line">  sidebar: false</span><br><span class="line">  # 回到顶部不止显示箭头，也显示阅读进度百分比</span><br><span class="line">  scrollpercent: true</span><br></pre></td></tr></table></figure>
+
+<h1 id="next主题的点击爱心"><a href="#next主题的点击爱心" class="headerlink" title="next主题的点击爱心"></a>next主题的点击爱心</h1><p>创建js文件</p>
+<p>在/themes/next/source/js/src下新建文件clicklove.js，接着把该代码拷贝粘贴到clicklove.js文件中。<br> 代码如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">e,t,a</span>)</span>&#123;<span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>)</span>&#123;c(<span class="string">&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &#x27;&#x27;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;</span>),o(),r()&#125;<span class="function"><span class="keyword">function</span> <span class="title">r</span>(<span class="params"></span>)</span>&#123;<span class="keyword">for</span>(<span class="keyword">var</span> e=<span class="number">0</span>;e&lt;d.length;e++)d[e].alpha&lt;=<span class="number">0</span>?(t.body.removeChild(d[e].el),d.splice(e,<span class="number">1</span>)):(d[e].y--,d[e].scale+=<span class="number">.004</span>,d[e].alpha-=<span class="number">.013</span>,d[e].el.style.cssText=<span class="string">&quot;left:&quot;</span>+d[e].x+<span class="string">&quot;px;top:&quot;</span>+d[e].y+<span class="string">&quot;px;opacity:&quot;</span>+d[e].alpha+<span class="string">&quot;;transform:scale(&quot;</span>+d[e].scale+<span class="string">&quot;,&quot;</span>+d[e].scale+<span class="string">&quot;) rotate(45deg);background:&quot;</span>+d[e].color+<span class="string">&quot;;z-index:99999&quot;</span>);requestAnimationFrame(r)&#125;<span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> t=<span class="string">&quot;function&quot;</span>==<span class="keyword">typeof</span> e.onclick&amp;&amp;e.onclick;e.onclick=<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;t&amp;&amp;t(),i(e)&#125;&#125;<span class="function"><span class="keyword">function</span> <span class="title">i</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">&quot;div&quot;</span>);a.className=<span class="string">&quot;heart&quot;</span>,d.push(&#123;<span class="attr">el</span>:a,<span class="attr">x</span>:e.clientX-<span class="number">5</span>,<span class="attr">y</span>:e.clientY-<span class="number">5</span>,<span class="attr">scale</span>:<span class="number">1</span>,<span class="attr">alpha</span>:<span class="number">1</span>,<span class="attr">color</span>:s()&#125;),t.body.appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">&quot;style&quot;</span>);a.type=<span class="string">&quot;text/css&quot;</span>;<span class="keyword">try</span>&#123;a.appendChild(t.createTextNode(e))&#125;<span class="function"><span class="title">catch</span>(<span class="params">t</span>)</span>&#123;a.styleSheet.cssText=e&#125;t.getElementsByTagName(<span class="string">&quot;head&quot;</span>)[<span class="number">0</span>].appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span><span class="string">&quot;rgb(&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;,&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;,&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;)&quot;</span>&#125;<span class="keyword">var</span> d=[];e.requestAnimationFrame=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="built_in">setTimeout</span>(e,<span class="number">1e3</span>/<span class="number">60</span>)&#125;&#125;(),n()&#125;(<span class="built_in">window</span>,<span class="built_in">document</span>);</span><br></pre></td></tr></table></figure>
+
+<p>修改_layout.swig，在\themes\next\layout_layout.swig文件末尾添加：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;!-- 页面点击小红心 --&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;/js/src/clicklove.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>命令行分别输入：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>完成后刷新页面即可。</p>
+<p>后续有其他的美化操作会继续更新…</p>
+<p>如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo新增博客文章</tag>
+        <tag>next主题美化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo更换next主题及部分配置功能的启用</title>
     <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
     <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
@@ -218,105 +317,6 @@
       </categories>
       <tags>
         <tag>部署博客到远端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo+next主题样式美化</title>
-    <url>/2020/11/18/hexo-next%E4%B8%BB%E9%A2%98%E6%A0%B7%E5%BC%8F%E7%BE%8E%E5%8C%96/</url>
-    <content><![CDATA[<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>首先新建一篇文章，在命令行输入：hexo n “文章名”，就会在博客的根目录的\source_posts下面新增一篇命名的文章，此时就可以使用Typora编辑器写博客了。</p>
- <a id="more"></a> 
-
-<h1 id="主页设置阅读全文"><a href="#主页设置阅读全文" class="headerlink" title="主页设置阅读全文"></a>主页设置阅读全文</h1><p>目前我在新版的next主题配置文件中还没找到这一项的开启方法，但是可以通过对md文章中增加一个下面的这个标签即可</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;!--more--&gt; </span><br></pre></td></tr></table></figure>
-
-<p>比如：</p>
-<p><img src="%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87.jpg"></p>
-<h1 id="设置动态背景"><a href="#设置动态背景" class="headerlink" title="设置动态背景"></a>设置动态背景</h1><p>在next/layout/_layout.swig的body结束标签之前加入这几行代码  （由于我的博客使用的是next主题，因此next是在博客根目录下themes里面的文件夹）</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.canvas_nest %&#125;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>然后在主题配置文件中的末尾加入  </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">canvas_nest: true</span><br></pre></td></tr></table></figure>
-
-<p>然后分别执行命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>重启服务器后，刷新页面就会出现动态背景的效果  </p>
-<h1 id="添加右上角的fork-Github的小猫"><a href="#添加右上角的fork-Github的小猫" class="headerlink" title="添加右上角的fork Github的小猫"></a>添加右上角的fork Github的小猫</h1><p>在下面的地址中选择好样式后复制右边多行代码，打开next/layout/_layout.swig在</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;headband&quot;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p>这个标签的下一行黏贴过去，把开头的url换成自己的github地址，然后命令行中输入命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p><img src="Github%E7%9A%84%E5%B0%8F%E7%8C%AB.jpg"></p>
-<h1 id="修改底部标签前面的-样式"><a href="#修改底部标签前面的-样式" class="headerlink" title="修改底部标签前面的#样式"></a>修改底部标签前面的#样式</h1><p>字体图标地址：<a href="https://fontawesome.com/icons?d=gallery&amp;q=fa-">https://fontawesome.com/icons?d=gallery&amp;q=fa-</a></p>
-<p>打开next\layout_macro下面的post.swig，修改此处为i标签类名在网址中根据自己选择（需要在网址中选中并弹出字体图标网页，在图标的下面会有例如   fa fa-tag   字样，选中复制即可）。</p>
-<p><img src="%E4%BF%AE%E6%94%B9%E5%BA%95%E9%83%A8%E6%A0%87%E7%AD%BE%E6%A0%B7%E5%BC%8F.jpg"></p>
-<h1 id="来必力评论系统"><a href="#来必力评论系统" class="headerlink" title="来必力评论系统"></a>来必力评论系统</h1><p>官网：<a href="https://livere.com/">https://livere.com/</a></p>
-<p>在官网注册后，在管理页面的代码管理中，复制一般网站栏代码中的data-uid后面的代码，然后粘贴到主题配置文件中对应的位子即可</p>
-<p><img src="livere_uid.jpg"></p>
-<h1 id="增加搜索功能"><a href="#增加搜索功能" class="headerlink" title="增加搜索功能"></a>增加搜索功能</h1><p>安装 hexo-generator-searchdb，在站点的根目录下执行以下命令：</p>
-<p>npm install hexo-generator-searchdb –save</p>
-<p>编辑根目录下的配置文件，新增以下内容到任意位置：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: <span class="number">10000</span></span><br></pre></td></tr></table></figure>
-
-<p>编辑 主题配置文件，启用本地搜索功能：</p>
-<p><img src="%E5%A2%9E%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD.jpg"></p>
-<h1 id="添加字数统计和阅读时长"><a href="#添加字数统计和阅读时长" class="headerlink" title="添加字数统计和阅读时长"></a>添加字数统计和阅读时长</h1><p>添加字数统计和阅读时长</p>
-<p>命令行cd到根目录下执行     npm install hexo-symbols-count-time –save</p>
-<p>如果安装完报如下提醒，还需安装eslint</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">D:\hexo\blog&gt;npm install hexo-symbols-count-time --save</span><br><span class="line">npm WARN babel-eslint@10.0.1 requires a peer of eslint@&gt;&#x3D; 4.12.1 but none is installed. You must install peer dependencies yourself.</span><br></pre></td></tr></table></figure>
-
-<p>安装eslint      npm install eslint –save</p>
-<p>在站点配置文件添加如下配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  symbols: true                # 文章字数统计</span><br><span class="line">  time: true                   # 文章阅读时长</span><br><span class="line">  total_symbols: true          # 站点总字数统计</span><br><span class="line">  total_time: true             # 站点总阅读时长</span><br><span class="line">  exclude_codeblock: false     # 排除代码字数统计</span><br></pre></td></tr></table></figure>
-
-<p>在NexT主题配置文件添加如下配置（NexT主题已支持该插件，有的话无需再添加）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Post wordcount display settings</span><br><span class="line"># Dependencies: https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;hexo-symbols-count-time</span><br><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true     # 是否另起一行（true的话不和发表时间等同一行）</span><br><span class="line">  item_text_post: true     # 首页文章统计数量前是否显示文字描述（本文字数、阅读时长）</span><br><span class="line">  item_text_total: false   # 页面底部统计数量前是否显示文字描述（站点总字数、站点阅读时长）</span><br><span class="line">  awl: 4                   # Average Word Length</span><br><span class="line">  wpm: 275                 # Words Per Minute（每分钟阅读词数）</span><br><span class="line">  suffix: mins.</span><br></pre></td></tr></table></figure>
-
-<p>完成后命令三连即可…</p>
-<h1 id="加载动画"><a href="#加载动画" class="headerlink" title="加载动画"></a>加载动画</h1><p>github地址：<a href="https://github.com/theme-next/theme-next-pace">https://github.com/theme-next/theme-next-pace</a></p>
-<p>先cd到next文件夹下，然后执行</p>
-<p>git clone <a href="https://github.com/theme-next/theme-next-pace">https://github.com/theme-next/theme-next-pace</a> source/lib/pace</p>
-<p>然后在主题的配置文件下设置true开启加载动画</p>
-<p><img src="%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB.jpg"></p>
-<h1 id="隐藏底部的强力驱动"><a href="#隐藏底部的强力驱动" class="headerlink" title="隐藏底部的强力驱动"></a>隐藏底部的强力驱动</h1><p>最新的next主题，在主题配置文件下改power为false即可</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Powered by Hexo &amp; NexT</span><br><span class="line"> powered: false</span><br></pre></td></tr></table></figure>
-
-<h1 id="更换页面的背景图片"><a href="#更换页面的背景图片" class="headerlink" title="更换页面的背景图片"></a>更换页面的背景图片</h1><p>首先在主题配置文件中找到custom_file_path字段，将最后一行的注释解开  </p>
-<p><img src="%E6%9B%B4%E6%8D%A2%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87.jpg"></p>
-<p>在博客的根目录下source文件夹下新建文件夹名为_data，然后在_data文件夹下新建文件styles，将其后缀改为styl，然后将下面代码写入写入此新建文件中，并且在主题文件夹下source的images里面放一张背景图，名为background.jpg（名与下面代码中url中文件名一致）</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">body &#123;</span><br><span class="line"> 	background:url(<span class="regexp">/images/</span>background.jpg);</span><br><span class="line"> 	background-repeat: no-repeat;</span><br><span class="line">    background-attachment:fixed;</span><br><span class="line">    background-position:<span class="number">50</span>% <span class="number">50</span>%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>重启服务器即可  </p>
-<p>但是由于我们文章是不透明的，影响了我们的美观，我们还得修改一下透明度（代码如下，依旧放在styles.styl文件内）</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">.content-wrap &#123;</span><br><span class="line">  opacity: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.sidebar &#123;</span><br><span class="line">  opacity: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.header-inner &#123;</span><br><span class="line">  background: rgba(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>,<span class="number">0.9</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.popup &#123;</span><br><span class="line">  opacity: <span class="number">0.9</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>完毕后分别输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<h1 id="回到顶部"><a href="#回到顶部" class="headerlink" title="回到顶部"></a>回到顶部</h1><p>在主题配置文件中搜索back2top:，我们可以看到共有三个可选配置项。其作用分别如下。  </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">back2top:</span><br><span class="line">  # 开启右下角的回到顶部箭头</span><br><span class="line">  enable: true</span><br><span class="line">  # 将回到顶部按钮改到侧边栏下方</span><br><span class="line">  sidebar: false</span><br><span class="line">  # 回到顶部不止显示箭头，也显示阅读进度百分比</span><br><span class="line">  scrollpercent: true</span><br></pre></td></tr></table></figure>
-
-<h1 id="next主题的点击爱心"><a href="#next主题的点击爱心" class="headerlink" title="next主题的点击爱心"></a>next主题的点击爱心</h1><p>创建js文件</p>
-<p>在/themes/next/source/js/src下新建文件clicklove.js，接着把该代码拷贝粘贴到clicklove.js文件中。<br> 代码如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">e,t,a</span>)</span>&#123;<span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>)</span>&#123;c(<span class="string">&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &#x27;&#x27;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;</span>),o(),r()&#125;<span class="function"><span class="keyword">function</span> <span class="title">r</span>(<span class="params"></span>)</span>&#123;<span class="keyword">for</span>(<span class="keyword">var</span> e=<span class="number">0</span>;e&lt;d.length;e++)d[e].alpha&lt;=<span class="number">0</span>?(t.body.removeChild(d[e].el),d.splice(e,<span class="number">1</span>)):(d[e].y--,d[e].scale+=<span class="number">.004</span>,d[e].alpha-=<span class="number">.013</span>,d[e].el.style.cssText=<span class="string">&quot;left:&quot;</span>+d[e].x+<span class="string">&quot;px;top:&quot;</span>+d[e].y+<span class="string">&quot;px;opacity:&quot;</span>+d[e].alpha+<span class="string">&quot;;transform:scale(&quot;</span>+d[e].scale+<span class="string">&quot;,&quot;</span>+d[e].scale+<span class="string">&quot;) rotate(45deg);background:&quot;</span>+d[e].color+<span class="string">&quot;;z-index:99999&quot;</span>);requestAnimationFrame(r)&#125;<span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> t=<span class="string">&quot;function&quot;</span>==<span class="keyword">typeof</span> e.onclick&amp;&amp;e.onclick;e.onclick=<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;t&amp;&amp;t(),i(e)&#125;&#125;<span class="function"><span class="keyword">function</span> <span class="title">i</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">&quot;div&quot;</span>);a.className=<span class="string">&quot;heart&quot;</span>,d.push(&#123;<span class="attr">el</span>:a,<span class="attr">x</span>:e.clientX-<span class="number">5</span>,<span class="attr">y</span>:e.clientY-<span class="number">5</span>,<span class="attr">scale</span>:<span class="number">1</span>,<span class="attr">alpha</span>:<span class="number">1</span>,<span class="attr">color</span>:s()&#125;),t.body.appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params">e</span>)</span>&#123;<span class="keyword">var</span> a=t.createElement(<span class="string">&quot;style&quot;</span>);a.type=<span class="string">&quot;text/css&quot;</span>;<span class="keyword">try</span>&#123;a.appendChild(t.createTextNode(e))&#125;<span class="function"><span class="title">catch</span>(<span class="params">t</span>)</span>&#123;a.styleSheet.cssText=e&#125;t.getElementsByTagName(<span class="string">&quot;head&quot;</span>)[<span class="number">0</span>].appendChild(a)&#125;<span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span><span class="string">&quot;rgb(&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;,&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;,&quot;</span>+~~(<span class="number">255</span>*<span class="built_in">Math</span>.random())+<span class="string">&quot;)&quot;</span>&#125;<span class="keyword">var</span> d=[];e.requestAnimationFrame=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">return</span> e.requestAnimationFrame||e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;<span class="built_in">setTimeout</span>(e,<span class="number">1e3</span>/<span class="number">60</span>)&#125;&#125;(),n()&#125;(<span class="built_in">window</span>,<span class="built_in">document</span>);</span><br></pre></td></tr></table></figure>
-
-<p>修改_layout.swig，在\themes\next\layout_layout.swig文件末尾添加：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;!-- 页面点击小红心 --&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;/js/src/clicklove.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>命令行分别输入：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>完成后刷新页面即可。</p>
-<p>后续有其他的美化操作会继续更新…</p>
-<p>如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>hexo新增博客文章</tag>
-        <tag>next主题美化</tag>
       </tags>
   </entry>
 </search>
