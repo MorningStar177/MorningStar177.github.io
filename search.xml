@@ -1,6 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>hexo更换next主题及部分配置功能的启用</title>
+    <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
+    <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
+<a id="more"></a>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
+<li><p>已经生成hexo博客主页（可以参考我的上一篇博客）</p>
+</li>
+<li><p>代码编辑器（sublime、vscode等）</p>
+</li>
+<li><p>支持MarkDown语言的编辑器（推荐Typora）</p>
+</li>
+</ul>
+<p>注：站点配置文件指的是博客文件夹根目录中的_config.yml，主题配置文件指的是next主题文件夹下的_config.yml</p>
+<h1 id="下载、启用及配置next主题"><a href="#下载、启用及配置next主题" class="headerlink" title="下载、启用及配置next主题"></a>下载、启用及配置next主题</h1><h2 id="下载next主题"><a href="#下载next主题" class="headerlink" title="下载next主题"></a>下载next主题</h2><p>点击链接跳转到github页面下载next主题压缩包<a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
+<p>解压至站点（博客文件夹根目录）的 themes 目录下，并将解压后的文件夹名称更改为next。</p>
+<h2 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h2><p>打开站点配置文件，推荐使用sublime, Ctrl+L快捷键输入theme找到 theme 字段，并将其值更改为 next（保证与themes文件夹下面next主题文件夹名字一致否则主题失效）。</p>
+<p><img src="%E5%90%AF%E7%94%A8next%E4%B8%BB%E9%A2%98.jpg"></p>
+<p>更改后在命令行中Ctrl+C打断正在运行的服务，hexo s重新启动服务器，并在浏览器中刷新输入命令行中的本地地址，当出现下面的页面说明更换主题成功。</p>
+<p><img src="%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F.jpg"></p>
+<p>注：根据个人意愿删除themes文件夹下的landscape主题。</p>
+<h2 id="更改主题配置文件"><a href="#更改主题配置文件" class="headerlink" title="更改主题配置文件"></a>更改主题配置文件</h2><h3 id="更改主题为中文"><a href="#更改主题为中文" class="headerlink" title="更改主题为中文"></a>更改主题为中文</h3><p>在主题配置文件文件中找到language字段修改为zh-CN，如下图  </p>
+<p><img src="zh-CN.jpg"></p>
+<p>按顺序在命令行中执行命令hexo clean、hexo g、hexo s，重启服务器后刷新页面即可生效。</p>
+<p>小小吐槽一下：这步本人遇到了一点小坑，官方网站配置的参考如下图</p>
+<p><img src="%E5%AE%98%E6%96%B9zh.jpg"></p>
+<p>然而配置完成后并没有生效，检查了一下next主题的根目录下的languages，发现有zh-CN.yml语言配置文件，于是值改成zh-CN后中文就生效了…</p>
+<h3 id="增加标签页、分类页"><a href="#增加标签页、分类页" class="headerlink" title="增加标签页、分类页"></a>增加标签页、分类页</h3><p>打开主题配置文件，找到menu字段，将下图白色箭头所示的注释打开（直接删掉前面的#或者注释快捷键都可以），在首页刷新，就可以看到红色箭头所示的效果（但是此时点开标签会报错空内容）。  </p>
+<p><img src="%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE%E9%A1%B5%E3%80%81%E5%88%86%E7%B1%BB%E9%A1%B5.jpg"></p>
+<p>关掉博客服务，然后输入命令hexo n page tags</p>
+<p>命令执行完成后会在source目录下新增一个tags文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
+<p><img src="newtags.jpg"></p>
+<p>再开启服务，刷新后点开首页中的标签就会有内容了。</p>
+<p>关掉服务，输入命令hexo n page categories，命令执行完成后会在source目录下新增一个categories文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
+<p><img src="newcategories.jpg"></p>
+<p>再开启服务，刷新后点开首页中的分类就会有内容了。</p>
+<h3 id="next主题页面布局样式更改"><a href="#next主题页面布局样式更改" class="headerlink" title="next主题页面布局样式更改"></a>next主题页面布局样式更改</h3><p>进入站点配置文件，找到Scheme 字段，根据自己的喜欢更改主题的样式（打开一个，将其他注释），每次修改完成后都可以在浏览器中刷新查看主题样式的变化。</p>
+<p><img src="next%E4%B8%BB%E9%A2%98%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F%E6%9B%B4%E6%94%B9.jpg"></p>
+<h3 id="设置主题的头像"><a href="#设置主题的头像" class="headerlink" title="设置主题的头像"></a>设置主题的头像</h3><p>在主题配置文件中查找avatar，url后面的#号去掉，并按照你自己头像的后缀更改此处的头像名后缀，在主题next下的\source\images文件夹中删掉avatar.gif，替换为你此处在url中的命名图片即可，刷新页面就会有头像显示。  </p>
+<p><img src="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98%E7%9A%84%E5%A4%B4%E5%83%8F.jpg"></p>
+<h3 id="更改标题及作者"><a href="#更改标题及作者" class="headerlink" title="更改标题及作者"></a>更改标题及作者</h3><p>在站点配置文件中找到这几行，按需修改即可</p>
+<p><img src="%E6%9B%B4%E6%94%B9%E6%A0%87%E9%A2%98%E5%8F%8A%E4%BD%9C%E8%80%85.jpg"></p>
+<h3 id="启用左边社交栏链接"><a href="#启用左边社交栏链接" class="headerlink" title="启用左边社交栏链接"></a>启用左边社交栏链接</h3><p>在博客的_config.yml中找到这几行，按需修改即可  </p>
+<p><img src="%E5%90%AF%E7%94%A8%E5%B7%A6%E4%BE%A7%E7%A4%BE%E4%BA%A4%E6%A0%8F%E9%93%BE%E6%8E%A5.jpg"></p>
+<p> 如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo更换主题</tag>
+        <tag>next主题</tag>
+        <tag>next主题配置功能启用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS基础之变量类型和计算</title>
+    <url>/2020/11/24/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97/</url>
+    <content><![CDATA[<p><strong>变量是每个语言最开始的基础，不会变量，别说你会JS！</strong></p>
+<h1 id="变量类型和计算"><a href="#变量类型和计算" class="headerlink" title="变量类型和计算"></a>变量类型和计算</h1><h2 id="值类型与引用类型的区别"><a href="#值类型与引用类型的区别" class="headerlink" title="值类型与引用类型的区别"></a>值类型与引用类型的区别</h2><a id="more"></a>
+
+<p>先看两段代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 值类型</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">let</span> b = a;</span><br><span class="line">a = <span class="number">200</span>;</span><br><span class="line"><span class="built_in">console</span>.log(b)  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 引用类型</span></span><br><span class="line"><span class="keyword">let</span> a = &#123; age = <span class="number">18</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> b = a;</span><br><span class="line">b.age = <span class="number">20</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a.age) <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+
+<p>深入分析</p>
+<p><strong>通过第一个值类型来看</strong>，首先变量一般会在函数中或者全局中出现，无论是函数还是全局中，值类型都是通过在栈（计算机的内存结构）中存储的，示意图如下</p>
+<p><img src="1606179634158.png" alt="1606179634158"></p>
+<p><strong>通过第二个引用类型来看</strong>，在计算机变量存储的时候，栈和堆是同时存在的，栈是从上到下一层层累加，而堆是从下往上一层层落，因此在age = 20的这个对象在堆中申请一个内存地址，然后把age = 20放在堆里面，然后key中存储对应的内存地址，而这个时候栈中存储的a的value指向的是内存地址1，也就是说并不是直接存储的对象，而是存储的这个内存地址指向这个对象，示意图如下</p>
+<p><img src="1606180185281.png" alt="1606180185281"></p>
+<h3 id="常见的值类型与引用类型"><a href="#常见的值类型与引用类型" class="headerlink" title="常见的值类型与引用类型"></a>常见的值类型与引用类型</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 常见值类型</span></span><br><span class="line"><span class="keyword">let</span> a                  <span class="comment">//undefined（如果是const a必须要赋值，如果不赋值直接报错而不是undefined）</span></span><br><span class="line"><span class="keyword">const</span> s = <span class="string">&#x27;abc&#x27;</span>        <span class="comment">// String</span></span><br><span class="line"><span class="keyword">const</span> n = <span class="number">100</span>          <span class="comment">// Number</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="literal">true</span>         <span class="comment">// Boolean</span></span><br><span class="line"><span class="keyword">const</span> s = <span class="built_in">Symbol</span>(<span class="string">&#x27;s&#x27;</span>)  <span class="comment">// ES6新增</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 常见引用类型</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">x</span>: <span class="number">100</span> &#125;</span><br><span class="line"><span class="keyword">const</span> arr = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]</span><br><span class="line"><span class="keyword">const</span> n = <span class="literal">null</span>     <span class="comment">// 特殊引用类型，指针指向为空地址</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;&#125;   <span class="comment">// 特殊引用类型，但不用与存储数据，所以没有&quot;拷贝、赋值函数&quot;这一说</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 例题</span></span><br><span class="line"><span class="keyword">const</span> obj1 = &#123; <span class="attr">x</span>: <span class="number">100</span>, <span class="attr">y</span>: <span class="number">200</span> &#125;</span><br><span class="line"><span class="keyword">const</span> obj2 = obj1</span><br><span class="line"><span class="keyword">let</span> x1 = obj1.x      <span class="comment">// x1 为值类型，直接就把100赋值过去</span></span><br><span class="line">obj2.x = <span class="number">101</span></span><br><span class="line">x1 = <span class="number">102</span>			<span class="comment">// x1的改变与引用类型没有关系</span></span><br><span class="line"><span class="built_in">console</span>.log(obj1)    <span class="comment">// &#123; x: 100, y: 200 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><em>注：</em>至于值类型与引用类型是不同的赋值形式，原因是<strong>考虑到性能或者存储</strong>的问题，<strong>值类型占用的空间较少</strong>（因为只有一个值），所以直接放在栈里面同时复制的时候也不会对性能造成很大的影响；而<strong>引用类型中的Json对象可能非常大</strong>，第一：直接放到栈的值里面会导致存储地址非常大，不好管理。第二：如果复制的时候直接复制value会导致复制过程非常的慢。因此<strong>计算机所有的程序，所有的代码，所有的语言都是采用值类型与引用类型严格的分离出来</strong>，它们的<strong>存储机制</strong>、<strong>赋值机制</strong>、<strong>拷贝机制</strong>也是严格的区分出来，它是<strong>基于内存的空间与CPU计算的耗时</strong>做到这样的区分。让引<strong>用类型也类似于值类型赋值方式</strong>，就<strong>需要深拷贝</strong>。</p>
+<h2 id="typeof运算符"><a href="#typeof运算符" class="headerlink" title="typeof运算符"></a>typeof运算符</h2><ul>
+<li>识别所有值类型</li>
+<li>识别函数</li>
+<li>判断是否是引用类型（不可再细分）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 判断所有值类型</span></span><br><span class="line"><span class="keyword">let</span> a;                  <span class="keyword">typeof</span> a   <span class="comment">// &#x27;undefined&#x27;</span></span><br><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;abc&#x27;</span>;      <span class="keyword">typeof</span> str <span class="comment">// &#x27;string&#x27;</span></span><br><span class="line"><span class="keyword">const</span> n = <span class="literal">true</span>;         <span class="keyword">typeof</span> n   <span class="comment">// &#x27;boolean&#x27;</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">100</span>;          <span class="keyword">typeof</span> b   <span class="comment">// &#x27;number&#x27;</span></span><br><span class="line"><span class="keyword">const</span> s = <span class="built_in">Symbol</span>(<span class="string">&#x27;s&#x27;</span>);  <span class="keyword">typeof</span> s   <span class="comment">// &#x27;symbol&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 能判断函数</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">console</span>.log       <span class="comment">// &#x27;function&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;     <span class="comment">// &#x27;function&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 能识别引用类型（不能再继续识别数组、null这些，只能归为object）</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span>        <span class="comment">// &#x27;object&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>]  <span class="comment">// &#x27;object&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> &#123; <span class="attr">x</span>: <span class="number">100</span> &#125;  <span class="comment">// &#x27;object&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>浅拷贝</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 浅拷贝，浅拷贝只是拷贝了引用对象存储栈中的value（内存地址），所以任意的修改会造成堆中值的修改</span></span><br><span class="line"><span class="keyword">const</span> obj1 = &#123;</span><br><span class="line">    age: <span class="number">20</span>,</span><br><span class="line">    name: <span class="string">&#x27;xxx&#x27;</span>,</span><br><span class="line">    address: &#123;</span><br><span class="line">        city: <span class="string">&#x27;beijing&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    arr: [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj2 = obj1</span><br><span class="line">obj2.address.city = <span class="string">&#x27;tieling&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(obj1.adress.city)   <span class="comment">// tieling</span></span><br></pre></td></tr></table></figure>
+
+<p>深拷贝</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 若只想修改obj2而不干扰到obj1，所以就需要深拷贝</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// obj 是 null， 或者 obj 不是对象或者数组，就没必要做深拷贝</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">&#x27;object&#x27;</span> || <span class="keyword">typeof</span> obj == <span class="string">&#x27;null&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化返回结果</span></span><br><span class="line">    <span class="keyword">let</span> result</span><br><span class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123;</span><br><span class="line">        <span class="comment">// 如果是数组，就将返回结果初始化为空数组</span></span><br><span class="line">        result = []</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果是对象，就将返回结果初始化为空对象</span></span><br><span class="line">        result = &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 无论是对象或者数组都可以用 for in 做遍历</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">        <span class="comment">// 保证key不是原型的属性，而是自身特有的</span></span><br><span class="line">        <span class="keyword">if</span> (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">            <span class="comment">// 递归调用！防止剩余深层次的内容</span></span><br><span class="line">            <span class="comment">// result[key] = &#123; key1: &#123; key2: obj[key][key1][key2] &#125; &#125; 如果还有就一直循环下去</span></span><br><span class="line">            result[key] = deepClone(obj[key])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将结果返回出去</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 此时就可以通过下面这一行代码实现深拷贝</span></span><br><span class="line"><span class="keyword">const</span> obj2 = deepClone(obj1)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="变量计算-类型转换"><a href="#变量计算-类型转换" class="headerlink" title="变量计算-类型转换"></a>变量计算-类型转换</h2><p><em>最容易考察也是最容易疏忽的地方</em></p>
+<ul>
+<li>字符串拼接</li>
+<li>==   （等号运算符）</li>
+<li>if语句和逻辑运算</li>
+</ul>
+<h3 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="number">100</span> + <span class="number">10</span>       <span class="comment">// 110</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">100</span> + <span class="string">&#x27;10&#x27;</span>     <span class="comment">// &#x27;10010&#x27;</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="literal">true</span> + <span class="string">&#x27;10&#x27;</span>    <span class="comment">// &#x27;true10&#x27;</span></span><br><span class="line"><span class="keyword">const</span> d = <span class="literal">true</span> + <span class="number">1</span>       <span class="comment">// 2</span></span><br><span class="line"><span class="keyword">const</span> f = <span class="literal">false</span> - <span class="number">1</span>      <span class="comment">// -1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="== 运算符"></a>== 运算符</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 会发生隐式的转换，让他们尝试相等</span></span><br><span class="line"><span class="number">100</span> == <span class="string">&#x27;100&#x27;</span>        <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="string">&#x27;&#x27;</span>             <span class="comment">// true</span></span><br><span class="line"><span class="number">0</span> == <span class="literal">false</span>          <span class="comment">// true</span></span><br><span class="line"><span class="literal">false</span> == <span class="string">&#x27;&#x27;</span>         <span class="comment">// true</span></span><br><span class="line"><span class="literal">null</span> == <span class="literal">undefined</span>   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 除了 == null （判断一个对象属性是null或undefined）之外，在实际开发中其他一律用 === ，例如</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">x</span>: <span class="number">100</span> &#125;</span><br><span class="line"><span class="keyword">if</span> (obj.a == <span class="literal">null</span>) &#123; &#125;</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line"><span class="comment">// if (obj.a === null || obj.a === undefined) &#123; &#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="if语句和逻辑运算"><a href="#if语句和逻辑运算" class="headerlink" title="if语句和逻辑运算"></a>if语句和逻辑运算</h2><ul>
+<li><p>truly变量：!!a === true 的变量</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> n = <span class="number">100</span></span><br><span class="line"><span class="built_in">console</span>.log(!n);   <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(!!n)   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>falsely变量：!!a === false 的变量</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> n = <span class="number">0</span></span><br><span class="line"><span class="built_in">console</span>.log(!n);   <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(!!n)   <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(!!<span class="literal">null</span>)        <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(!!<span class="string">&#x27;&#x27;</span>)          <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(!!<span class="literal">undefined</span>)   <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(!!&#123;&#125;)          <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 以下是 falsely 变量。除此之外都是 truly 变量</span></span><br><span class="line">!!<span class="number">0</span> === <span class="literal">false</span></span><br><span class="line">!!<span class="literal">NaN</span> === <span class="literal">false</span></span><br><span class="line">!!<span class="string">&#x27;&#x27;</span> === <span class="literal">false</span></span><br><span class="line">!!<span class="literal">null</span> === <span class="literal">false</span></span><br><span class="line">!!<span class="literal">undefined</span> === <span class="literal">false</span></span><br><span class="line">!!<span class="literal">false</span> === <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<p><strong>实际上 if 语句里面判断的不是 true 或者 false ，判断的是 truly 或者 falsely 变量</strong></p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// truly 变量</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="literal">true</span></span><br><span class="line"><span class="keyword">if</span> (a) &#123; <span class="comment">// ... &#125;</span></span><br><span class="line"><span class="keyword">const</span> b = <span class="number">100</span></span><br><span class="line"><span class="keyword">if</span> (b) &#123; <span class="comment">// ... &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// falsely 变量</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">if</span> (c) &#123; <span class="comment">// ... &#125;</span></span><br><span class="line"><span class="keyword">const</span> d = <span class="literal">null</span></span><br><span class="line"><span class="keyword">if</span> (d) &#123; <span class="comment">// ... &#125;</span></span><br><span class="line"><span class="keyword">let</span> e</span><br><span class="line"><span class="keyword">if</span> (e) &#123; <span class="comment">// ... &#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="逻辑判断"><a href="#逻辑判断" class="headerlink" title="逻辑判断"></a>逻辑判断</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">10</span> &amp;&amp; <span class="number">0</span>)        <span class="comment">// 0      &amp;&amp; 第一个值为true则返回第二个，第一个值为false则返回第一个</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;&#x27;</span> || <span class="string">&#x27;abc&#x27;</span>)    <span class="comment">// &#x27;abc&#x27;  || 第一个值为false则返回第二个，第一个为true则返回第一个</span></span><br><span class="line"><span class="built_in">console</span>.log(!<span class="built_in">window</span>.abc)    <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>变量类型和计算</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试刷题的方法和注意事项</title>
+    <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
+<a id="more"></a>
+
+<h1 id="刷题方法"><a href="#刷题方法" class="headerlink" title="刷题方法"></a>刷题方法</h1><p>这位前辈针对刷面试题方法一共提出了<strong>四点建议</strong>，分别是：</p>
+<ul>
+<li><p>遇到面试题，先看到的应该是题的考点，其次，脑子里都要思考四个问题</p>
+<p>1.是什么 </p>
+<p>2.原理</p>
+<p>3.解决什么问题 </p>
+<p>4.怎么用</p>
+</li>
+<li><p>会的题，应该怎么用有逻辑性的语言表达出来（建议分条）</p>
+</li>
+<li><p>每道题（如跨域）要会其主流的流程，并且以主流为重点说，其他的可以稍微提一下</p>
+</li>
+<li><p>这一点是在第二点的基础上，往自己开发的项目上靠，例如自己平时做项目的时候是用什么什么方法解决的。</p>
+</li>
+</ul>
+<p>在平时刷题的时候养成这种好习惯，相信对刷题的效率一定会有所提升。</p>
+<h1 id="刷题注意事项"><a href="#刷题注意事项" class="headerlink" title="刷题注意事项"></a>刷题注意事项</h1><p>这一块主要是自己平时逛社区看到的，总结了一下分享出来：</p>
+<p><strong>1.大厂偏爱考察基础，特别是对于工作经验少的人，因此基础题一定要完全掌握</strong></p>
+<p><strong>2.做不完的题海：以不变应万变，题可变，考点是不会变的，如Promis解决什么问题，这一定与异步有关</strong></p>
+<h1 id="高效学习三步曲"><a href="#高效学习三步曲" class="headerlink" title="高效学习三步曲"></a>高效学习三步曲</h1><p>这块是慕课网上的老师讲到的，感觉讲的非常好，拿出来mark一下</p>
+<ul>
+<li><p><strong>找准知识体系</strong></p>
+<p>这一步很重要很重要，也很难，这个知识体系是一个<strong>结构化的知识范围</strong>，就像一棵树一样，有根有树干，再往下分树枝、树叶这些，<strong>有组织</strong>，<strong>易扩展</strong>，这种知识体系便于我们的记忆（推荐<strong>思维导图</strong>）。</p>
+</li>
+<li><p><strong>刻意训练</strong></p>
+<p>这一块不用多说，练就完事了！</p>
+</li>
+<li><p><strong>及时反馈</strong></p>
+<p>可以通过在技术交流社区中写文章这种方式，总结输出自己的知识点，另一方面，如果写得好还会有人点赞，或者哪地方有进步的空间大家还可以互相交流。</p>
+</li>
+</ul>
+<p>自己也搜罗整理了一些面试资料（包括面试的知识体系），如果有兴趣可以通过下方的二维码、留言或首页社交块与我联系。</p>
+]]></content>
+      <categories>
+        <category>前端刷题</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>面试题</tag>
+        <tag>刷题方法</tag>
+        <tag>刷题注意事项</tag>
+        <tag>高效学习三步曲</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo框架搭建个人博客</title>
+    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
+<p>在搭建博客开始之前，你必须已经</p>
+<a id="more"></a>
+
+<ul>
+<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
+</li>
+<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
+</li>
+<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
+<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
+<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
+<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
+</li>
+</ul>
+<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
+<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
+<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
+<ul>
+<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
+<li>重新执行此次命令</li>
+<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
+</ul>
+<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
+<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
+<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
+<p><img src="1.jpg"></p>
+<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
+<p>这时候我们可以启动我们的博客</p>
+<p>命令行：hexo s     （注：s为start的简写）</p>
+<p><img src="2.jpg"></p>
+<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
+<p> <img src="3.jpg"></p>
+<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
+<p>后续还会更新更换其他主题及页面样式的美化。</p>
+<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo框架</tag>
+        <tag>博客搭建前的准备工作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将hexo博客部署到github或gitee</title>
+    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
+    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
+<ul>
+<li>全是静态文件，访问速度快；</li>
+<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
+<li>可以绑定自己的域名；</li>
+<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
+<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
+<li>= =</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
+<li>优点：部署比较简单，且不用频繁的更新部署</li>
+<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
+</ul>
+<p>登录github后，点击右上角的＋，然后点击new repository</p>
+<p><img src="newrepository.jpg"></p>
+<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
+<p><img src="newsave.jpg"></p>
+<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
+<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
+<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
+<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
+<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
+<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
+<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
+<li>优点：访问速度快，中文页面友好</li>
+<li>缺点：每次部署后都需要服务中点击更新部署</li>
+</ul>
+<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
+<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
+<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
+<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
+<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
+<p><img src="MyblogAdress.jpg"></p>
+<p>注意：每次执行完命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
+
+<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
+<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>部署博客到远端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo+next主题样式美化</title>
     <url>/2020/11/18/hexo-next%E4%B8%BB%E9%A2%98%E6%A0%B7%E5%BC%8F%E7%BE%8E%E5%8C%96/</url>
     <content><![CDATA[<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>首先新建一篇文章，在命令行输入：hexo n “文章名”，就会在博客的根目录的\source_posts下面新增一篇命名的文章，此时就可以使用Typora编辑器写博客了。</p>
@@ -97,226 +398,6 @@
       <tags>
         <tag>hexo新增博客文章</tag>
         <tag>next主题美化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo更换next主题及部分配置功能的启用</title>
-    <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
-    <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
-<a id="more"></a>
-
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
-<li><p>已经生成hexo博客主页（可以参考我的上一篇博客）</p>
-</li>
-<li><p>代码编辑器（sublime、vscode等）</p>
-</li>
-<li><p>支持MarkDown语言的编辑器（推荐Typora）</p>
-</li>
-</ul>
-<p>注：站点配置文件指的是博客文件夹根目录中的_config.yml，主题配置文件指的是next主题文件夹下的_config.yml</p>
-<h1 id="下载、启用及配置next主题"><a href="#下载、启用及配置next主题" class="headerlink" title="下载、启用及配置next主题"></a>下载、启用及配置next主题</h1><h2 id="下载next主题"><a href="#下载next主题" class="headerlink" title="下载next主题"></a>下载next主题</h2><p>点击链接跳转到github页面下载next主题压缩包<a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
-<p>解压至站点（博客文件夹根目录）的 themes 目录下，并将解压后的文件夹名称更改为next。</p>
-<h2 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h2><p>打开站点配置文件，推荐使用sublime, Ctrl+L快捷键输入theme找到 theme 字段，并将其值更改为 next（保证与themes文件夹下面next主题文件夹名字一致否则主题失效）。</p>
-<p><img src="%E5%90%AF%E7%94%A8next%E4%B8%BB%E9%A2%98.jpg"></p>
-<p>更改后在命令行中Ctrl+C打断正在运行的服务，hexo s重新启动服务器，并在浏览器中刷新输入命令行中的本地地址，当出现下面的页面说明更换主题成功。</p>
-<p><img src="%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F.jpg"></p>
-<p>注：根据个人意愿删除themes文件夹下的landscape主题。</p>
-<h2 id="更改主题配置文件"><a href="#更改主题配置文件" class="headerlink" title="更改主题配置文件"></a>更改主题配置文件</h2><h3 id="更改主题为中文"><a href="#更改主题为中文" class="headerlink" title="更改主题为中文"></a>更改主题为中文</h3><p>在主题配置文件文件中找到language字段修改为zh-CN，如下图  </p>
-<p><img src="zh-CN.jpg"></p>
-<p>按顺序在命令行中执行命令hexo clean、hexo g、hexo s，重启服务器后刷新页面即可生效。</p>
-<p>小小吐槽一下：这步本人遇到了一点小坑，官方网站配置的参考如下图</p>
-<p><img src="%E5%AE%98%E6%96%B9zh.jpg"></p>
-<p>然而配置完成后并没有生效，检查了一下next主题的根目录下的languages，发现有zh-CN.yml语言配置文件，于是值改成zh-CN后中文就生效了…</p>
-<h3 id="增加标签页、分类页"><a href="#增加标签页、分类页" class="headerlink" title="增加标签页、分类页"></a>增加标签页、分类页</h3><p>打开主题配置文件，找到menu字段，将下图白色箭头所示的注释打开（直接删掉前面的#或者注释快捷键都可以），在首页刷新，就可以看到红色箭头所示的效果（但是此时点开标签会报错空内容）。  </p>
-<p><img src="%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE%E9%A1%B5%E3%80%81%E5%88%86%E7%B1%BB%E9%A1%B5.jpg"></p>
-<p>关掉博客服务，然后输入命令hexo n page tags</p>
-<p>命令执行完成后会在source目录下新增一个tags文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
-<p><img src="newtags.jpg"></p>
-<p>再开启服务，刷新后点开首页中的标签就会有内容了。</p>
-<p>关掉服务，输入命令hexo n page categories，命令执行完成后会在source目录下新增一个categories文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
-<p><img src="newcategories.jpg"></p>
-<p>再开启服务，刷新后点开首页中的分类就会有内容了。</p>
-<h3 id="next主题页面布局样式更改"><a href="#next主题页面布局样式更改" class="headerlink" title="next主题页面布局样式更改"></a>next主题页面布局样式更改</h3><p>进入站点配置文件，找到Scheme 字段，根据自己的喜欢更改主题的样式（打开一个，将其他注释），每次修改完成后都可以在浏览器中刷新查看主题样式的变化。</p>
-<p><img src="next%E4%B8%BB%E9%A2%98%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F%E6%9B%B4%E6%94%B9.jpg"></p>
-<h3 id="设置主题的头像"><a href="#设置主题的头像" class="headerlink" title="设置主题的头像"></a>设置主题的头像</h3><p>在主题配置文件中查找avatar，url后面的#号去掉，并按照你自己头像的后缀更改此处的头像名后缀，在主题next下的\source\images文件夹中删掉avatar.gif，替换为你此处在url中的命名图片即可，刷新页面就会有头像显示。  </p>
-<p><img src="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98%E7%9A%84%E5%A4%B4%E5%83%8F.jpg"></p>
-<h3 id="更改标题及作者"><a href="#更改标题及作者" class="headerlink" title="更改标题及作者"></a>更改标题及作者</h3><p>在站点配置文件中找到这几行，按需修改即可</p>
-<p><img src="%E6%9B%B4%E6%94%B9%E6%A0%87%E9%A2%98%E5%8F%8A%E4%BD%9C%E8%80%85.jpg"></p>
-<h3 id="启用左边社交栏链接"><a href="#启用左边社交栏链接" class="headerlink" title="启用左边社交栏链接"></a>启用左边社交栏链接</h3><p>在博客的_config.yml中找到这几行，按需修改即可  </p>
-<p><img src="%E5%90%AF%E7%94%A8%E5%B7%A6%E4%BE%A7%E7%A4%BE%E4%BA%A4%E6%A0%8F%E9%93%BE%E6%8E%A5.jpg"></p>
-<p> 如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。 </p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>hexo更换主题</tag>
-        <tag>next主题</tag>
-        <tag>next主题配置功能启用</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo框架搭建个人博客</title>
-    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
-<p>在搭建博客开始之前，你必须已经</p>
-<a id="more"></a>
-
-<ul>
-<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
-</li>
-<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
-</li>
-<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
-<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
-<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
-<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
-</li>
-</ul>
-<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
-<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
-<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
-<ul>
-<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
-<li>重新执行此次命令</li>
-<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
-</ul>
-<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
-<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
-<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
-<p><img src="1.jpg"></p>
-<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
-<p>这时候我们可以启动我们的博客</p>
-<p>命令行：hexo s     （注：s为start的简写）</p>
-<p><img src="2.jpg"></p>
-<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
-<p> <img src="3.jpg"></p>
-<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
-<p>后续还会更新更换其他主题及页面样式的美化。</p>
-<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>hexo框架</tag>
-        <tag>博客搭建前的准备工作</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试刷题的方法和注意事项</title>
-    <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
-<a id="more"></a>
-
-<h1 id="刷题方法"><a href="#刷题方法" class="headerlink" title="刷题方法"></a>刷题方法</h1><p>这位前辈针对刷面试题方法一共提出了<strong>四点建议</strong>，分别是：</p>
-<ul>
-<li><p>遇到面试题，先看到的应该是题的考点，其次，脑子里都要思考四个问题</p>
-<p>1.是什么 </p>
-<p>2.原理</p>
-<p>3.解决什么问题 </p>
-<p>4.怎么用</p>
-</li>
-<li><p>会的题，应该怎么用有逻辑性的语言表达出来（建议分条）</p>
-</li>
-<li><p>每道题（如跨域）要会其主流的流程，并且以主流为重点说，其他的可以稍微提一下</p>
-</li>
-<li><p>这一点是在第二点的基础上，往自己开发的项目上靠，例如自己平时做项目的时候是用什么什么方法解决的。</p>
-</li>
-</ul>
-<p>在平时刷题的时候养成这种好习惯，相信对刷题的效率一定会有所提升。</p>
-<h1 id="刷题注意事项"><a href="#刷题注意事项" class="headerlink" title="刷题注意事项"></a>刷题注意事项</h1><p>这一块主要是自己平时逛社区看到的，总结了一下分享出来：</p>
-<p><strong>1.大厂偏爱考察基础，特别是对于工作经验少的人，因此基础题一定要完全掌握</strong></p>
-<p><strong>2.做不完的题海：以不变应万变，题可变，考点是不会变的，如Promis解决什么问题，这一定与异步有关</strong></p>
-<h1 id="高效学习三步曲"><a href="#高效学习三步曲" class="headerlink" title="高效学习三步曲"></a>高效学习三步曲</h1><p>这块是慕课网上的老师讲到的，感觉讲的非常好，拿出来mark一下</p>
-<ul>
-<li><p><strong>找准知识体系</strong></p>
-<p>这一步很重要很重要，也很难，这个知识体系是一个<strong>结构化的知识范围</strong>，就像一棵树一样，有根有树干，再往下分树枝、树叶这些，<strong>有组织</strong>，<strong>易扩展</strong>，这种知识体系便于我们的记忆（推荐<strong>思维导图</strong>）。</p>
-</li>
-<li><p><strong>刻意训练</strong></p>
-<p>这一块不用多说，练就完事了！</p>
-</li>
-<li><p><strong>及时反馈</strong></p>
-<p>可以通过在技术交流社区中写文章这种方式，总结输出自己的知识点，另一方面，如果写得好还会有人点赞，或者哪地方有进步的空间大家还可以互相交流。</p>
-</li>
-</ul>
-<p>自己也搜罗整理了一些面试资料（包括面试的知识体系），如果有兴趣可以通过下方的二维码、留言或首页社交块与我联系。</p>
-]]></content>
-      <categories>
-        <category>前端刷题</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>面试题</tag>
-        <tag>刷题方法</tag>
-        <tag>刷题注意事项</tag>
-        <tag>高效学习三步曲</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>将hexo博客部署到github或gitee</title>
-    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
-    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
-<ul>
-<li>全是静态文件，访问速度快；</li>
-<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
-<li>可以绑定自己的域名；</li>
-<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
-<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
-<li>= =</li>
-</ul>
-<a id="more"></a>
-
-<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
-<li>优点：部署比较简单，且不用频繁的更新部署</li>
-<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
-</ul>
-<p>登录github后，点击右上角的＋，然后点击new repository</p>
-<p><img src="newrepository.jpg"></p>
-<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
-<p><img src="newsave.jpg"></p>
-<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
-<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
-<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
-<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
-<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
-<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
-<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
-<li>优点：访问速度快，中文页面友好</li>
-<li>缺点：每次部署后都需要服务中点击更新部署</li>
-</ul>
-<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
-<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
-<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
-<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
-<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
-<p><img src="MyblogAdress.jpg"></p>
-<p>注意：每次执行完命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
-
-<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
-<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>部署博客到远端</tag>
       </tags>
   </entry>
   <entry>
@@ -536,8 +617,8 @@
         <category>前端面试题</category>
       </categories>
       <tags>
-        <tag>HTML、CSS面试题</tag>
         <tag>知识点总结</tag>
+        <tag>HTML、CSS面试题</tag>
       </tags>
   </entry>
 </search>
