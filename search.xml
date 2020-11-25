@@ -1,59 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hexo更换next主题及部分配置功能的启用</title>
-    <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
-    <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
+    <title>hexo框架搭建个人博客</title>
+    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
+<p>在搭建博客开始之前，你必须已经</p>
 <a id="more"></a>
 
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
-<li><p>已经生成hexo博客主页（可以参考我的上一篇博客）</p>
+<ul>
+<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
 </li>
-<li><p>代码编辑器（sublime、vscode等）</p>
+<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
 </li>
-<li><p>支持MarkDown语言的编辑器（推荐Typora）</p>
+<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
+<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
+<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
+<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
 </li>
 </ul>
-<p>注：站点配置文件指的是博客文件夹根目录中的_config.yml，主题配置文件指的是next主题文件夹下的_config.yml</p>
-<h1 id="下载、启用及配置next主题"><a href="#下载、启用及配置next主题" class="headerlink" title="下载、启用及配置next主题"></a>下载、启用及配置next主题</h1><h2 id="下载next主题"><a href="#下载next主题" class="headerlink" title="下载next主题"></a>下载next主题</h2><p>点击链接跳转到github页面下载next主题压缩包<a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
-<p>解压至站点（博客文件夹根目录）的 themes 目录下，并将解压后的文件夹名称更改为next。</p>
-<h2 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h2><p>打开站点配置文件，推荐使用sublime, Ctrl+L快捷键输入theme找到 theme 字段，并将其值更改为 next（保证与themes文件夹下面next主题文件夹名字一致否则主题失效）。</p>
-<p><img src="%E5%90%AF%E7%94%A8next%E4%B8%BB%E9%A2%98.jpg"></p>
-<p>更改后在命令行中Ctrl+C打断正在运行的服务，hexo s重新启动服务器，并在浏览器中刷新输入命令行中的本地地址，当出现下面的页面说明更换主题成功。</p>
-<p><img src="%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F.jpg"></p>
-<p>注：根据个人意愿删除themes文件夹下的landscape主题。</p>
-<h2 id="更改主题配置文件"><a href="#更改主题配置文件" class="headerlink" title="更改主题配置文件"></a>更改主题配置文件</h2><h3 id="更改主题为中文"><a href="#更改主题为中文" class="headerlink" title="更改主题为中文"></a>更改主题为中文</h3><p>在主题配置文件文件中找到language字段修改为zh-CN，如下图  </p>
-<p><img src="zh-CN.jpg"></p>
-<p>按顺序在命令行中执行命令hexo clean、hexo g、hexo s，重启服务器后刷新页面即可生效。</p>
-<p>小小吐槽一下：这步本人遇到了一点小坑，官方网站配置的参考如下图</p>
-<p><img src="%E5%AE%98%E6%96%B9zh.jpg"></p>
-<p>然而配置完成后并没有生效，检查了一下next主题的根目录下的languages，发现有zh-CN.yml语言配置文件，于是值改成zh-CN后中文就生效了…</p>
-<h3 id="增加标签页、分类页"><a href="#增加标签页、分类页" class="headerlink" title="增加标签页、分类页"></a>增加标签页、分类页</h3><p>打开主题配置文件，找到menu字段，将下图白色箭头所示的注释打开（直接删掉前面的#或者注释快捷键都可以），在首页刷新，就可以看到红色箭头所示的效果（但是此时点开标签会报错空内容）。  </p>
-<p><img src="%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE%E9%A1%B5%E3%80%81%E5%88%86%E7%B1%BB%E9%A1%B5.jpg"></p>
-<p>关掉博客服务，然后输入命令hexo n page tags</p>
-<p>命令执行完成后会在source目录下新增一个tags文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
-<p><img src="newtags.jpg"></p>
-<p>再开启服务，刷新后点开首页中的标签就会有内容了。</p>
-<p>关掉服务，输入命令hexo n page categories，命令执行完成后会在source目录下新增一个categories文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
-<p><img src="newcategories.jpg"></p>
-<p>再开启服务，刷新后点开首页中的分类就会有内容了。</p>
-<h3 id="next主题页面布局样式更改"><a href="#next主题页面布局样式更改" class="headerlink" title="next主题页面布局样式更改"></a>next主题页面布局样式更改</h3><p>进入站点配置文件，找到Scheme 字段，根据自己的喜欢更改主题的样式（打开一个，将其他注释），每次修改完成后都可以在浏览器中刷新查看主题样式的变化。</p>
-<p><img src="next%E4%B8%BB%E9%A2%98%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F%E6%9B%B4%E6%94%B9.jpg"></p>
-<h3 id="设置主题的头像"><a href="#设置主题的头像" class="headerlink" title="设置主题的头像"></a>设置主题的头像</h3><p>在主题配置文件中查找avatar，url后面的#号去掉，并按照你自己头像的后缀更改此处的头像名后缀，在主题next下的\source\images文件夹中删掉avatar.gif，替换为你此处在url中的命名图片即可，刷新页面就会有头像显示。  </p>
-<p><img src="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98%E7%9A%84%E5%A4%B4%E5%83%8F.jpg"></p>
-<h3 id="更改标题及作者"><a href="#更改标题及作者" class="headerlink" title="更改标题及作者"></a>更改标题及作者</h3><p>在站点配置文件中找到这几行，按需修改即可</p>
-<p><img src="%E6%9B%B4%E6%94%B9%E6%A0%87%E9%A2%98%E5%8F%8A%E4%BD%9C%E8%80%85.jpg"></p>
-<h3 id="启用左边社交栏链接"><a href="#启用左边社交栏链接" class="headerlink" title="启用左边社交栏链接"></a>启用左边社交栏链接</h3><p>在博客的_config.yml中找到这几行，按需修改即可  </p>
-<p><img src="%E5%90%AF%E7%94%A8%E5%B7%A6%E4%BE%A7%E7%A4%BE%E4%BA%A4%E6%A0%8F%E9%93%BE%E6%8E%A5.jpg"></p>
-<p> 如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。 </p>
+<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
+<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
+<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
+<ul>
+<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
+<li>重新执行此次命令</li>
+<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
+</ul>
+<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
+<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
+<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
+<p><img src="1.jpg"></p>
+<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
+<p>这时候我们可以启动我们的博客</p>
+<p>命令行：hexo s     （注：s为start的简写）</p>
+<p><img src="2.jpg"></p>
+<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
+<p> <img src="3.jpg"></p>
+<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
+<p>后续还会更新更换其他主题及页面样式的美化。</p>
+<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
 ]]></content>
       <categories>
         <category>从0搭建博客及美化</category>
       </categories>
       <tags>
-        <tag>hexo更换主题</tag>
-        <tag>next主题</tag>
-        <tag>next主题配置功能启用</tag>
+        <tag>hexo框架</tag>
+        <tag>博客搭建前的准备工作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试刷题的方法和注意事项</title>
+    <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
+<a id="more"></a>
+
+<h1 id="刷题方法"><a href="#刷题方法" class="headerlink" title="刷题方法"></a>刷题方法</h1><p>这位前辈针对刷面试题方法一共提出了<strong>四点建议</strong>，分别是：</p>
+<ul>
+<li><p>遇到面试题，先看到的应该是题的考点，其次，脑子里都要思考四个问题</p>
+<p>1.是什么 </p>
+<p>2.原理</p>
+<p>3.解决什么问题 </p>
+<p>4.怎么用</p>
+</li>
+<li><p>会的题，应该怎么用有逻辑性的语言表达出来（建议分条）</p>
+</li>
+<li><p>每道题（如跨域）要会其主流的流程，并且以主流为重点说，其他的可以稍微提一下</p>
+</li>
+<li><p>这一点是在第二点的基础上，往自己开发的项目上靠，例如自己平时做项目的时候是用什么什么方法解决的。</p>
+</li>
+</ul>
+<p>在平时刷题的时候养成这种好习惯，相信对刷题的效率一定会有所提升。</p>
+<h1 id="刷题注意事项"><a href="#刷题注意事项" class="headerlink" title="刷题注意事项"></a>刷题注意事项</h1><p>这一块主要是自己平时逛社区看到的，总结了一下分享出来：</p>
+<p><strong>1.大厂偏爱考察基础，特别是对于工作经验少的人，因此基础题一定要完全掌握</strong></p>
+<p><strong>2.做不完的题海：以不变应万变，题可变，考点是不会变的，如Promis解决什么问题，这一定与异步有关</strong></p>
+<h1 id="高效学习三步曲"><a href="#高效学习三步曲" class="headerlink" title="高效学习三步曲"></a>高效学习三步曲</h1><p>这块是慕课网上的老师讲到的，感觉讲的非常好，拿出来mark一下</p>
+<ul>
+<li><p><strong>找准知识体系</strong></p>
+<p>这一步很重要很重要，也很难，这个知识体系是一个<strong>结构化的知识范围</strong>，就像一棵树一样，有根有树干，再往下分树枝、树叶这些，<strong>有组织</strong>，<strong>易扩展</strong>，这种知识体系便于我们的记忆（推荐<strong>思维导图</strong>）。</p>
+</li>
+<li><p><strong>刻意训练</strong></p>
+<p>这一块不用多说，练就完事了！</p>
+</li>
+<li><p><strong>及时反馈</strong></p>
+<p>可以通过在技术交流社区中写文章这种方式，总结输出自己的知识点，另一方面，如果写得好还会有人点赞，或者哪地方有进步的空间大家还可以互相交流。</p>
+</li>
+</ul>
+<p>自己也搜罗整理了一些面试资料（包括面试的知识体系），如果有兴趣可以通过下方的二维码、留言或首页社交块与我联系。</p>
+]]></content>
+      <categories>
+        <category>前端刷题</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>面试题</tag>
+        <tag>刷题方法</tag>
+        <tag>刷题注意事项</tag>
+        <tag>高效学习三步曲</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS基础之原型和原型链</title>
+    <url>/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
+    <content><![CDATA[<p><strong>三座大山之一，必考！！！</strong></p>
+<p>JS本身是一个基于原型基层的语言，ES6之前，写继承的时候只能通过原型来继承，ES6出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。</p>
+<a id="more"></a>
+
+<h1 id="如何用Class实现继承"><a href="#如何用Class实现继承" class="headerlink" title="如何用Class实现继承"></a>如何用Class实现继承</h1><h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>class 本质上就类似于一个模版，我们可以通过模版去构建一些东西。</p>
+<ul>
+<li>constructor</li>
+<li>属性</li>
+<li>方法</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, number</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">        <span class="built_in">this</span>.number = number</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(</span><br><span class="line">            <span class="comment">// 模版字符串</span></span><br><span class="line">            <span class="string">`姓名:<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>, 学号:<span class="subst">$&#123;<span class="built_in">this</span>.number&#125;</span>`</span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过类 new 对象/实例  (可以 new n多个对象)</span></span><br><span class="line"><span class="keyword">let</span> xiaoa = <span class="keyword">new</span> Student(<span class="string">&#x27;小A&#x27;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="built_in">console</span>.log(xiaoa.name)    <span class="comment">// 小A</span></span><br><span class="line"><span class="built_in">console</span>.log(xiaoa.number)  <span class="comment">// 18</span></span><br><span class="line">xiaoa.sayHi()              <span class="comment">// 姓名:小A, 学号:18</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>当我们有很多个 class ，这些 class 有一些比较公共的属性的时候，就可以把它抽离出来，让后让这些 class 继承。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">eat</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span> eat something`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Student子类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, number</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 调用 super 把 name 给 people 的 constructor</span></span><br><span class="line">        <span class="comment">// 然后把名字赋值到属性上</span></span><br><span class="line">        <span class="built_in">super</span>(name)</span><br><span class="line">        <span class="built_in">this</span>.number = number</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`姓名:<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>,学号<span class="subst">$&#123;<span class="built_in">this</span>.number&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// teacher子类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, major</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name)</span><br><span class="line">        <span class="built_in">this</span>.major = major</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">teach</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span> 教授 <span class="subst">$&#123;<span class="built_in">this</span>.major&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student(<span class="string">&#x27;A同学&#x27;</span>, <span class="number">66</span>)</span><br><span class="line"><span class="built_in">console</span>.log(s1.name)      <span class="comment">// A同学</span></span><br><span class="line"><span class="built_in">console</span>.log(s1.number)	  <span class="comment">// 66</span></span><br><span class="line">s1.sayHi()				 <span class="comment">// 姓名:A同学,学号66</span></span><br><span class="line">s1.eat()                  <span class="comment">// A同学 eat something</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> t1 = <span class="keyword">new</span> Teacher(<span class="string">&#x27;C老师&#x27;</span>, <span class="string">&#x27;语文&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(t1.name)     <span class="comment">// C老师</span></span><br><span class="line"><span class="built_in">console</span>.log(t1.major)    <span class="comment">// 语文</span></span><br><span class="line">t1.teach()               <span class="comment">// C老师 教授 语文</span></span><br><span class="line">t1.eat()                 <span class="comment">// C老师 eat something</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="类型判断"><a href="#类型判断" class="headerlink" title="类型判断"></a>类型判断</h1><p>主要是判断 instanceof 前面的是否由 instanceof 后面的构建出来的，接上面代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student()</span><br><span class="line"></span><br><span class="line">s1 <span class="keyword">instanceof</span> Student     <span class="comment">// true</span></span><br><span class="line">s1 <span class="keyword">instanceof</span> People      <span class="comment">// true   People 是 Student 的父类，也参与了构建的一部分</span></span><br><span class="line">s1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true   Object 是所有 class 的父类</span></span><br><span class="line"></span><br><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Array</span>       <span class="comment">// true</span></span><br><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Array</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">&#123;&#125; <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="JS原型"><a href="#JS原型" class="headerlink" title="JS原型"></a>JS原型</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student()</span><br><span class="line"></span><br><span class="line"><span class="comment">// class 实际上是函数，可见是语法糖</span></span><br><span class="line"><span class="keyword">typeof</span> People   <span class="comment">// &#x27;function&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> Student  <span class="comment">// &#x27;function&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 隐式原型和显式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( s1.__proto__ )        <span class="comment">// 隐式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( Student.prototype )   <span class="comment">// 显式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( s1.__proto__ === Student.prototype )  <span class="comment">// true 也就是两个引用的是一个内存地址</span></span><br></pre></td></tr></table></figure>
+
+<p>在定义 class Student 的时候会有一个显式原型（prototype）指向一个对象（Student.prototype），并且把方法（sayHi）放在这个对象（Student.prototype）里面，通过 new 一个实例对象 s1 之后，他的 name、number 会放在实例对象 s1 本身，而这里的 sayHi 方法是通过隐式原型指向（Student.prototype）里面的方法来获取的。</p>
+<img src="1606225829665.png" alt="1606225829665" style="zoom: 67%;" />
+
+
+
+<h2 id="原型关系"><a href="#原型关系" class="headerlink" title="原型关系"></a>原型关系</h2><ul>
+<li>每个 class 都有显式原型 prototype</li>
+<li>每个实例都有隐式原型 __ proto __</li>
+<li>实例的隐式原型 __ proto __ 指向对应的 class 的显示原型 prototype</li>
+</ul>
+<h2 id="基于原型的执行规则"><a href="#基于原型的执行规则" class="headerlink" title="基于原型的执行规则"></a>基于原型的执行规则</h2><ul>
+<li><p>获取属性 s1.name 或执行方法 s1.sayHi() 时</p>
+</li>
+<li><p>先在自身属性和方法寻找</p>
+</li>
+<li><p>如果找不到则自动去隐式原型 __ proto __ 中查找 </p>
+<p>例如获取 s1.sayHi（），此时 s1 自身并没有 sayHi 方法，因此去 s1 的 __ proto __ 中查找，而隐式原型正好指向 class 的显式原型 Student.prototype ，然后就找到了 sayHi 方法。</p>
+</li>
+</ul>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Student.prototype.__proto__)</span><br><span class="line"><span class="built_in">console</span>.log(People.prototype)</span><br><span class="line"><span class="built_in">console</span>.log(People.prototype === Student.prototype.__proto__)  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>首先，左下角三个图的关系对应上一张图。但这里的 Student 的显式原型（Student.prototype）还会有一个隐式原型，指向了 People 的显式原型（People.prototype）,People原型里面有 eat 方法。</p>
+<p>逻辑上来讲，实例 s1 是通过 Student new 出来的，所以 s1 的隐式原型指向 Student 的显式原型。其次可以理解为 Student 的显式原型对象（Student.prototype）是通过 People new 出来的，所以 Student.prototype 的隐式原型指向 People 的显式原型（People.prototype）,</p>
+<img src="1606262732500.png" alt="1606262732500" style="zoom: 80%;" />
+
+<p>整体上说：</p>
+<ul>
+<li><p>访问 s1.name/number 是通过 s1 本身属性；</p>
+</li>
+<li><p>访问 s1.sayHi() ,此时由于 s1 本身没有 sayHi 方法，所以通过隐式原型指向的 Student 上的显式原型对象找到 sayHi 方法；</p>
+</li>
+<li><p>访问 s1.eat() , s1 的身上与其身上隐式原型指向的 Student.prototype 都没有此方法，因此再通过 Student.prototype 上的隐式原型指向的 People.prototype 上来找到 eat 方法（由此形成了一个链）</p>
+</li>
+</ul>
+<p>我们可以通过 s1.hasOwnProperty(‘属性’) 来判断某个属性或方法是否为自身拥有，那么 hasOwnProperty() 方法是哪里来的？</p>
+<p>从下图可以看出 Student 继承于 People ， People 继承于 Object ，所以说 People 的显式原型对象中也有隐式原型，并且指向 Object 的显式原型对象 Object.prototype （JS 引擎本身自己带的），Object 原型里面有很多方法。</p>
+<p><strong>因此 s1 访问 hasOwnProperty 方法，就会通过这个原型链来一级一级查找，最终在基类 Object 的显式原型上找到 hasOwnProperty 方法</strong></p>
+<img src="1606264497414.png" alt="1606264497414" style="zoom:80%;" />
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基类 Object 的显式原型对象身上的隐式原型永远指向 null </span></span><br><span class="line"><span class="comment">// 因此基类 Object 的显式原型对象为原型链的最后一级</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.__proto__     <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="再看-instanceof"><a href="#再看-instanceof" class="headerlink" title="再看 instanceof"></a>再看 instanceof</h3><p>还是这张图， instanceof 前面的变量顺着隐式原型往上找，如果能对应到 instanceof 后面的参数 class 的显式原型（或者原型链上的显式原型），如果能对应到，那么 instanceof 成立返回 true，如果对应不到就返回 false ，</p>
+<img src="1606264497414.png" alt="1606264497414" style="zoom:80%;" />
+
+
+
+<h2 id="重要提示！！！"><a href="#重要提示！！！" class="headerlink" title="重要提示！！！"></a>重要提示！！！</h2><ul>
+<li>class 是 ES6 语法规范，由 ECMA 委员会发布</li>
+<li>ECMA 只规定语法规则，即我们代码的书写规范，不规定如何实现</li>
+<li>以上实现方式都是 V8 引擎的实现方式，也是主流的</li>
+</ul>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h1><ul>
+<li><p>如何准确判断一个变量是不是数组？</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 结合原型链的图理解 instanceof </span></span><br><span class="line"><span class="keyword">const</span> a = []</span><br><span class="line">a <span class="keyword">instanceof</span> <span class="built_in">Array</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从原型入手: Array.prototype.isPrototypeOf(obj)</span></span><br><span class="line"><span class="comment">// 利用isPrototypeOf()方法，判定Array是不是在obj的原型链中如果是，则返回true,否则false。</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.isPrototypeOf(a)   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>class 的原型本质，怎么理解？</p>
+<ul>
+<li>每个 class 都有显式原型 prototype</li>
+<li>每个实例都有隐式原型 __ proto __</li>
+<li>实例的隐式原型 __ proto __ 指向对应的 class 的显示原型 prototype</li>
+<li>获取实例身上属性或执行方法时，先在自身属性和方法寻找，如果找不到则自动去隐式原型指向的父类显式原型对象中查找 ，然后顺着与原型链去查找。</li>
+</ul>
+</li>
+<li><p>手写一个简易的 jQuery，考虑插件和扩展性</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">jQuery</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">selector</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 首先 DOM 查询</span></span><br><span class="line">        <span class="keyword">const</span> result = <span class="built_in">document</span>.querySelectorAll(selector)</span><br><span class="line">        <span class="keyword">const</span> length = result.length</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对查出的结果进行遍历</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="comment">// 把遍历的每个结果都放到 this 上</span></span><br><span class="line">            <span class="built_in">this</span>[i] = result[i]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">this</span>.length = length</span><br><span class="line">        <span class="built_in">this</span>.selector = selector</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jQuery 中的 get 方法</span></span><br><span class="line">    <span class="function"><span class="title">get</span>(<span class="params">index</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>[index]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// each 遍历</span></span><br><span class="line">    <span class="function"><span class="title">each</span>(<span class="params">fn</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> elem = <span class="built_in">this</span>[i]</span><br><span class="line">            fn(elem)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// on 监听方法</span></span><br><span class="line">    <span class="function"><span class="title">on</span>(<span class="params">type, fn</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.each(<span class="function"><span class="params">elem</span> =&gt;</span> &#123;</span><br><span class="line">            elem.addEventListener(type, fn, <span class="literal">false</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 还可扩展很多 DOM 操作 API</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const $p = new jQuery(&#x27;p&#x27;)</span></span><br><span class="line"><span class="comment">// $p.get(1)</span></span><br><span class="line"><span class="comment">// $p.each((elem) =&gt; console.log(elem.nodeName))</span></span><br><span class="line"><span class="comment">// $p.on(&#x27;click&#x27;, () =&gt; alert(&#x27;clicked&#x27;))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 插件机制（做一个插件，但其实用的还是 jQuery）</span></span><br><span class="line">jQuery.prototype.dialog = <span class="function"><span class="keyword">function</span> (<span class="params">info</span>) </span>&#123;</span><br><span class="line">    alert(info)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $p.dialog(&#x27;123456&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;造轮子&quot; (复写机制)</span></span><br><span class="line"><span class="comment">// 就是基于这个 jQuery 去造一个更加完美的 myJQuery 供使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myJQuery</span> <span class="keyword">extends</span> <span class="title">jQuery</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">selector</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// super 的好处体现，直接使用 jQuery 的复杂 constructor，无需再写一遍逻辑</span></span><br><span class="line">        <span class="built_in">super</span>(selector)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 扩展自己的方法...</span></span><br><span class="line">    <span class="function"><span class="title">addClass</span>(<span class="params">className</span>)</span> &#123; &#125;</span><br><span class="line">    <span class="function"><span class="title">style</span>(<span class="params">data</span>)</span> &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>原型和原型链</tag>
       </tags>
   </entry>
   <entry>
@@ -138,167 +289,59 @@
       </tags>
   </entry>
   <entry>
-    <title>前端面试刷题的方法和注意事项</title>
-    <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
+    <title>hexo更换next主题及部分配置功能的启用</title>
+    <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
+    <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
 <a id="more"></a>
 
-<h1 id="刷题方法"><a href="#刷题方法" class="headerlink" title="刷题方法"></a>刷题方法</h1><p>这位前辈针对刷面试题方法一共提出了<strong>四点建议</strong>，分别是：</p>
-<ul>
-<li><p>遇到面试题，先看到的应该是题的考点，其次，脑子里都要思考四个问题</p>
-<p>1.是什么 </p>
-<p>2.原理</p>
-<p>3.解决什么问题 </p>
-<p>4.怎么用</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
+<li><p>已经生成hexo博客主页（可以参考我的上一篇博客）</p>
 </li>
-<li><p>会的题，应该怎么用有逻辑性的语言表达出来（建议分条）</p>
+<li><p>代码编辑器（sublime、vscode等）</p>
 </li>
-<li><p>每道题（如跨域）要会其主流的流程，并且以主流为重点说，其他的可以稍微提一下</p>
-</li>
-<li><p>这一点是在第二点的基础上，往自己开发的项目上靠，例如自己平时做项目的时候是用什么什么方法解决的。</p>
+<li><p>支持MarkDown语言的编辑器（推荐Typora）</p>
 </li>
 </ul>
-<p>在平时刷题的时候养成这种好习惯，相信对刷题的效率一定会有所提升。</p>
-<h1 id="刷题注意事项"><a href="#刷题注意事项" class="headerlink" title="刷题注意事项"></a>刷题注意事项</h1><p>这一块主要是自己平时逛社区看到的，总结了一下分享出来：</p>
-<p><strong>1.大厂偏爱考察基础，特别是对于工作经验少的人，因此基础题一定要完全掌握</strong></p>
-<p><strong>2.做不完的题海：以不变应万变，题可变，考点是不会变的，如Promis解决什么问题，这一定与异步有关</strong></p>
-<h1 id="高效学习三步曲"><a href="#高效学习三步曲" class="headerlink" title="高效学习三步曲"></a>高效学习三步曲</h1><p>这块是慕课网上的老师讲到的，感觉讲的非常好，拿出来mark一下</p>
-<ul>
-<li><p><strong>找准知识体系</strong></p>
-<p>这一步很重要很重要，也很难，这个知识体系是一个<strong>结构化的知识范围</strong>，就像一棵树一样，有根有树干，再往下分树枝、树叶这些，<strong>有组织</strong>，<strong>易扩展</strong>，这种知识体系便于我们的记忆（推荐<strong>思维导图</strong>）。</p>
-</li>
-<li><p><strong>刻意训练</strong></p>
-<p>这一块不用多说，练就完事了！</p>
-</li>
-<li><p><strong>及时反馈</strong></p>
-<p>可以通过在技术交流社区中写文章这种方式，总结输出自己的知识点，另一方面，如果写得好还会有人点赞，或者哪地方有进步的空间大家还可以互相交流。</p>
-</li>
-</ul>
-<p>自己也搜罗整理了一些面试资料（包括面试的知识体系），如果有兴趣可以通过下方的二维码、留言或首页社交块与我联系。</p>
-]]></content>
-      <categories>
-        <category>前端刷题</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>面试题</tag>
-        <tag>刷题方法</tag>
-        <tag>刷题注意事项</tag>
-        <tag>高效学习三步曲</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo框架搭建个人博客</title>
-    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
-<p>在搭建博客开始之前，你必须已经</p>
-<a id="more"></a>
-
-<ul>
-<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
-</li>
-<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
-</li>
-<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
-<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
-<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
-<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
-</li>
-</ul>
-<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
-<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
-<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
-<ul>
-<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
-<li>重新执行此次命令</li>
-<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
-</ul>
-<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
-<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
-<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
-<p><img src="1.jpg"></p>
-<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
-<p>这时候我们可以启动我们的博客</p>
-<p>命令行：hexo s     （注：s为start的简写）</p>
-<p><img src="2.jpg"></p>
-<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
-<p> <img src="3.jpg"></p>
-<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
-<p>后续还会更新更换其他主题及页面样式的美化。</p>
-<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
+<p>注：站点配置文件指的是博客文件夹根目录中的_config.yml，主题配置文件指的是next主题文件夹下的_config.yml</p>
+<h1 id="下载、启用及配置next主题"><a href="#下载、启用及配置next主题" class="headerlink" title="下载、启用及配置next主题"></a>下载、启用及配置next主题</h1><h2 id="下载next主题"><a href="#下载next主题" class="headerlink" title="下载next主题"></a>下载next主题</h2><p>点击链接跳转到github页面下载next主题压缩包<a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
+<p>解压至站点（博客文件夹根目录）的 themes 目录下，并将解压后的文件夹名称更改为next。</p>
+<h2 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h2><p>打开站点配置文件，推荐使用sublime, Ctrl+L快捷键输入theme找到 theme 字段，并将其值更改为 next（保证与themes文件夹下面next主题文件夹名字一致否则主题失效）。</p>
+<p><img src="%E5%90%AF%E7%94%A8next%E4%B8%BB%E9%A2%98.jpg"></p>
+<p>更改后在命令行中Ctrl+C打断正在运行的服务，hexo s重新启动服务器，并在浏览器中刷新输入命令行中的本地地址，当出现下面的页面说明更换主题成功。</p>
+<p><img src="%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F.jpg"></p>
+<p>注：根据个人意愿删除themes文件夹下的landscape主题。</p>
+<h2 id="更改主题配置文件"><a href="#更改主题配置文件" class="headerlink" title="更改主题配置文件"></a>更改主题配置文件</h2><h3 id="更改主题为中文"><a href="#更改主题为中文" class="headerlink" title="更改主题为中文"></a>更改主题为中文</h3><p>在主题配置文件文件中找到language字段修改为zh-CN，如下图  </p>
+<p><img src="zh-CN.jpg"></p>
+<p>按顺序在命令行中执行命令hexo clean、hexo g、hexo s，重启服务器后刷新页面即可生效。</p>
+<p>小小吐槽一下：这步本人遇到了一点小坑，官方网站配置的参考如下图</p>
+<p><img src="%E5%AE%98%E6%96%B9zh.jpg"></p>
+<p>然而配置完成后并没有生效，检查了一下next主题的根目录下的languages，发现有zh-CN.yml语言配置文件，于是值改成zh-CN后中文就生效了…</p>
+<h3 id="增加标签页、分类页"><a href="#增加标签页、分类页" class="headerlink" title="增加标签页、分类页"></a>增加标签页、分类页</h3><p>打开主题配置文件，找到menu字段，将下图白色箭头所示的注释打开（直接删掉前面的#或者注释快捷键都可以），在首页刷新，就可以看到红色箭头所示的效果（但是此时点开标签会报错空内容）。  </p>
+<p><img src="%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE%E9%A1%B5%E3%80%81%E5%88%86%E7%B1%BB%E9%A1%B5.jpg"></p>
+<p>关掉博客服务，然后输入命令hexo n page tags</p>
+<p>命令执行完成后会在source目录下新增一个tags文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
+<p><img src="newtags.jpg"></p>
+<p>再开启服务，刷新后点开首页中的标签就会有内容了。</p>
+<p>关掉服务，输入命令hexo n page categories，命令执行完成后会在source目录下新增一个categories文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
+<p><img src="newcategories.jpg"></p>
+<p>再开启服务，刷新后点开首页中的分类就会有内容了。</p>
+<h3 id="next主题页面布局样式更改"><a href="#next主题页面布局样式更改" class="headerlink" title="next主题页面布局样式更改"></a>next主题页面布局样式更改</h3><p>进入站点配置文件，找到Scheme 字段，根据自己的喜欢更改主题的样式（打开一个，将其他注释），每次修改完成后都可以在浏览器中刷新查看主题样式的变化。</p>
+<p><img src="next%E4%B8%BB%E9%A2%98%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F%E6%9B%B4%E6%94%B9.jpg"></p>
+<h3 id="设置主题的头像"><a href="#设置主题的头像" class="headerlink" title="设置主题的头像"></a>设置主题的头像</h3><p>在主题配置文件中查找avatar，url后面的#号去掉，并按照你自己头像的后缀更改此处的头像名后缀，在主题next下的\source\images文件夹中删掉avatar.gif，替换为你此处在url中的命名图片即可，刷新页面就会有头像显示。  </p>
+<p><img src="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98%E7%9A%84%E5%A4%B4%E5%83%8F.jpg"></p>
+<h3 id="更改标题及作者"><a href="#更改标题及作者" class="headerlink" title="更改标题及作者"></a>更改标题及作者</h3><p>在站点配置文件中找到这几行，按需修改即可</p>
+<p><img src="%E6%9B%B4%E6%94%B9%E6%A0%87%E9%A2%98%E5%8F%8A%E4%BD%9C%E8%80%85.jpg"></p>
+<h3 id="启用左边社交栏链接"><a href="#启用左边社交栏链接" class="headerlink" title="启用左边社交栏链接"></a>启用左边社交栏链接</h3><p>在博客的_config.yml中找到这几行，按需修改即可  </p>
+<p><img src="%E5%90%AF%E7%94%A8%E5%B7%A6%E4%BE%A7%E7%A4%BE%E4%BA%A4%E6%A0%8F%E9%93%BE%E6%8E%A5.jpg"></p>
+<p> 如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。 </p>
 ]]></content>
       <categories>
         <category>从0搭建博客及美化</category>
       </categories>
       <tags>
-        <tag>hexo框架</tag>
-        <tag>博客搭建前的准备工作</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>将hexo博客部署到github或gitee</title>
-    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
-    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
-<ul>
-<li>全是静态文件，访问速度快；</li>
-<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
-<li>可以绑定自己的域名；</li>
-<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
-<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
-<li>= =</li>
-</ul>
-<a id="more"></a>
-
-<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
-<li>优点：部署比较简单，且不用频繁的更新部署</li>
-<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
-</ul>
-<p>登录github后，点击右上角的＋，然后点击new repository</p>
-<p><img src="newrepository.jpg"></p>
-<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
-<p><img src="newsave.jpg"></p>
-<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
-<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
-<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
-<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
-<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
-<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
-<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
-<li>优点：访问速度快，中文页面友好</li>
-<li>缺点：每次部署后都需要服务中点击更新部署</li>
-</ul>
-<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
-<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
-<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
-<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
-<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
-<p><img src="MyblogAdress.jpg"></p>
-<p>注意：每次执行完命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
-
-<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
-<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>部署博客到远端</tag>
+        <tag>hexo更换主题</tag>
+        <tag>next主题</tag>
+        <tag>next主题配置功能启用</tag>
       </tags>
   </entry>
   <entry>
@@ -398,6 +441,72 @@
       <tags>
         <tag>hexo新增博客文章</tag>
         <tag>next主题美化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将hexo博客部署到github或gitee</title>
+    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
+    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
+<ul>
+<li>全是静态文件，访问速度快；</li>
+<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
+<li>可以绑定自己的域名；</li>
+<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
+<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
+<li>= =</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
+<li>优点：部署比较简单，且不用频繁的更新部署</li>
+<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
+</ul>
+<p>登录github后，点击右上角的＋，然后点击new repository</p>
+<p><img src="newrepository.jpg"></p>
+<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
+<p><img src="newsave.jpg"></p>
+<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
+<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
+<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
+<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
+<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
+<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
+<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
+<li>优点：访问速度快，中文页面友好</li>
+<li>缺点：每次部署后都需要服务中点击更新部署</li>
+</ul>
+<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
+<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
+<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
+<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
+<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
+<p><img src="MyblogAdress.jpg"></p>
+<p>注意：每次执行完命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
+
+<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
+<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>部署博客到远端</tag>
       </tags>
   </entry>
   <entry>
