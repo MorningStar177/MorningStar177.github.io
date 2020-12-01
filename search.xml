@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>JS基础-作用域和闭包</title>
+    <url>/2020/11/30/JS%E5%9F%BA%E7%A1%80-%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85/</url>
+    <content><![CDATA[<p>三座大山之二，不会闭包，基本不会通过！</p>
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><ul>
+<li>全局作用域</li>
+<li>函数作用域</li>
+<li>块级作用域（ES6新增）</li>
+</ul>
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ES6 块级作用域</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(x)  <span class="comment">// 会报错</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="自由变量"><a href="#自由变量" class="headerlink" title="自由变量"></a>自由变量</h2><ul>
+<li>一个变量没有被当前作用域定义，但被使用了</li>
+<li>向上级作用域，一层一层依次寻找，直到找到为止</li>
+<li>如果到全局作用域都没找到，则报错 xx is not defined</li>
+</ul>
+<img src="1606279652721.png" alt="1606279652721" style="zoom: 80%;" />
+
+<p>如上图，a、a1、a2 都是自由变量，a3则是在当前函数作用域下定义过</p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>其实是作用域应用的特殊情况，有两种表现:</p>
+<ul>
+<li>函数作为参数被传递</li>
+<li>函数作为返回值被返回</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为返回值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 此处的 a 是一个自由变量，向上级作用域寻找</span></span><br><span class="line">        <span class="built_in">console</span>.log(a)  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> fn = create()</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">fn()  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">    fn()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// a 是自由变量，上级作用域为全局作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line">print(fn)  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>总结：所有的自由变量的查找，是在函数定义的地方向上级作用域查找，不是在执行的地方！！！</strong></p>
+<h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><ul>
+<li>作为普通函数被调用</li>
+<li>使用 call、apply、bind 调用</li>
+<li>作为对象方法被调用</li>
+<li>在 class 方法中调用</li>
+<li>在箭头函数中调用</li>
+</ul>
+<p><strong>切记，this 在上诉场景中取什么样的值，是在函数执行的时候确认的，不是在定义的时候确认的</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn1()  <span class="comment">// window</span></span><br><span class="line"></span><br><span class="line">fn1.call(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;) <span class="comment">// &#123; x: 100 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.bind(&#123; <span class="attr">x</span>: <span class="number">200</span> &#125;)  <span class="comment">// bind返回一个新的函数</span></span><br><span class="line">fn2()  <span class="comment">// &#123; x: 200 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">wait</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// this === window</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;, <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">waitAgain</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">            <span class="comment">// 箭头函数里面的 this 取值是取上级作用域的 this 值</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">        <span class="built_in">this</span>.age = <span class="number">20</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> zs = <span class="keyword">new</span> People(<span class="string">&quot;张三&quot;</span>)</span><br><span class="line">zs.sayHi()   <span class="comment">// zs 对象</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="this-不同应用场景如何取值"><a href="#this-不同应用场景如何取值" class="headerlink" title="this  不同应用场景如何取值"></a>this  不同应用场景如何取值</h2><ul>
+<li>作为普通函数调用（包括立即执行函数），this 指向 window</li>
+<li>使用 call、apply、bind 调用，传入什么 this 就指向的是什么</li>
+<li>在对象方法中调用，如果有 settimeout 则 this 指向 window ，若无 settimeout ，则指向当前对象本身</li>
+<li>在箭头函数中的 this 取上级作用域的 this 的值</li>
+<li>在 class 方法中调用 this ，则指向实例本身</li>
+</ul>
+<h2 id="手写-bind-函数"><a href="#手写-bind-函数" class="headerlink" title="手写 bind 函数"></a>手写 bind 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种 通过 call 或 apply 实现</span></span><br><span class="line"><span class="comment">// 通过在构造函数原型对象上增加一个 myBind 来模拟 bind</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将参数拆解为数组</span></span><br><span class="line">    <span class="comment">// const args = Array.prototype.slice.call(arguments)</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 this 并将数组第一项 this 挖出去</span></span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fn1.myBind(...) 中的 fn1</span></span><br><span class="line">    <span class="comment">// 由于是 fn1 调用的 bind2</span></span><br><span class="line">    <span class="comment">// 所以这里的 this 指向 fn1</span></span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> self.apply(t, args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种 不通过 call、apply 方法实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myBind = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     const bindObj = args.shift()</span></span><br><span class="line"><span class="comment">//     bindObj.fn = this</span></span><br><span class="line"><span class="comment">//     return function () &#123;</span></span><br><span class="line"><span class="comment">//         const result = bindObj.fn(...args)</span></span><br><span class="line"><span class="comment">//         delete bindObj.fn</span></span><br><span class="line"><span class="comment">//         return result</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;this&#x27;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;this is fn1&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.myBind(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;, <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>)</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">相当于返回了一个函数</span></span><br><span class="line"><span class="comment">const fn2 = function () &#123;</span></span><br><span class="line"><span class="comment">    return fn1.apply(&#123; x: 100 &#125;, [10, 20, 30])</span></span><br><span class="line"><span class="comment">&#125; </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> res = fn2()</span><br><span class="line"><span class="built_in">console</span>.log(res)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="手写-call-函数"><a href="#手写-call-函数" class="headerlink" title="手写 call 函数"></a>手写 call 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是无参数判断逻辑，并通过 apply 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="built_in">console</span>.log(self)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 apply 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myCall = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const self = args.shift()</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     self.fn = this</span></span><br><span class="line"><span class="comment">//     const result = self.fn(...args)</span></span><br><span class="line"><span class="comment">//     delete self.fn</span></span><br><span class="line"><span class="comment">//     return result</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(&#123; <span class="attr">a</span>: <span class="number">100</span> &#125;, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是实现参数判断逻辑</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入的第一个参数是否为一个对象且不能为 null</span></span><br><span class="line">    <span class="comment">// 如果不是则 this 为 window</span></span><br><span class="line">    <span class="comment">// const flag = arguments.length &gt;= 2 &amp;&amp; typeof arguments[0] === &#x27;object&#x27; &amp;&amp; arguments[0] !== &#x27;null&#x27;</span></span><br><span class="line">    <span class="comment">// 上下两种逻辑均可</span></span><br><span class="line">    <span class="keyword">const</span> flag = <span class="built_in">arguments</span>.length &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">arguments</span>[<span class="number">0</span>] <span class="keyword">instanceof</span> <span class="built_in">Object</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">let</span> t</span><br><span class="line">    <span class="comment">// 如果有绑定的对象则将这个对象从数组中挖出来</span></span><br><span class="line">    <span class="keyword">if</span> (flag) t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="手写-apply-函数"><a href="#手写-apply-函数" class="headerlink" title="手写 apply 函数"></a>手写 apply 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种实现方式 通过 call 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> that = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> self = args.shift()</span><br><span class="line">    <span class="comment">// arguments 里面是一个对象 + 数组</span></span><br><span class="line">    <span class="comment">// 通过扩展运算符,并取出第一个对象后</span></span><br><span class="line">    <span class="comment">// 此时里面的 index 为 0 的数据是一个数组，所以需要 args[0]</span></span><br><span class="line">    <span class="keyword">const</span> result = that.call(self, ...args[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 call 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myApply = function (thisArg, args) &#123;</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&#x27;fn&#x27;)        // 声明一个独有的Symbol属性, 防止fn覆盖已有属性</span></span><br><span class="line"><span class="comment">//     thisArg = thisArg || window    // 若没有传入this, 默认绑定window对象</span></span><br><span class="line"><span class="comment">//     thisArg.fn = this              // this指向调用call的对象,即我们要改变this指向的函数</span></span><br><span class="line"><span class="comment">//     const result = thisArg.fn(...args)  // 执行当前函数</span></span><br><span class="line"><span class="comment">//     delete thisArg.fn              // 删除我们声明的fn属性</span></span><br><span class="line"><span class="comment">//     return result                  // 返回函数执行结果</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b)</span><br><span class="line">&#125;</span><br><span class="line">foo.myApply(&#123; <span class="attr">x</span>: <span class="number">300</span> &#125;, [<span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong><em>注：Symbol 生成一个全局唯一的值</em></strong></p>
+<h2 id="三兄弟区别"><a href="#三兄弟区别" class="headerlink" title="三兄弟区别"></a>三兄弟区别</h2><ul>
+<li>三兄弟接收的第一个参数都是要绑定的 this 指向</li>
+<li>apply 的第二个参数是一个参数数组，call 和 bind 的第二个及之后的参数作为函数实参按顺序传入</li>
+<li>bind 不会立即调用，其他两个会立即调用</li>
+</ul>
+<h1 id="实际开发中闭包的应用"><a href="#实际开发中闭包的应用" class="headerlink" title="实际开发中闭包的应用"></a>实际开发中闭包的应用</h1><ul>
+<li><p>隐藏数据</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 闭包隐藏数据，只提供 API</span></span><br><span class="line"><span class="comment">// 做一个简单的 cache 工具</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createCache</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123;&#125; <span class="comment">// 闭包中的数据，被隐藏，不被外界访问</span></span><br><span class="line">    <span class="comment">// 闭包的一种方式，返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        set: <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">            data[key] = value</span><br><span class="line">        &#125;,</span><br><span class="line">        get: <span class="function"><span class="keyword">function</span> (<span class="params">key</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> data[key]</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果我们不通过 set、get 无法修改 data 的值</span></span><br><span class="line"><span class="comment">// 因为 data 是在 createCache 作用域里面的，不会被外界所访问</span></span><br><span class="line"><span class="keyword">const</span> c = createCache()</span><br><span class="line">c.set(<span class="string">&quot;a&quot;</span>, <span class="number">100</span>)</span><br><span class="line"><span class="built_in">console</span>.log(c.get(<span class="string">&quot;a&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 点击 a 标签弹出对应的标签序号</span></span><br><span class="line"><span class="keyword">let</span> a</span><br><span class="line"><span class="comment">// let i 是定义了一个 for 里面的块级作用域</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    a = <span class="built_in">document</span>.createElement(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">    a.innerHTML = i + <span class="string">&quot;&lt;br&gt;&quot;</span></span><br><span class="line">    a.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        e.preventDefault()</span><br><span class="line">        alert(i)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者也可使用立即执行函数来实现。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>作用域和闭包</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo+next主题样式美化</title>
     <url>/2020/11/18/hexo-next%E4%B8%BB%E9%A2%98%E6%A0%B7%E5%BC%8F%E7%BE%8E%E5%8C%96/</url>
     <content><![CDATA[<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>首先新建一篇文章，在命令行输入：hexo n “文章名”，就会在博客的根目录的\source_posts下面新增一篇命名的文章，此时就可以使用Typora编辑器写博客了。</p>
@@ -100,6 +195,54 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo框架搭建个人博客</title>
+    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
+<p>在搭建博客开始之前，你必须已经</p>
+<a id="more"></a>
+
+<ul>
+<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
+</li>
+<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
+</li>
+<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
+<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
+<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
+<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
+</li>
+</ul>
+<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
+<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
+<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
+<ul>
+<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
+<li>重新执行此次命令</li>
+<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
+</ul>
+<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
+<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
+<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
+<p><img src="1.jpg"></p>
+<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
+<p>这时候我们可以启动我们的博客</p>
+<p>命令行：hexo s     （注：s为start的简写）</p>
+<p><img src="2.jpg"></p>
+<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
+<p> <img src="3.jpg"></p>
+<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
+<p>后续还会更新更换其他主题及页面样式的美化。</p>
+<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo框架</tag>
+        <tag>博客搭建前的准备工作</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo更换next主题及部分配置功能的启用</title>
     <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
     <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
@@ -156,51 +299,31 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo框架搭建个人博客</title>
-    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
-<p>在搭建博客开始之前，你必须已经</p>
+    <title>PowerShell字符串缺少终止符错误</title>
+    <url>/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">字符串缺少终止符: <span class="string">&#x27;。</span></span><br><span class="line"><span class="string">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString</span></span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<ul>
-<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
-</li>
-<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
-</li>
-<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
-<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
-<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
-<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
-</li>
-</ul>
-<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
-<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
-<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
-<ul>
-<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
-<li>重新执行此次命令</li>
-<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
-</ul>
-<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
-<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
-<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
-<p><img src="1.jpg"></p>
-<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
-<p>这时候我们可以启动我们的博客</p>
-<p>命令行：hexo s     （注：s为start的简写）</p>
-<p><img src="2.jpg"></p>
-<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
-<p> <img src="3.jpg"></p>
-<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
-<p>后续还会更新更换其他主题及页面样式的美化。</p>
-<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
+<p>然后毫无以外的 powershell 文件夹切换也没成功。。。</p>
+<p>直接 powershell 用切换命令，毫无意外的也跪了…</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d <span class="string">&quot;D:\Chao&#x27;s Blog&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>看了一眼报错信息发现是没有终止字符，我的文件夹的名如下图</p>
+<p><img src="image-20201201082804013.png" alt="image-20201201082804013"></p>
+<p>原来是这个单引号 ‘ 搞的，<strong>先说解决方法</strong>，<strong>直接删掉这个 ‘s 前面的 ‘</strong> </p>
+<p>如果此时末尾给个闭合的 ‘ , 会报如下的错误</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Location</span> : 找不到接受实际参数“s”的位置形式参数。</span><br><span class="line">所在位置 行:<span class="number">1</span> 字符: <span class="number">1</span></span><br><span class="line">+ <span class="built_in">Set-Location</span> <span class="literal">-literalPath</span> <span class="string">&#x27;D:\Chao&#x27;</span>s Blog<span class="string">&#x27;&#x27;</span></span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidArgument: (:) [<span class="built_in">Set-Location</span>]，ParameterBindingException</span><br><span class="line">    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand</span><br></pre></td></tr></table></figure>
+
+<p>所以平时我们命名文件夹，不建议加符号之类的。</p>
 ]]></content>
       <categories>
-        <category>从0搭建博客及美化</category>
+        <category>PowerShell命令行报错</category>
       </categories>
       <tags>
-        <tag>hexo框架</tag>
-        <tag>博客搭建前的准备工作</tag>
+        <tag>PowerShell</tag>
+        <tag>字符串缺少终止符</tag>
       </tags>
   </entry>
   <entry>
@@ -349,6 +472,72 @@
       </tags>
   </entry>
   <entry>
+    <title>将hexo博客部署到github或gitee</title>
+    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
+    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
+<ul>
+<li>全是静态文件，访问速度快；</li>
+<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
+<li>可以绑定自己的域名；</li>
+<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
+<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
+<li>= =</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
+<li>优点：部署比较简单，且不用频繁的更新部署</li>
+<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
+</ul>
+<p>登录github后，点击右上角的＋，然后点击new repository</p>
+<p><img src="newrepository.jpg"></p>
+<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
+<p><img src="newsave.jpg"></p>
+<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
+<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
+<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
+<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
+<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
+<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
+<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
+<li>优点：访问速度快，中文页面友好</li>
+<li>缺点：每次部署后都需要服务中点击更新部署</li>
+</ul>
+<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
+<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
+<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
+<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
+<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
+<p><img src="MyblogAdress.jpg"></p>
+<p>注意：每次执行完命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
+
+<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
+<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>部署博客到远端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前端面试题总结-JS基础之原型和原型链</title>
     <url>/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
     <content><![CDATA[<p><strong>三座大山之一，必考！！！</strong></p>
@@ -455,72 +644,6 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>原型和原型链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>将hexo博客部署到github或gitee</title>
-    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
-    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
-<ul>
-<li>全是静态文件，访问速度快；</li>
-<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
-<li>可以绑定自己的域名；</li>
-<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
-<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
-<li>= =</li>
-</ul>
-<a id="more"></a>
-
-<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
-<li>优点：部署比较简单，且不用频繁的更新部署</li>
-<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
-</ul>
-<p>登录github后，点击右上角的＋，然后点击new repository</p>
-<p><img src="newrepository.jpg"></p>
-<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
-<p><img src="newsave.jpg"></p>
-<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
-<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
-<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
-<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
-<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
-<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
-<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
-<li>优点：访问速度快，中文页面友好</li>
-<li>缺点：每次部署后都需要服务中点击更新部署</li>
-</ul>
-<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
-<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
-<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
-<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
-<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
-<p><img src="MyblogAdress.jpg"></p>
-<p>注意：每次执行完命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
-
-<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
-<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>部署博客到远端</tag>
       </tags>
   </entry>
   <entry>

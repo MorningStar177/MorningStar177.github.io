@@ -23,19 +23,23 @@
     var CONFIG = {"hostname":"morningstar175.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="越努力越幸运">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="https://morningstar175.gitee.io/categories/index.html">
+  <meta name="description" content="通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误： 123字符串缺少终止符: &amp;#x27;。    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException    + FullyQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PowerShell字符串缺少终止符错误">
+<meta property="og:url" content="https://morningstar175.gitee.io/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/index.html">
 <meta property="og:site_name" content="Chao&#39;s Blog · 专注技术分享">
-<meta property="og:description" content="越努力越幸运">
+<meta property="og:description" content="通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误： 123字符串缺少终止符: &amp;#x27;。    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException    + FullyQ">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-11-17T07:26:34.000Z">
-<meta property="article:modified_time" content="2020-11-17T07:28:22.000Z">
+<meta property="og:image" content="https://morningstar175.gitee.io/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/image-20201201082804013.png">
+<meta property="article:published_time" content="2020-12-01T00:38:37.000Z">
+<meta property="article:modified_time" content="2020-12-01T00:44:28.423Z">
 <meta property="article:author" content="Morningstar">
+<meta property="article:tag" content="PowerShell">
+<meta property="article:tag" content="字符串缺少终止符">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://morningstar175.gitee.io/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/image-20201201082804013.png">
 
-<link rel="canonical" href="https://morningstar175.gitee.io/categories/">
+<link rel="canonical" href="https://morningstar175.gitee.io/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/">
 
 
 <script id="page-configurations">
@@ -43,13 +47,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>分类 | Chao's Blog · 专注技术分享
-</title>
+  <title>PowerShell字符串缺少终止符错误 | Chao's Blog · 专注技术分享</title>
   
 
 
@@ -194,51 +197,168 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-CN">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">分类
-</h1>
-
-<div class="post-meta">
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://morningstar175.gitee.io/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/">
 
-</div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Morningstar">
+      <meta itemprop="description" content="越努力越幸运">
+    </span>
 
-</header>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chao's Blog · 专注技术分享">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PowerShell字符串缺少终止符错误
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-01 08:38:37 / 修改时间：08:44:28" itemprop="dateCreated datePublished" datetime="2020-12-01T08:38:37+08:00">2020-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PowerShell%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8A%A5%E9%94%99/" itemprop="url" rel="index"><span itemprop="name">PowerShell命令行报错</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>739</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+        <p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">字符串缺少终止符: <span class="string">&#x27;。</span></span><br><span class="line"><span class="string">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>然后毫无以外的 powershell 文件夹切换也没成功。。。</p>
+<p>直接 powershell 用切换命令，毫无意外的也跪了…</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d <span class="string">&quot;D:\Chao&#x27;s Blog&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>看了一眼报错信息发现是没有终止字符，我的文件夹的名如下图</p>
+<p><img src="image-20201201082804013.png" alt="image-20201201082804013"></p>
+<p>原来是这个单引号 ‘ 搞的，<strong>先说解决方法</strong>，<strong>直接删掉这个 ‘s 前面的 ‘</strong> </p>
+<p>如果此时末尾给个闭合的 ‘ , 会报如下的错误</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-Location</span> : 找不到接受实际参数“s”的位置形式参数。</span><br><span class="line">所在位置 行:<span class="number">1</span> 字符: <span class="number">1</span></span><br><span class="line">+ <span class="built_in">Set-Location</span> <span class="literal">-literalPath</span> <span class="string">&#x27;D:\Chao&#x27;</span>s Blog<span class="string">&#x27;&#x27;</span></span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidArgument: (:) [<span class="built_in">Set-Location</span>]，ParameterBindingException</span><br><span class="line">    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand</span><br></pre></td></tr></table></figure>
+
+<p>所以平时我们命名文件夹，不建议加符号之类的。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果文章对您有帮助，您可以鼓励一下作者.</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
       
-      
-      <div class="post-body">
-          <div class="category-all-page">
-            <div class="category-all-title">
-              目前共计 4 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/PowerShell%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8A%A5%E9%94%99/">PowerShell命令行报错</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BB%8E0%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96/">从0搭建博客及美化</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%88%B7%E9%A2%98/">前端刷题</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/">前端面试题</a><span class="category-list-count">5</span></li></ul>
-            </div>
-          </div>
-        
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Morningstar 微信支付">
+        <p>微信支付</p>
       </div>
       
-      
-      
-    </div>
-    
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Morningstar 支付宝">
+        <p>支付宝</p>
+      </div>
 
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PowerShell/" rel="tag"><i class="fa fa-tag"></i> PowerShell</a>
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6/" rel="tag"><i class="fa fa-tag"></i> 字符串缺少终止符</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/30/JS%E5%9F%BA%E7%A1%80-%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85/" rel="prev" title="JS基础-作用域和闭包">
+      <i class="fa fa-chevron-left"></i> JS基础-作用域和闭包
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
     
-    
-    
+  </article>
+  
+  
+  
+
 
 
           </div>
