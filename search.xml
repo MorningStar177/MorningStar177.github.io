@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>JS基础-作用域和闭包</title>
+    <url>/2020/11/30/JS%E5%9F%BA%E7%A1%80-%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85/</url>
+    <content><![CDATA[<p>三座大山之二，不会闭包，基本不会通过！</p>
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><ul>
+<li>全局作用域</li>
+<li>函数作用域</li>
+<li>块级作用域（ES6新增）</li>
+</ul>
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ES6 块级作用域</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(x)  <span class="comment">// 会报错</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="自由变量"><a href="#自由变量" class="headerlink" title="自由变量"></a>自由变量</h2><ul>
+<li>一个变量没有被当前作用域定义，但被使用了</li>
+<li>向上级作用域，一层一层依次寻找，直到找到为止</li>
+<li>如果到全局作用域都没找到，则报错 xx is not defined</li>
+</ul>
+<img src="1606279652721.png" alt="1606279652721" style="zoom: 80%;" />
+
+<p>如上图，a、a1、a2 都是自由变量，a3则是在当前函数作用域下定义过</p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>其实是作用域应用的特殊情况，有两种表现:</p>
+<ul>
+<li>函数作为参数被传递</li>
+<li>函数作为返回值被返回</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为返回值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 此处的 a 是一个自由变量，向上级作用域寻找</span></span><br><span class="line">        <span class="built_in">console</span>.log(a)  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> fn = create()</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">fn()  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">    fn()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// a 是自由变量，上级作用域为全局作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line">print(fn)  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>总结：所有的自由变量的查找，是在函数定义的地方向上级作用域查找，不是在执行的地方！！！</strong></p>
+<h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><ul>
+<li>作为普通函数被调用</li>
+<li>使用 call、apply、bind 调用</li>
+<li>作为对象方法被调用</li>
+<li>在 class 方法中调用</li>
+<li>在箭头函数中调用</li>
+</ul>
+<p><strong>切记，this 在上诉场景中取什么样的值，是在函数执行的时候确认的，不是在定义的时候确认的</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn1()  <span class="comment">// window</span></span><br><span class="line"></span><br><span class="line">fn1.call(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;) <span class="comment">// &#123; x: 100 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.bind(&#123; <span class="attr">x</span>: <span class="number">200</span> &#125;)  <span class="comment">// bind返回一个新的函数</span></span><br><span class="line">fn2()  <span class="comment">// &#123; x: 200 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">wait</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// this === window</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;, <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">waitAgain</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">            <span class="comment">// 箭头函数里面的 this 取值是取上级作用域的 this 值</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">        <span class="built_in">this</span>.age = <span class="number">20</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> zs = <span class="keyword">new</span> People(<span class="string">&quot;张三&quot;</span>)</span><br><span class="line">zs.sayHi()   <span class="comment">// zs 对象</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="this-不同应用场景如何取值"><a href="#this-不同应用场景如何取值" class="headerlink" title="this  不同应用场景如何取值"></a>this  不同应用场景如何取值</h2><ul>
+<li>作为普通函数调用（包括立即执行函数），this 指向 window</li>
+<li>使用 call、apply、bind 调用，传入什么 this 就指向的是什么</li>
+<li>在对象方法中调用，如果有 settimeout 则 this 指向 window ，若无 settimeout ，则指向当前对象本身</li>
+<li>在箭头函数中的 this 取上级作用域的 this 的值</li>
+<li>在 class 方法中调用 this ，则指向实例本身</li>
+</ul>
+<h2 id="手写-bind-函数"><a href="#手写-bind-函数" class="headerlink" title="手写 bind 函数"></a>手写 bind 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种 通过 call 或 apply 实现</span></span><br><span class="line"><span class="comment">// 通过在构造函数原型对象上增加一个 myBind 来模拟 bind</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将参数拆解为数组</span></span><br><span class="line">    <span class="comment">// const args = Array.prototype.slice.call(arguments)</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 this 并将数组第一项 this 挖出去</span></span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fn1.myBind(...) 中的 fn1</span></span><br><span class="line">    <span class="comment">// 由于是 fn1 调用的 bind2</span></span><br><span class="line">    <span class="comment">// 所以这里的 this 指向 fn1</span></span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> self.apply(t, args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种 不通过 call、apply 方法实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myBind = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     const bindObj = args.shift()</span></span><br><span class="line"><span class="comment">//     bindObj.fn = this</span></span><br><span class="line"><span class="comment">//     return function () &#123;</span></span><br><span class="line"><span class="comment">//         const result = bindObj.fn(...args)</span></span><br><span class="line"><span class="comment">//         delete bindObj.fn</span></span><br><span class="line"><span class="comment">//         return result</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;this&#x27;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;this is fn1&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.myBind(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;, <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>)</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">相当于返回了一个函数</span></span><br><span class="line"><span class="comment">const fn2 = function () &#123;</span></span><br><span class="line"><span class="comment">    return fn1.apply(&#123; x: 100 &#125;, [10, 20, 30])</span></span><br><span class="line"><span class="comment">&#125; </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> res = fn2()</span><br><span class="line"><span class="built_in">console</span>.log(res)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="手写-call-函数"><a href="#手写-call-函数" class="headerlink" title="手写 call 函数"></a>手写 call 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是无参数判断逻辑，并通过 apply 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="built_in">console</span>.log(self)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 apply 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myCall = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const self = args.shift()</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     self.fn = this</span></span><br><span class="line"><span class="comment">//     const result = self.fn(...args)</span></span><br><span class="line"><span class="comment">//     delete self.fn</span></span><br><span class="line"><span class="comment">//     return result</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(&#123; <span class="attr">a</span>: <span class="number">100</span> &#125;, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是实现参数判断逻辑</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入的第一个参数是否为一个对象且不能为 null</span></span><br><span class="line">    <span class="comment">// 如果不是则 this 为 window</span></span><br><span class="line">    <span class="comment">// const flag = arguments.length &gt;= 2 &amp;&amp; typeof arguments[0] === &#x27;object&#x27; &amp;&amp; arguments[0] !== &#x27;null&#x27;</span></span><br><span class="line">    <span class="comment">// 上下两种逻辑均可</span></span><br><span class="line">    <span class="keyword">const</span> flag = <span class="built_in">arguments</span>.length &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">arguments</span>[<span class="number">0</span>] <span class="keyword">instanceof</span> <span class="built_in">Object</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">let</span> t</span><br><span class="line">    <span class="comment">// 如果有绑定的对象则将这个对象从数组中挖出来</span></span><br><span class="line">    <span class="keyword">if</span> (flag) t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="手写-apply-函数"><a href="#手写-apply-函数" class="headerlink" title="手写 apply 函数"></a>手写 apply 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种实现方式 通过 call 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> that = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> self = args.shift()</span><br><span class="line">    <span class="comment">// arguments 里面是一个对象 + 数组</span></span><br><span class="line">    <span class="comment">// 通过扩展运算符,并取出第一个对象后</span></span><br><span class="line">    <span class="comment">// 此时里面的 index 为 0 的数据是一个数组，所以需要 args[0]</span></span><br><span class="line">    <span class="keyword">const</span> result = that.call(self, ...args[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 call 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myApply = function (thisArg, args) &#123;</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&#x27;fn&#x27;)        // 声明一个独有的Symbol属性, 防止fn覆盖已有属性</span></span><br><span class="line"><span class="comment">//     thisArg = thisArg || window    // 若没有传入this, 默认绑定window对象</span></span><br><span class="line"><span class="comment">//     thisArg.fn = this              // this指向调用call的对象,即我们要改变this指向的函数</span></span><br><span class="line"><span class="comment">//     const result = thisArg.fn(...args)  // 执行当前函数</span></span><br><span class="line"><span class="comment">//     delete thisArg.fn              // 删除我们声明的fn属性</span></span><br><span class="line"><span class="comment">//     return result                  // 返回函数执行结果</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b)</span><br><span class="line">&#125;</span><br><span class="line">foo.myApply(&#123; <span class="attr">x</span>: <span class="number">300</span> &#125;, [<span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong><em>注：Symbol 生成一个全局唯一的值</em></strong></p>
+<h2 id="三兄弟区别"><a href="#三兄弟区别" class="headerlink" title="三兄弟区别"></a>三兄弟区别</h2><ul>
+<li>三兄弟接收的第一个参数都是要绑定的 this 指向</li>
+<li>apply 的第二个参数是一个参数数组，call 和 bind 的第二个及之后的参数作为函数实参按顺序传入</li>
+<li>bind 不会立即调用，其他两个会立即调用</li>
+</ul>
+<h1 id="实际开发中闭包的应用"><a href="#实际开发中闭包的应用" class="headerlink" title="实际开发中闭包的应用"></a>实际开发中闭包的应用</h1><ul>
+<li><p>隐藏数据</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 闭包隐藏数据，只提供 API</span></span><br><span class="line"><span class="comment">// 做一个简单的 cache 工具</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createCache</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123;&#125; <span class="comment">// 闭包中的数据，被隐藏，不被外界访问</span></span><br><span class="line">    <span class="comment">// 闭包的一种方式，返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        set: <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">            data[key] = value</span><br><span class="line">        &#125;,</span><br><span class="line">        get: <span class="function"><span class="keyword">function</span> (<span class="params">key</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> data[key]</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果我们不通过 set、get 无法修改 data 的值</span></span><br><span class="line"><span class="comment">// 因为 data 是在 createCache 作用域里面的，不会被外界所访问</span></span><br><span class="line"><span class="keyword">const</span> c = createCache()</span><br><span class="line">c.set(<span class="string">&quot;a&quot;</span>, <span class="number">100</span>)</span><br><span class="line"><span class="built_in">console</span>.log(c.get(<span class="string">&quot;a&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 点击 a 标签弹出对应的标签序号</span></span><br><span class="line"><span class="keyword">let</span> a</span><br><span class="line"><span class="comment">// let i 是定义了一个 for 里面的块级作用域</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    a = <span class="built_in">document</span>.createElement(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">    a.innerHTML = i + <span class="string">&quot;&lt;br&gt;&quot;</span></span><br><span class="line">    a.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        e.preventDefault()</span><br><span class="line">        alert(i)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者也可使用立即执行函数来实现。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>作用域和闭包</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo+next主题样式美化</title>
     <url>/2020/11/18/hexo-next%E4%B8%BB%E9%A2%98%E6%A0%B7%E5%BC%8F%E7%BE%8E%E5%8C%96/</url>
     <content><![CDATA[<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>首先新建一篇文章，在命令行输入：hexo n “文章名”，就会在博客的根目录的\source_posts下面新增一篇命名的文章，此时就可以使用Typora编辑器写博客了。</p>
@@ -100,6 +195,54 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo框架搭建个人博客</title>
+    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
+<p>在搭建博客开始之前，你必须已经</p>
+<a id="more"></a>
+
+<ul>
+<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
+</li>
+<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
+</li>
+<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
+<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
+<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
+<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
+</li>
+</ul>
+<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
+<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
+<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
+<ul>
+<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
+<li>重新执行此次命令</li>
+<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
+</ul>
+<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
+<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
+<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
+<p><img src="1.jpg"></p>
+<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
+<p>这时候我们可以启动我们的博客</p>
+<p>命令行：hexo s     （注：s为start的简写）</p>
+<p><img src="2.jpg"></p>
+<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
+<p> <img src="3.jpg"></p>
+<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
+<p>后续还会更新更换其他主题及页面样式的美化。</p>
+<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo框架</tag>
+        <tag>博客搭建前的准备工作</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo更换next主题及部分配置功能的启用</title>
     <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
     <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
@@ -156,149 +299,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JS基础-作用域和闭包</title>
-    <url>/2020/11/30/JS%E5%9F%BA%E7%A1%80-%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85/</url>
-    <content><![CDATA[<p>三座大山之二，不会闭包，基本不会通过！</p>
-<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><ul>
-<li>全局作用域</li>
-<li>函数作用域</li>
-<li>块级作用域（ES6新增）</li>
-</ul>
-<a id="more"></a>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ES6 块级作用域</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(x)  <span class="comment">// 会报错</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="自由变量"><a href="#自由变量" class="headerlink" title="自由变量"></a>自由变量</h2><ul>
-<li>一个变量没有被当前作用域定义，但被使用了</li>
-<li>向上级作用域，一层一层依次寻找，直到找到为止</li>
-<li>如果到全局作用域都没找到，则报错 xx is not defined</li>
-</ul>
-<img src="1606279652721.png" alt="1606279652721" style="zoom: 80%;" />
-
-<p>如上图，a、a1、a2 都是自由变量，a3则是在当前函数作用域下定义过</p>
-<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>其实是作用域应用的特殊情况，有两种表现:</p>
-<ul>
-<li>函数作为参数被传递</li>
-<li>函数作为返回值被返回</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为返回值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 此处的 a 是一个自由变量，向上级作用域寻找</span></span><br><span class="line">        <span class="built_in">console</span>.log(a)  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> fn = create()</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">fn()  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">    fn()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// a 是自由变量，上级作用域为全局作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line">print(fn)  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>总结：所有的自由变量的查找，是在函数定义的地方向上级作用域查找，不是在执行的地方！！！</strong></p>
-<h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><ul>
-<li>作为普通函数被调用</li>
-<li>使用 call、apply、bind 调用</li>
-<li>作为对象方法被调用</li>
-<li>在 class 方法中调用</li>
-<li>在箭头函数中调用</li>
-</ul>
-<p><strong>切记，this 在上诉场景中取什么样的值，是在函数执行的时候确认的，不是在定义的时候确认的</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn1()  <span class="comment">// window</span></span><br><span class="line"></span><br><span class="line">fn1.call(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;) <span class="comment">// &#123; x: 100 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.bind(&#123; <span class="attr">x</span>: <span class="number">200</span> &#125;)  <span class="comment">// bind返回一个新的函数</span></span><br><span class="line">fn2()  <span class="comment">// &#123; x: 200 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">wait</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// this === window</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;, <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">waitAgain</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">            <span class="comment">// 箭头函数里面的 this 取值是取上级作用域的 this 值</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">        <span class="built_in">this</span>.age = <span class="number">20</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> zs = <span class="keyword">new</span> People(<span class="string">&quot;张三&quot;</span>)</span><br><span class="line">zs.sayHi()   <span class="comment">// zs 对象</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="this-不同应用场景如何取值"><a href="#this-不同应用场景如何取值" class="headerlink" title="this  不同应用场景如何取值"></a>this  不同应用场景如何取值</h2><ul>
-<li>作为普通函数调用（包括立即执行函数），this 指向 window</li>
-<li>使用 call、apply、bind 调用，传入什么 this 就指向的是什么</li>
-<li>在对象方法中调用，如果有 settimeout 则 this 指向 window ，若无 settimeout ，则指向当前对象本身</li>
-<li>在箭头函数中的 this 取上级作用域的 this 的值</li>
-<li>在 class 方法中调用 this ，则指向实例本身</li>
-</ul>
-<h2 id="手写-bind-函数"><a href="#手写-bind-函数" class="headerlink" title="手写 bind 函数"></a>手写 bind 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种 通过 call 或 apply 实现</span></span><br><span class="line"><span class="comment">// 通过在构造函数原型对象上增加一个 myBind 来模拟 bind</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将参数拆解为数组</span></span><br><span class="line">    <span class="comment">// const args = Array.prototype.slice.call(arguments)</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 this 并将数组第一项 this 挖出去</span></span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fn1.myBind(...) 中的 fn1</span></span><br><span class="line">    <span class="comment">// 由于是 fn1 调用的 bind2</span></span><br><span class="line">    <span class="comment">// 所以这里的 this 指向 fn1</span></span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> self.apply(t, args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种 不通过 call、apply 方法实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myBind = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     const bindObj = args.shift()</span></span><br><span class="line"><span class="comment">//     bindObj.fn = this</span></span><br><span class="line"><span class="comment">//     return function () &#123;</span></span><br><span class="line"><span class="comment">//         const result = bindObj.fn(...args)</span></span><br><span class="line"><span class="comment">//         delete bindObj.fn</span></span><br><span class="line"><span class="comment">//         return result</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;this&#x27;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;this is fn1&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.myBind(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;, <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>)</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">相当于返回了一个函数</span></span><br><span class="line"><span class="comment">const fn2 = function () &#123;</span></span><br><span class="line"><span class="comment">    return fn1.apply(&#123; x: 100 &#125;, [10, 20, 30])</span></span><br><span class="line"><span class="comment">&#125; </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> res = fn2()</span><br><span class="line"><span class="built_in">console</span>.log(res)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="手写-call-函数"><a href="#手写-call-函数" class="headerlink" title="手写 call 函数"></a>手写 call 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是无参数判断逻辑，并通过 apply 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="built_in">console</span>.log(self)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 apply 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myCall = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const self = args.shift()</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     self.fn = this</span></span><br><span class="line"><span class="comment">//     const result = self.fn(...args)</span></span><br><span class="line"><span class="comment">//     delete self.fn</span></span><br><span class="line"><span class="comment">//     return result</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(&#123; <span class="attr">a</span>: <span class="number">100</span> &#125;, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是实现参数判断逻辑</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入的第一个参数是否为一个对象且不能为 null</span></span><br><span class="line">    <span class="comment">// 如果不是则 this 为 window</span></span><br><span class="line">    <span class="comment">// const flag = arguments.length &gt;= 2 &amp;&amp; typeof arguments[0] === &#x27;object&#x27; &amp;&amp; arguments[0] !== &#x27;null&#x27;</span></span><br><span class="line">    <span class="comment">// 上下两种逻辑均可</span></span><br><span class="line">    <span class="keyword">const</span> flag = <span class="built_in">arguments</span>.length &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">arguments</span>[<span class="number">0</span>] <span class="keyword">instanceof</span> <span class="built_in">Object</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">let</span> t</span><br><span class="line">    <span class="comment">// 如果有绑定的对象则将这个对象从数组中挖出来</span></span><br><span class="line">    <span class="keyword">if</span> (flag) t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="手写-apply-函数"><a href="#手写-apply-函数" class="headerlink" title="手写 apply 函数"></a>手写 apply 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种实现方式 通过 call 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> that = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> self = args.shift()</span><br><span class="line">    <span class="comment">// arguments 里面是一个对象 + 数组</span></span><br><span class="line">    <span class="comment">// 通过扩展运算符,并取出第一个对象后</span></span><br><span class="line">    <span class="comment">// 此时里面的 index 为 0 的数据是一个数组，所以需要 args[0]</span></span><br><span class="line">    <span class="keyword">const</span> result = that.call(self, ...args[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 call 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myApply = function (thisArg, args) &#123;</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&#x27;fn&#x27;)        // 声明一个独有的Symbol属性, 防止fn覆盖已有属性</span></span><br><span class="line"><span class="comment">//     thisArg = thisArg || window    // 若没有传入this, 默认绑定window对象</span></span><br><span class="line"><span class="comment">//     thisArg.fn = this              // this指向调用call的对象,即我们要改变this指向的函数</span></span><br><span class="line"><span class="comment">//     const result = thisArg.fn(...args)  // 执行当前函数</span></span><br><span class="line"><span class="comment">//     delete thisArg.fn              // 删除我们声明的fn属性</span></span><br><span class="line"><span class="comment">//     return result                  // 返回函数执行结果</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b)</span><br><span class="line">&#125;</span><br><span class="line">foo.myApply(&#123; <span class="attr">x</span>: <span class="number">300</span> &#125;, [<span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-
-<p><strong><em>注：Symbol 生成一个全局唯一的值</em></strong></p>
-<h2 id="三兄弟区别"><a href="#三兄弟区别" class="headerlink" title="三兄弟区别"></a>三兄弟区别</h2><ul>
-<li>三兄弟接收的第一个参数都是要绑定的 this 指向</li>
-<li>apply 的第二个参数是一个参数数组，call 和 bind 的第二个及之后的参数作为函数实参按顺序传入</li>
-<li>bind 不会立即调用，其他两个会立即调用</li>
-</ul>
-<h1 id="实际开发中闭包的应用"><a href="#实际开发中闭包的应用" class="headerlink" title="实际开发中闭包的应用"></a>实际开发中闭包的应用</h1><ul>
-<li><p>隐藏数据</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 闭包隐藏数据，只提供 API</span></span><br><span class="line"><span class="comment">// 做一个简单的 cache 工具</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createCache</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123;&#125; <span class="comment">// 闭包中的数据，被隐藏，不被外界访问</span></span><br><span class="line">    <span class="comment">// 闭包的一种方式，返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        set: <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">            data[key] = value</span><br><span class="line">        &#125;,</span><br><span class="line">        get: <span class="function"><span class="keyword">function</span> (<span class="params">key</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> data[key]</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果我们不通过 set、get 无法修改 data 的值</span></span><br><span class="line"><span class="comment">// 因为 data 是在 createCache 作用域里面的，不会被外界所访问</span></span><br><span class="line"><span class="keyword">const</span> c = createCache()</span><br><span class="line">c.set(<span class="string">&quot;a&quot;</span>, <span class="number">100</span>)</span><br><span class="line"><span class="built_in">console</span>.log(c.get(<span class="string">&quot;a&quot;</span>))</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 点击 a 标签弹出对应的标签序号</span></span><br><span class="line"><span class="keyword">let</span> a</span><br><span class="line"><span class="comment">// let i 是定义了一个 for 里面的块级作用域</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    a = <span class="built_in">document</span>.createElement(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">    a.innerHTML = i + <span class="string">&quot;&lt;br&gt;&quot;</span></span><br><span class="line">    a.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        e.preventDefault()</span><br><span class="line">        alert(i)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>或者也可使用立即执行函数来实现。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>作用域和闭包</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo框架搭建个人博客</title>
-    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
-<p>在搭建博客开始之前，你必须已经</p>
-<a id="more"></a>
-
-<ul>
-<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
-</li>
-<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
-</li>
-<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
-<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
-<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
-<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
-</li>
-</ul>
-<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
-<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
-<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
-<ul>
-<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
-<li>重新执行此次命令</li>
-<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
-</ul>
-<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
-<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
-<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
-<p><img src="1.jpg"></p>
-<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
-<p>这时候我们可以启动我们的博客</p>
-<p>命令行：hexo s     （注：s为start的简写）</p>
-<p><img src="2.jpg"></p>
-<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
-<p> <img src="3.jpg"></p>
-<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
-<p>后续还会更新更换其他主题及页面样式的美化。</p>
-<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>hexo框架</tag>
-        <tag>博客搭建前的准备工作</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PowerShell字符串缺少终止符错误</title>
     <url>/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/</url>
     <content><![CDATA[<p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
@@ -327,47 +327,53 @@
       </tags>
   </entry>
   <entry>
-    <title>前端面试题总结-JS基础之单线程和异步</title>
-    <url>/2020/12/01/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%BC%82%E6%AD%A5/</url>
-    <content><![CDATA[<p>三座大山之三，必考！</p>
-<h1 id="单线程和异步"><a href="#单线程和异步" class="headerlink" title="单线程和异步"></a>单线程和异步</h1><ul>
-<li>JS 是单线程语言，只能同时做一件事</li>
-<li>浏览器和 nodejs 已经支持 JS启动进程，如 Web Worker</li>
-<li>JS 和 DOM 渲染共用一个线程，因为 JS 可以修改 DOM 结构</li>
-</ul>
-<p>因此</p>
+    <title>前端面试刷题的方法和注意事项</title>
+    <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
 <a id="more"></a>
 
+<h1 id="刷题方法"><a href="#刷题方法" class="headerlink" title="刷题方法"></a>刷题方法</h1><p>这位前辈针对刷面试题方法一共提出了<strong>四点建议</strong>，分别是：</p>
 <ul>
-<li>遇到等待（网络请求、定时任务）不能卡住</li>
-<li>需要异步（解决单线程等待的这种问题）</li>
-<li>异步是基于 callback 函数形式</li>
+<li><p>遇到面试题，先看到的应该是题的考点，其次，脑子里都要思考四个问题</p>
+<p>1.是什么 </p>
+<p>2.原理</p>
+<p>3.解决什么问题 </p>
+<p>4.怎么用</p>
+</li>
+<li><p>会的题，应该怎么用有逻辑性的语言表达出来（建议分条）</p>
+</li>
+<li><p>每道题（如跨域）要会其主流的流程，并且以主流为重点说，其他的可以稍微提一下</p>
+</li>
+<li><p>这一点是在第二点的基础上，往自己开发的项目上靠，例如自己平时做项目的时候是用什么什么方法解决的。</p>
+</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 异步 通过 callback 函数，这里是 () =&gt; &#123; console.log(200) &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">alert(<span class="number">200</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="异步的应用场景"><a href="#异步的应用场景" class="headerlink" title="异步的应用场景"></a>异步的应用场景</h2><ul>
-<li>网络请求，如 Ajax、图片加载</li>
-<li>定时任务，如 setTimeout</li>
+<p>在平时刷题的时候养成这种好习惯，相信对刷题的效率一定会有所提升。</p>
+<h1 id="刷题注意事项"><a href="#刷题注意事项" class="headerlink" title="刷题注意事项"></a>刷题注意事项</h1><p>这一块主要是自己平时逛社区看到的，总结了一下分享出来：</p>
+<p><strong>1.大厂偏爱考察基础，特别是对于工作经验少的人，因此基础题一定要完全掌握</strong></p>
+<p><strong>2.做不完的题海：以不变应万变，题可变，考点是不会变的，如Promis解决什么问题，这一定与异步有关</strong></p>
+<h1 id="高效学习三步曲"><a href="#高效学习三步曲" class="headerlink" title="高效学习三步曲"></a>高效学习三步曲</h1><p>这块是慕课网上的老师讲到的，感觉讲的非常好，拿出来mark一下</p>
+<ul>
+<li><p><strong>找准知识体系</strong></p>
+<p>这一步很重要很重要，也很难，这个知识体系是一个<strong>结构化的知识范围</strong>，就像一棵树一样，有根有树干，再往下分树枝、树叶这些，<strong>有组织</strong>，<strong>易扩展</strong>，这种知识体系便于我们的记忆（推荐<strong>思维导图</strong>）。</p>
+</li>
+<li><p><strong>刻意训练</strong></p>
+<p>这一块不用多说，练就完事了！</p>
+</li>
+<li><p><strong>及时反馈</strong></p>
+<p>可以通过在技术交流社区中写文章这种方式，总结输出自己的知识点，另一方面，如果写得好还会有人点赞，或者哪地方有进步的空间大家还可以互相交流。</p>
+</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ajax</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line">$.get(<span class="string">&quot;./data.json&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;end&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 图片加载</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;loaded&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(end)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setTimeout</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setInterval</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
-
-<h1 id="callback-hell"><a href="#callback-hell" class="headerlink" title="callback hell"></a>callback hell</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// callback hell (回调地狱)</span></span><br><span class="line"><span class="comment">// 获取第一份数据</span></span><br><span class="line">$.get(url1, <span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data1)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取第二份数据</span></span><br><span class="line">    $.get(url2, <span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取第三份数据</span></span><br><span class="line">        $.get(url3, <span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data3)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 还可能获取更多的数据</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Promise 主要解决的是 callback hell 的问题</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url,</span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">                resolve(data)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="title">error</span>(<span class="params">err</span>)</span> &#123;</span><br><span class="line">                reject(err)</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url1 = <span class="string">&quot;./data1.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./data2.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url3 = <span class="string">&quot;./data3.json&quot;</span></span><br><span class="line">getData(url1)</span><br><span class="line">    .then(<span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data1)</span><br><span class="line">        <span class="keyword">return</span> getData(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line">        <span class="keyword">return</span> getData(url3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.error(err))</span><br></pre></td></tr></table></figure>
-
-<h1 id="同步与异步的区别"><a href="#同步与异步的区别" class="headerlink" title="同步与异步的区别"></a>同步与异步的区别</h1><ul>
-<li>异步是基于 JS 是单线程语言</li>
-<li>异步不会阻塞代码执行</li>
-<li>同步会阻塞代码执行</li>
-</ul>
-<h1 id="手写-Promise-加载两张图片"><a href="#手写-Promise-加载两张图片" class="headerlink" title="手写 Promise 加载两张图片"></a>手写 Promise 加载两张图片</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err)</span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> urll = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./2.jpg&quot;</span></span><br><span class="line">loadImg(urll)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.width)</span><br><span class="line">        <span class="comment">// 返回一个普通对象</span></span><br><span class="line">        <span class="keyword">return</span> img1</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.height)</span><br><span class="line">        <span class="comment">// 返回一个 Promise 实例</span></span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.width)</span><br><span class="line">        <span class="keyword">return</span> img2</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.height)</span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>]]></content>
+<p>自己也搜罗整理了一些面试资料（包括面试的知识体系），如果有兴趣可以通过下方的二维码、留言或首页社交块与我联系。</p>
+]]></content>
       <categories>
-        <category>前端面试题</category>
+        <category>前端刷题</category>
       </categories>
       <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>变量类型和计算</tag>
+        <tag>前端</tag>
+        <tag>面试题</tag>
+        <tag>刷题方法</tag>
+        <tag>刷题注意事项</tag>
+        <tag>高效学习三步曲</tag>
       </tags>
   </entry>
   <entry>
@@ -527,53 +533,142 @@
       </tags>
   </entry>
   <entry>
-    <title>前端面试刷题的方法和注意事项</title>
-    <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
-<a id="more"></a>
+    <title>前端面试题总结-JS之异步进阶2</title>
+    <url>/2020/12/03/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E4%B9%8B%E5%BC%82%E6%AD%A5%E8%BF%9B%E9%98%B62/</url>
+    <content><![CDATA[<h1 id="宏任务-macroTask-和微任务-microTask"><a href="#宏任务-macroTask-和微任务-microTask" class="headerlink" title="宏任务 macroTask 和微任务 microTask"></a>宏任务 macroTask 和微任务 microTask</h1><a id="more"></a>
 
-<h1 id="刷题方法"><a href="#刷题方法" class="headerlink" title="刷题方法"></a>刷题方法</h1><p>这位前辈针对刷面试题方法一共提出了<strong>四点建议</strong>，分别是：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 不同类型的异步执行顺序不同</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="comment">// 宏任务</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 微任务</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">400</span>)</span><br><span class="line"><span class="comment">// 100 -&gt; 400 -&gt; 300 -&gt; 200</span></span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p>遇到面试题，先看到的应该是题的考点，其次，脑子里都要思考四个问题</p>
-<p>1.是什么 </p>
-<p>2.原理</p>
-<p>3.解决什么问题 </p>
-<p>4.怎么用</p>
+<li>宏任务：setTimeout、setInterval、Ajax、DOM 事件</li>
+<li>微任务：Promise、async / await</li>
+<li>微任务执行时机比宏任务要早</li>
+</ul>
+<h1 id="event-loop-和-DOM-渲染"><a href="#event-loop-和-DOM-渲染" class="headerlink" title="event loop 和 DOM 渲染"></a>event loop 和 DOM 渲染</h1><ul>
+<li>JS 是单线程的，而且和 DOM 渲染共用一个线程</li>
+<li>JS 执行的时候，得留一些时机供 DOM 渲染</li>
+</ul>
+<p><strong>再次回顾 event loop 的过程</strong></p>
+<ul>
+<li>每一次 call stack 结束（每次轮询结束），同步任务执行完毕，都会触发 DOM 渲染（不一定非得渲染，就是给一次 DOM 渲染的机会！）</li>
+<li>然后再触发下一次 Event Loop</li>
+</ul>
+<p>触发 Event Loop 机制，如果 Callback Queue 里面执行完毕，也就是 call stack 再次空闲，又会尝试触发 DOM 渲染，然后再触发 Event Loop 机制，以此循环下去。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> $p1 = $(<span class="string">&#x27;&lt;p&gt;一段文字&lt;/p&gt;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> $p2 = $(<span class="string">&#x27;&lt;p&gt;一段文字&lt;/p&gt;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> $p3 = $(<span class="string">&#x27;&lt;p&gt;一段文字&lt;/p&gt;&#x27;</span>)</span><br><span class="line">$(<span class="string">&quot;#container&quot;</span>).append($p1).append($p2).append($p3)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;length&#x27;</span>,  $(<span class="string">&#x27;#container&#x27;</span>).children().length )</span><br><span class="line">alert(<span class="string">&#x27;本次 call stack 结束，DOM 结构已更新，但尚未触发渲染&#x27;</span>)</span><br><span class="line"><span class="comment">// （alert 会阻断 js 执行，也会阻断 DOM 渲染，便于查看效果，因此只有当关闭 alert 对话框的时候才会渲染出标签）</span></span><br><span class="line"><span class="comment">// 到此，即本次 call stack 结束后（同步任务都执行完了），浏览器会自动触发渲染，不用代码干预</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 另外，按照 event loop 触发 DOM 渲染时机，setTimeout 时 alert ，就能看到 DOM 渲染后的结果了</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;setTimeout 是在下一次 Call Stack ，就能看到 DOM 渲染出来的结果了&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="宏任务与微任务的区别"><a href="#宏任务与微任务的区别" class="headerlink" title="宏任务与微任务的区别"></a>宏任务与微任务的区别</h1><ul>
+<li><p>宏任务：在 DOM 渲染后触发，如 setTimeout</p>
 </li>
-<li><p>会的题，应该怎么用有逻辑性的语言表达出来（建议分条）</p>
-</li>
-<li><p>每道题（如跨域）要会其主流的流程，并且以主流为重点说，其他的可以稍微提一下</p>
-</li>
-<li><p>这一点是在第二点的基础上，往自己开发的项目上靠，例如自己平时做项目的时候是用什么什么方法解决的。</p>
+<li><p>微任务：DOM 渲染前触发，如 Promise</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 修改 DOM</span></span><br><span class="line"><span class="keyword">const</span> $p1 = $(<span class="string">&#x27;&lt;p&gt;一段文字&lt;/p&gt;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> $p2 = $(<span class="string">&#x27;&lt;p&gt;一段文字&lt;/p&gt;&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> $p3 = $(<span class="string">&#x27;&lt;p&gt;一段文字&lt;/p&gt;&#x27;</span>)</span><br><span class="line">$(<span class="string">&quot;#container&quot;</span>).append($p1).append($p2).append($p3)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 微任务：渲染之前执行（DOM 结构已更新）</span></span><br><span class="line"><span class="comment">// Promise.resolve().then(() =&gt; &#123;</span></span><br><span class="line"><span class="comment">//     const length = $(&#x27;#container&#x27;).children().length</span></span><br><span class="line"><span class="comment">//     alert(`micro task $&#123;length&#125;`) // 3,DOM 没有渲染出来</span></span><br><span class="line"><span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 宏任务：渲染之后执行（DOM 结构已更新）</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> length = $(<span class="string">&#x27;#container&#x27;</span>).children().length</span><br><span class="line">    alert(<span class="string">`macro task <span class="subst">$&#123;length&#125;</span>`</span>) <span class="comment">// 3,DOM 已经渲染完毕</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
-<p>在平时刷题的时候养成这种好习惯，相信对刷题的效率一定会有所提升。</p>
-<h1 id="刷题注意事项"><a href="#刷题注意事项" class="headerlink" title="刷题注意事项"></a>刷题注意事项</h1><p>这一块主要是自己平时逛社区看到的，总结了一下分享出来：</p>
-<p><strong>1.大厂偏爱考察基础，特别是对于工作经验少的人，因此基础题一定要完全掌握</strong></p>
-<p><strong>2.做不完的题海：以不变应万变，题可变，考点是不会变的，如Promis解决什么问题，这一定与异步有关</strong></p>
-<h1 id="高效学习三步曲"><a href="#高效学习三步曲" class="headerlink" title="高效学习三步曲"></a>高效学习三步曲</h1><p>这块是慕课网上的老师讲到的，感觉讲的非常好，拿出来mark一下</p>
+<p>再深入思考一下：为何两者会有以上区别，一个在渲染前，一个在渲染后？</p>
 <ul>
-<li><p><strong>找准知识体系</strong></p>
-<p>这一步很重要很重要，也很难，这个知识体系是一个<strong>结构化的知识范围</strong>，就像一棵树一样，有根有树干，再往下分树枝、树叶这些，<strong>有组织</strong>，<strong>易扩展</strong>，这种知识体系便于我们的记忆（推荐<strong>思维导图</strong>）。</p>
-</li>
-<li><p><strong>刻意训练</strong></p>
-<p>这一块不用多说，练就完事了！</p>
-</li>
-<li><p><strong>及时反馈</strong></p>
-<p>可以通过在技术交流社区中写文章这种方式，总结输出自己的知识点，另一方面，如果写得好还会有人点赞，或者哪地方有进步的空间大家还可以互相交流。</p>
-</li>
+<li>微任务：ES 语法标准之内，JS 引擎来统一处理。即，不用浏览器有任何干预，即可一次性处理完，更快更及时。</li>
+<li>宏任务：ES 语法没有，JS 引擎不处理，浏览器（或 nodejs）干预处理。</li>
 </ul>
-<p>自己也搜罗整理了一些面试资料（包括面试的知识体系），如果有兴趣可以通过下方的二维码、留言或首页社交块与我联系。</p>
+<h1 id="从-event-loop-解释，为何微任务执行更早"><a href="#从-event-loop-解释，为何微任务执行更早" class="headerlink" title="从 event loop 解释，为何微任务执行更早"></a>从 event loop 解释，为何微任务执行更早</h1><img src="image-20201203094801835.png" alt="image-20201203094801835" style="zoom: 25%;" />
+
+<p>当执行 Promise 或 async/await 这种微任务的时候，会等待时机将它放在 micro task queue （与宏任务队列 Callba queue 是分开的）里面，而且不会经过 Web APIs ，因为 Promise 是 ES6 规范，不是 W3C 规范。</p>
+<p>产生这种区别的原因是：</p>
+<ul>
+<li>微任务是 ES6 语法规定的</li>
+<li>宏任务是由浏览器规定的</li>
+</ul>
+<p>因此在执行的时候分成了四步来完成：</p>
+<img src="image-20201203095401879.png" alt="image-20201203095401879" style="zoom:25%;" />
+
+<h1 id="微任务和宏任务-总结"><a href="#微任务和宏任务-总结" class="headerlink" title="微任务和宏任务-总结"></a>微任务和宏任务-总结</h1><ul>
+<li>宏任务有哪些？微任务有哪些？为什么微任务触发时机更早</li>
+<li>微任务、宏任务和 DOM 渲染的关系</li>
+<li>微任务、宏任务和 DOM 渲染，在 event loop 的过程</li>
+</ul>
+<h1 id="考题"><a href="#考题" class="headerlink" title="考题"></a>考题</h1><p><strong>描述 event loop 机制（可画图）</strong></p>
+<ul>
+<li>回顾 event loop 的过程</li>
+<li>和 DOM 渲染的关系</li>
+<li>微任务和宏任务在 event loop 过程中的不同处理</li>
+</ul>
+<p>后两点可以先放一放，先把第一点讲清楚后，如果进阶问，再讲这块，否则一气讲完会很乱</p>
+<p><strong>什么事宏任务和微任务，两者区别</strong></p>
+<ul>
+<li>宏任务：setTimeout，setInterval、Ajax、DOM 事件</li>
+<li>微任务：Promise、async/await</li>
+<li>微任务执行时机比宏任务要早（再细就是微任务在 DOM 渲染前触发，宏任务在 DOM 渲染后触发）</li>
+</ul>
+<p><strong>Promise 的三种状态，如何变化</strong></p>
+<ul>
+<li>pending、resolved、rejected</li>
+<li>pending -&gt; resolved 或 pending -&gt; rejected</li>
+<li>变化不可逆</li>
+</ul>
+<p><strong>场景题 - promise then 和 catch 的连接</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">    .then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">    .then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;error1&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve()</span><br><span class="line">    .then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;error1&quot;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果：13，123，12</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>场景题 - async / await 语法</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = fn() <span class="comment">// ??</span></span><br><span class="line">    <span class="keyword">const</span> b = <span class="keyword">await</span> fn() <span class="comment">// ??</span></span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">    <span class="built_in">console</span>.log(b)</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// a 返回 promise 对象，b 返回 100</span></span><br><span class="line"></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line">    <span class="keyword">const</span> a = <span class="keyword">await</span> <span class="number">100</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;a&quot;</span>, a)</span><br><span class="line">    <span class="keyword">const</span> b = <span class="keyword">await</span> <span class="built_in">Promise</span>.resolve(<span class="number">200</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;b&quot;</span>, b)</span><br><span class="line">    <span class="keyword">const</span> c = <span class="keyword">await</span> <span class="built_in">Promise</span>.reject(<span class="number">300</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;c&quot;</span>, c)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;end&quot;</span>)</span><br><span class="line">&#125;)() <span class="comment">// 执行完毕后，打印哪些内容？</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// start -&gt; a 100 -&gt; b 200 -&gt; 报错</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>场景题 - Promise 和 setTimeout 的顺序</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">400</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 100 -&gt; 400 -&gt; 300 -&gt; 200</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>场景题 - 外加 async / await 的顺序问题</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 start&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> async2()</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 end&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script start&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;setTimeout&quot;</span>)</span><br><span class="line">&#125;, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">async1()</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;promise1&quot;</span>)</span><br><span class="line">    resolve()</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;promise2&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script end&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// script start -&gt; async1 start -&gt; async2 -&gt; promise1 -&gt; script end -&gt; async1 end -&gt; promise2 -&gt; setTimeout</span></span><br></pre></td></tr></table></figure>
+
+<p><em>注：new Promise 时，传入的函数会立马被执行</em></p>
 ]]></content>
       <categories>
-        <category>前端刷题</category>
+        <category>前端面试题</category>
       </categories>
       <tags>
-        <tag>前端</tag>
-        <tag>面试题</tag>
-        <tag>刷题方法</tag>
-        <tag>刷题注意事项</tag>
-        <tag>高效学习三步曲</tag>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>异步进阶</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS基础之单线程和异步</title>
+    <url>/2020/12/01/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%BC%82%E6%AD%A5/</url>
+    <content><![CDATA[<p>三座大山之三，必考！</p>
+<h1 id="单线程和异步"><a href="#单线程和异步" class="headerlink" title="单线程和异步"></a>单线程和异步</h1><ul>
+<li>JS 是单线程语言，只能同时做一件事</li>
+<li>浏览器和 nodejs 已经支持 JS启动进程，如 Web Worker</li>
+<li>JS 和 DOM 渲染共用一个线程，因为 JS 可以修改 DOM 结构</li>
+</ul>
+<p>因此</p>
+<a id="more"></a>
+
+<ul>
+<li>遇到等待（网络请求、定时任务）不能卡住</li>
+<li>需要异步（解决单线程等待的这种问题）</li>
+<li>异步是基于 callback 函数形式</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 异步 通过 callback 函数，这里是 () =&gt; &#123; console.log(200) &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">alert(<span class="number">200</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="异步的应用场景"><a href="#异步的应用场景" class="headerlink" title="异步的应用场景"></a>异步的应用场景</h2><ul>
+<li>网络请求，如 Ajax、图片加载</li>
+<li>定时任务，如 setTimeout</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ajax</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line">$.get(<span class="string">&quot;./data.json&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;end&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 图片加载</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;loaded&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(end)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setTimeout</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setInterval</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="callback-hell"><a href="#callback-hell" class="headerlink" title="callback hell"></a>callback hell</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// callback hell (回调地狱)</span></span><br><span class="line"><span class="comment">// 获取第一份数据</span></span><br><span class="line">$.get(url1, <span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data1)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取第二份数据</span></span><br><span class="line">    $.get(url2, <span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取第三份数据</span></span><br><span class="line">        $.get(url3, <span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data3)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 还可能获取更多的数据</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Promise 主要解决的是 callback hell 的问题</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url,</span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">                resolve(data)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="title">error</span>(<span class="params">err</span>)</span> &#123;</span><br><span class="line">                reject(err)</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url1 = <span class="string">&quot;./data1.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./data2.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url3 = <span class="string">&quot;./data3.json&quot;</span></span><br><span class="line">getData(url1)</span><br><span class="line">    .then(<span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data1)</span><br><span class="line">        <span class="keyword">return</span> getData(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line">        <span class="keyword">return</span> getData(url3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.error(err))</span><br></pre></td></tr></table></figure>
+
+<h1 id="同步与异步的区别"><a href="#同步与异步的区别" class="headerlink" title="同步与异步的区别"></a>同步与异步的区别</h1><ul>
+<li>异步是基于 JS 是单线程语言</li>
+<li>异步不会阻塞代码执行</li>
+<li>同步会阻塞代码执行</li>
+</ul>
+<h1 id="手写-Promise-加载两张图片"><a href="#手写-Promise-加载两张图片" class="headerlink" title="手写 Promise 加载两张图片"></a>手写 Promise 加载两张图片</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err)</span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> urll = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./2.jpg&quot;</span></span><br><span class="line">loadImg(urll)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.width)</span><br><span class="line">        <span class="comment">// 返回一个普通对象</span></span><br><span class="line">        <span class="keyword">return</span> img1</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.height)</span><br><span class="line">        <span class="comment">// 返回一个 Promise 实例</span></span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.width)</span><br><span class="line">        <span class="keyword">return</span> img2</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.height)</span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>变量类型和计算</tag>
       </tags>
   </entry>
   <entry>
@@ -669,6 +764,115 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>作用域和闭包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS基础之原型和原型链</title>
+    <url>/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
+    <content><![CDATA[<p><strong>三座大山之一，必考！！！</strong></p>
+<p>JS本身是一个基于原型基层的语言，ES6之前，写继承的时候只能通过原型来继承，ES6出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。</p>
+<a id="more"></a>
+
+<h1 id="如何用Class实现继承"><a href="#如何用Class实现继承" class="headerlink" title="如何用Class实现继承"></a>如何用Class实现继承</h1><h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>class 本质上就类似于一个模版，我们可以通过模版去构建一些东西。</p>
+<ul>
+<li>constructor</li>
+<li>属性</li>
+<li>方法</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, number</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">        <span class="built_in">this</span>.number = number</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(</span><br><span class="line">            <span class="comment">// 模版字符串</span></span><br><span class="line">            <span class="string">`姓名:<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>, 学号:<span class="subst">$&#123;<span class="built_in">this</span>.number&#125;</span>`</span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过类 new 对象/实例  (可以 new n多个对象)</span></span><br><span class="line"><span class="keyword">let</span> xiaoa = <span class="keyword">new</span> Student(<span class="string">&#x27;小A&#x27;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="built_in">console</span>.log(xiaoa.name)    <span class="comment">// 小A</span></span><br><span class="line"><span class="built_in">console</span>.log(xiaoa.number)  <span class="comment">// 18</span></span><br><span class="line">xiaoa.sayHi()              <span class="comment">// 姓名:小A, 学号:18</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>当我们有很多个 class ，这些 class 有一些比较公共的属性的时候，就可以把它抽离出来，让后让这些 class 继承。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">eat</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span> eat something`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Student子类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, number</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 调用 super 把 name 给 people 的 constructor</span></span><br><span class="line">        <span class="comment">// 然后把名字赋值到属性上</span></span><br><span class="line">        <span class="built_in">super</span>(name)</span><br><span class="line">        <span class="built_in">this</span>.number = number</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`姓名:<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>,学号<span class="subst">$&#123;<span class="built_in">this</span>.number&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// teacher子类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, major</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name)</span><br><span class="line">        <span class="built_in">this</span>.major = major</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">teach</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span> 教授 <span class="subst">$&#123;<span class="built_in">this</span>.major&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student(<span class="string">&#x27;A同学&#x27;</span>, <span class="number">66</span>)</span><br><span class="line"><span class="built_in">console</span>.log(s1.name)      <span class="comment">// A同学</span></span><br><span class="line"><span class="built_in">console</span>.log(s1.number)	  <span class="comment">// 66</span></span><br><span class="line">s1.sayHi()				 <span class="comment">// 姓名:A同学,学号66</span></span><br><span class="line">s1.eat()                  <span class="comment">// A同学 eat something</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> t1 = <span class="keyword">new</span> Teacher(<span class="string">&#x27;C老师&#x27;</span>, <span class="string">&#x27;语文&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(t1.name)     <span class="comment">// C老师</span></span><br><span class="line"><span class="built_in">console</span>.log(t1.major)    <span class="comment">// 语文</span></span><br><span class="line">t1.teach()               <span class="comment">// C老师 教授 语文</span></span><br><span class="line">t1.eat()                 <span class="comment">// C老师 eat something</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="类型判断"><a href="#类型判断" class="headerlink" title="类型判断"></a>类型判断</h1><p>主要是判断 instanceof 前面的是否由 instanceof 后面的构建出来的，接上面代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student()</span><br><span class="line"></span><br><span class="line">s1 <span class="keyword">instanceof</span> Student     <span class="comment">// true</span></span><br><span class="line">s1 <span class="keyword">instanceof</span> People      <span class="comment">// true   People 是 Student 的父类，也参与了构建的一部分</span></span><br><span class="line">s1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true   Object 是所有 class 的父类</span></span><br><span class="line"></span><br><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Array</span>       <span class="comment">// true</span></span><br><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Array</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">&#123;&#125; <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="JS原型"><a href="#JS原型" class="headerlink" title="JS原型"></a>JS原型</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student()</span><br><span class="line"></span><br><span class="line"><span class="comment">// class 实际上是函数，可见是语法糖</span></span><br><span class="line"><span class="keyword">typeof</span> People   <span class="comment">// &#x27;function&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> Student  <span class="comment">// &#x27;function&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 隐式原型和显式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( s1.__proto__ )        <span class="comment">// 隐式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( Student.prototype )   <span class="comment">// 显式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( s1.__proto__ === Student.prototype )  <span class="comment">// true 也就是两个引用的是一个内存地址</span></span><br></pre></td></tr></table></figure>
+
+<p>在定义 class Student 的时候会有一个显式原型（prototype）指向一个对象（Student.prototype），并且把方法（sayHi）放在这个对象（Student.prototype）里面，通过 new 一个实例对象 s1 之后，他的 name、number 会放在实例对象 s1 本身，而这里的 sayHi 方法是通过隐式原型指向（Student.prototype）里面的方法来获取的。</p>
+<img src="1606225829665.png" alt="1606225829665" style="zoom: 67%;" />
+
+
+
+<h2 id="原型关系"><a href="#原型关系" class="headerlink" title="原型关系"></a>原型关系</h2><ul>
+<li>每个 class 都有显式原型 prototype</li>
+<li>每个实例都有隐式原型 __ proto __</li>
+<li>实例的隐式原型 __ proto __ 指向对应的 class 的显示原型 prototype</li>
+</ul>
+<h2 id="基于原型的执行规则"><a href="#基于原型的执行规则" class="headerlink" title="基于原型的执行规则"></a>基于原型的执行规则</h2><ul>
+<li><p>获取属性 s1.name 或执行方法 s1.sayHi() 时</p>
+</li>
+<li><p>先在自身属性和方法寻找</p>
+</li>
+<li><p>如果找不到则自动去隐式原型 __ proto __ 中查找 </p>
+<p>例如获取 s1.sayHi（），此时 s1 自身并没有 sayHi 方法，因此去 s1 的 __ proto __ 中查找，而隐式原型正好指向 class 的显式原型 Student.prototype ，然后就找到了 sayHi 方法。</p>
+</li>
+</ul>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Student.prototype.__proto__)</span><br><span class="line"><span class="built_in">console</span>.log(People.prototype)</span><br><span class="line"><span class="built_in">console</span>.log(People.prototype === Student.prototype.__proto__)  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>首先，左下角三个图的关系对应上一张图。但这里的 Student 的显式原型（Student.prototype）还会有一个隐式原型，指向了 People 的显式原型（People.prototype）,People原型里面有 eat 方法。</p>
+<p>逻辑上来讲，实例 s1 是通过 Student new 出来的，所以 s1 的隐式原型指向 Student 的显式原型。其次可以理解为 Student 的显式原型对象（Student.prototype）是通过 People new 出来的，所以 Student.prototype 的隐式原型指向 People 的显式原型（People.prototype）,</p>
+<img src="1606262732500.png" alt="1606262732500" style="zoom: 80%;" />
+
+<p>整体上说：</p>
+<ul>
+<li><p>访问 s1.name/number 是通过 s1 本身属性；</p>
+</li>
+<li><p>访问 s1.sayHi() ,此时由于 s1 本身没有 sayHi 方法，所以通过隐式原型指向的 Student 上的显式原型对象找到 sayHi 方法；</p>
+</li>
+<li><p>访问 s1.eat() , s1 的身上与其身上隐式原型指向的 Student.prototype 都没有此方法，因此再通过 Student.prototype 上的隐式原型指向的 People.prototype 上来找到 eat 方法（由此形成了一个链）</p>
+</li>
+</ul>
+<p>我们可以通过 s1.hasOwnProperty(‘属性’) 来判断某个属性或方法是否为自身拥有，那么 hasOwnProperty() 方法是哪里来的？</p>
+<p>从下图可以看出 Student 继承于 People ， People 继承于 Object ，所以说 People 的显式原型对象中也有隐式原型，并且指向 Object 的显式原型对象 Object.prototype （JS 引擎本身自己带的），Object 原型里面有很多方法。</p>
+<p><strong>因此 s1 访问 hasOwnProperty 方法，就会通过这个原型链来一级一级查找，最终在基类 Object 的显式原型上找到 hasOwnProperty 方法</strong></p>
+<img src="1606264497414.png" alt="1606264497414" style="zoom:80%;" />
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基类 Object 的显式原型对象身上的隐式原型永远指向 null </span></span><br><span class="line"><span class="comment">// 因此基类 Object 的显式原型对象为原型链的最后一级</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.__proto__     <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="再看-instanceof"><a href="#再看-instanceof" class="headerlink" title="再看 instanceof"></a>再看 instanceof</h3><p>还是这张图， instanceof 前面的变量顺着隐式原型往上找，如果能对应到 instanceof 后面的参数 class 的显式原型（或者原型链上的显式原型），如果能对应到，那么 instanceof 成立返回 true，如果对应不到就返回 false ，</p>
+<img src="1606264497414.png" alt="1606264497414" style="zoom:80%;" />
+
+
+
+<h2 id="重要提示！！！"><a href="#重要提示！！！" class="headerlink" title="重要提示！！！"></a>重要提示！！！</h2><ul>
+<li>class 是 ES6 语法规范，由 ECMA 委员会发布</li>
+<li>ECMA 只规定语法规则，即我们代码的书写规范，不规定如何实现</li>
+<li>以上实现方式都是 V8 引擎的实现方式，也是主流的</li>
+</ul>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h1><ul>
+<li><p>如何准确判断一个变量是不是数组？</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 结合原型链的图理解 instanceof </span></span><br><span class="line"><span class="keyword">const</span> a = []</span><br><span class="line">a <span class="keyword">instanceof</span> <span class="built_in">Array</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从原型入手: Array.prototype.isPrototypeOf(obj)</span></span><br><span class="line"><span class="comment">// 利用isPrototypeOf()方法，判定Array是不是在obj的原型链中如果是，则返回true,否则false。</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.isPrototypeOf(a)   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>class 的原型本质，怎么理解？</p>
+<ul>
+<li>每个 class 都有显式原型 prototype</li>
+<li>每个实例都有隐式原型 __ proto __</li>
+<li>实例的隐式原型 __ proto __ 指向对应的 class 的显示原型 prototype</li>
+<li>获取实例身上属性或执行方法时，先在自身属性和方法寻找，如果找不到则自动去隐式原型指向的父类显式原型对象中查找 ，然后顺着与原型链去查找。</li>
+</ul>
+</li>
+<li><p>手写一个简易的 jQuery，考虑插件和扩展性</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">jQuery</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">selector</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 首先 DOM 查询</span></span><br><span class="line">        <span class="keyword">const</span> result = <span class="built_in">document</span>.querySelectorAll(selector)</span><br><span class="line">        <span class="keyword">const</span> length = result.length</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对查出的结果进行遍历</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="comment">// 把遍历的每个结果都放到 this 上</span></span><br><span class="line">            <span class="built_in">this</span>[i] = result[i]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">this</span>.length = length</span><br><span class="line">        <span class="built_in">this</span>.selector = selector</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jQuery 中的 get 方法</span></span><br><span class="line">    <span class="function"><span class="title">get</span>(<span class="params">index</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>[index]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// each 遍历</span></span><br><span class="line">    <span class="function"><span class="title">each</span>(<span class="params">fn</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> elem = <span class="built_in">this</span>[i]</span><br><span class="line">            fn(elem)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// on 监听方法</span></span><br><span class="line">    <span class="function"><span class="title">on</span>(<span class="params">type, fn</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.each(<span class="function"><span class="params">elem</span> =&gt;</span> &#123;</span><br><span class="line">            elem.addEventListener(type, fn, <span class="literal">false</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 还可扩展很多 DOM 操作 API</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const $p = new jQuery(&#x27;p&#x27;)</span></span><br><span class="line"><span class="comment">// $p.get(1)</span></span><br><span class="line"><span class="comment">// $p.each((elem) =&gt; console.log(elem.nodeName))</span></span><br><span class="line"><span class="comment">// $p.on(&#x27;click&#x27;, () =&gt; alert(&#x27;clicked&#x27;))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 插件机制（做一个插件，但其实用的还是 jQuery）</span></span><br><span class="line">jQuery.prototype.dialog = <span class="function"><span class="keyword">function</span> (<span class="params">info</span>) </span>&#123;</span><br><span class="line">    alert(info)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $p.dialog(&#x27;123456&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;造轮子&quot; (复写机制)</span></span><br><span class="line"><span class="comment">// 就是基于这个 jQuery 去造一个更加完美的 myJQuery 供使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myJQuery</span> <span class="keyword">extends</span> <span class="title">jQuery</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">selector</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// super 的好处体现，直接使用 jQuery 的复杂 constructor，无需再写一遍逻辑</span></span><br><span class="line">        <span class="built_in">super</span>(selector)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 扩展自己的方法...</span></span><br><span class="line">    <span class="function"><span class="title">addClass</span>(<span class="params">className</span>)</span> &#123; &#125;</span><br><span class="line">    <span class="function"><span class="title">style</span>(<span class="params">data</span>)</span> &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>原型和原型链</tag>
       </tags>
   </entry>
   <entry>
@@ -816,115 +1020,6 @@
       </categories>
       <tags>
         <tag>部署博客到远端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题总结-JS基础之原型和原型链</title>
-    <url>/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
-    <content><![CDATA[<p><strong>三座大山之一，必考！！！</strong></p>
-<p>JS本身是一个基于原型基层的语言，ES6之前，写继承的时候只能通过原型来继承，ES6出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。</p>
-<a id="more"></a>
-
-<h1 id="如何用Class实现继承"><a href="#如何用Class实现继承" class="headerlink" title="如何用Class实现继承"></a>如何用Class实现继承</h1><h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>class 本质上就类似于一个模版，我们可以通过模版去构建一些东西。</p>
-<ul>
-<li>constructor</li>
-<li>属性</li>
-<li>方法</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, number</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">        <span class="built_in">this</span>.number = number</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(</span><br><span class="line">            <span class="comment">// 模版字符串</span></span><br><span class="line">            <span class="string">`姓名:<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>, 学号:<span class="subst">$&#123;<span class="built_in">this</span>.number&#125;</span>`</span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过类 new 对象/实例  (可以 new n多个对象)</span></span><br><span class="line"><span class="keyword">let</span> xiaoa = <span class="keyword">new</span> Student(<span class="string">&#x27;小A&#x27;</span>, <span class="number">18</span>)</span><br><span class="line"><span class="built_in">console</span>.log(xiaoa.name)    <span class="comment">// 小A</span></span><br><span class="line"><span class="built_in">console</span>.log(xiaoa.number)  <span class="comment">// 18</span></span><br><span class="line">xiaoa.sayHi()              <span class="comment">// 姓名:小A, 学号:18</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>当我们有很多个 class ，这些 class 有一些比较公共的属性的时候，就可以把它抽离出来，让后让这些 class 继承。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">eat</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span> eat something`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Student子类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, number</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 调用 super 把 name 给 people 的 constructor</span></span><br><span class="line">        <span class="comment">// 然后把名字赋值到属性上</span></span><br><span class="line">        <span class="built_in">super</span>(name)</span><br><span class="line">        <span class="built_in">this</span>.number = number</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`姓名:<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span>,学号<span class="subst">$&#123;<span class="built_in">this</span>.number&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// teacher子类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name, major</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name)</span><br><span class="line">        <span class="built_in">this</span>.major = major</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">teach</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;<span class="built_in">this</span>.name&#125;</span> 教授 <span class="subst">$&#123;<span class="built_in">this</span>.major&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student(<span class="string">&#x27;A同学&#x27;</span>, <span class="number">66</span>)</span><br><span class="line"><span class="built_in">console</span>.log(s1.name)      <span class="comment">// A同学</span></span><br><span class="line"><span class="built_in">console</span>.log(s1.number)	  <span class="comment">// 66</span></span><br><span class="line">s1.sayHi()				 <span class="comment">// 姓名:A同学,学号66</span></span><br><span class="line">s1.eat()                  <span class="comment">// A同学 eat something</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> t1 = <span class="keyword">new</span> Teacher(<span class="string">&#x27;C老师&#x27;</span>, <span class="string">&#x27;语文&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(t1.name)     <span class="comment">// C老师</span></span><br><span class="line"><span class="built_in">console</span>.log(t1.major)    <span class="comment">// 语文</span></span><br><span class="line">t1.teach()               <span class="comment">// C老师 教授 语文</span></span><br><span class="line">t1.eat()                 <span class="comment">// C老师 eat something</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="类型判断"><a href="#类型判断" class="headerlink" title="类型判断"></a>类型判断</h1><p>主要是判断 instanceof 前面的是否由 instanceof 后面的构建出来的，接上面代码</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student()</span><br><span class="line"></span><br><span class="line">s1 <span class="keyword">instanceof</span> Student     <span class="comment">// true</span></span><br><span class="line">s1 <span class="keyword">instanceof</span> People      <span class="comment">// true   People 是 Student 的父类，也参与了构建的一部分</span></span><br><span class="line">s1 <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true   Object 是所有 class 的父类</span></span><br><span class="line"></span><br><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Array</span>       <span class="comment">// true</span></span><br><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Array</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">&#123;&#125; <span class="keyword">instanceof</span> <span class="built_in">Object</span>      <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="JS原型"><a href="#JS原型" class="headerlink" title="JS原型"></a>JS原型</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="keyword">const</span> s1 = <span class="keyword">new</span> Student()</span><br><span class="line"></span><br><span class="line"><span class="comment">// class 实际上是函数，可见是语法糖</span></span><br><span class="line"><span class="keyword">typeof</span> People   <span class="comment">// &#x27;function&#x27;</span></span><br><span class="line"><span class="keyword">typeof</span> Student  <span class="comment">// &#x27;function&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 隐式原型和显式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( s1.__proto__ )        <span class="comment">// 隐式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( Student.prototype )   <span class="comment">// 显式原型</span></span><br><span class="line"><span class="built_in">console</span>.log( s1.__proto__ === Student.prototype )  <span class="comment">// true 也就是两个引用的是一个内存地址</span></span><br></pre></td></tr></table></figure>
-
-<p>在定义 class Student 的时候会有一个显式原型（prototype）指向一个对象（Student.prototype），并且把方法（sayHi）放在这个对象（Student.prototype）里面，通过 new 一个实例对象 s1 之后，他的 name、number 会放在实例对象 s1 本身，而这里的 sayHi 方法是通过隐式原型指向（Student.prototype）里面的方法来获取的。</p>
-<img src="1606225829665.png" alt="1606225829665" style="zoom: 67%;" />
-
-
-
-<h2 id="原型关系"><a href="#原型关系" class="headerlink" title="原型关系"></a>原型关系</h2><ul>
-<li>每个 class 都有显式原型 prototype</li>
-<li>每个实例都有隐式原型 __ proto __</li>
-<li>实例的隐式原型 __ proto __ 指向对应的 class 的显示原型 prototype</li>
-</ul>
-<h2 id="基于原型的执行规则"><a href="#基于原型的执行规则" class="headerlink" title="基于原型的执行规则"></a>基于原型的执行规则</h2><ul>
-<li><p>获取属性 s1.name 或执行方法 s1.sayHi() 时</p>
-</li>
-<li><p>先在自身属性和方法寻找</p>
-</li>
-<li><p>如果找不到则自动去隐式原型 __ proto __ 中查找 </p>
-<p>例如获取 s1.sayHi（），此时 s1 自身并没有 sayHi 方法，因此去 s1 的 __ proto __ 中查找，而隐式原型正好指向 class 的显式原型 Student.prototype ，然后就找到了 sayHi 方法。</p>
-</li>
-</ul>
-<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Student.prototype.__proto__)</span><br><span class="line"><span class="built_in">console</span>.log(People.prototype)</span><br><span class="line"><span class="built_in">console</span>.log(People.prototype === Student.prototype.__proto__)  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<p>首先，左下角三个图的关系对应上一张图。但这里的 Student 的显式原型（Student.prototype）还会有一个隐式原型，指向了 People 的显式原型（People.prototype）,People原型里面有 eat 方法。</p>
-<p>逻辑上来讲，实例 s1 是通过 Student new 出来的，所以 s1 的隐式原型指向 Student 的显式原型。其次可以理解为 Student 的显式原型对象（Student.prototype）是通过 People new 出来的，所以 Student.prototype 的隐式原型指向 People 的显式原型（People.prototype）,</p>
-<img src="1606262732500.png" alt="1606262732500" style="zoom: 80%;" />
-
-<p>整体上说：</p>
-<ul>
-<li><p>访问 s1.name/number 是通过 s1 本身属性；</p>
-</li>
-<li><p>访问 s1.sayHi() ,此时由于 s1 本身没有 sayHi 方法，所以通过隐式原型指向的 Student 上的显式原型对象找到 sayHi 方法；</p>
-</li>
-<li><p>访问 s1.eat() , s1 的身上与其身上隐式原型指向的 Student.prototype 都没有此方法，因此再通过 Student.prototype 上的隐式原型指向的 People.prototype 上来找到 eat 方法（由此形成了一个链）</p>
-</li>
-</ul>
-<p>我们可以通过 s1.hasOwnProperty(‘属性’) 来判断某个属性或方法是否为自身拥有，那么 hasOwnProperty() 方法是哪里来的？</p>
-<p>从下图可以看出 Student 继承于 People ， People 继承于 Object ，所以说 People 的显式原型对象中也有隐式原型，并且指向 Object 的显式原型对象 Object.prototype （JS 引擎本身自己带的），Object 原型里面有很多方法。</p>
-<p><strong>因此 s1 访问 hasOwnProperty 方法，就会通过这个原型链来一级一级查找，最终在基类 Object 的显式原型上找到 hasOwnProperty 方法</strong></p>
-<img src="1606264497414.png" alt="1606264497414" style="zoom:80%;" />
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基类 Object 的显式原型对象身上的隐式原型永远指向 null </span></span><br><span class="line"><span class="comment">// 因此基类 Object 的显式原型对象为原型链的最后一级</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.__proto__     <span class="comment">// null</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="再看-instanceof"><a href="#再看-instanceof" class="headerlink" title="再看 instanceof"></a>再看 instanceof</h3><p>还是这张图， instanceof 前面的变量顺着隐式原型往上找，如果能对应到 instanceof 后面的参数 class 的显式原型（或者原型链上的显式原型），如果能对应到，那么 instanceof 成立返回 true，如果对应不到就返回 false ，</p>
-<img src="1606264497414.png" alt="1606264497414" style="zoom:80%;" />
-
-
-
-<h2 id="重要提示！！！"><a href="#重要提示！！！" class="headerlink" title="重要提示！！！"></a>重要提示！！！</h2><ul>
-<li>class 是 ES6 语法规范，由 ECMA 委员会发布</li>
-<li>ECMA 只规定语法规则，即我们代码的书写规范，不规定如何实现</li>
-<li>以上实现方式都是 V8 引擎的实现方式，也是主流的</li>
-</ul>
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><strong>题目</strong></h1><ul>
-<li><p>如何准确判断一个变量是不是数组？</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 结合原型链的图理解 instanceof </span></span><br><span class="line"><span class="keyword">const</span> a = []</span><br><span class="line">a <span class="keyword">instanceof</span> <span class="built_in">Array</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 从原型入手: Array.prototype.isPrototypeOf(obj)</span></span><br><span class="line"><span class="comment">// 利用isPrototypeOf()方法，判定Array是不是在obj的原型链中如果是，则返回true,否则false。</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.isPrototypeOf(a)   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>class 的原型本质，怎么理解？</p>
-<ul>
-<li>每个 class 都有显式原型 prototype</li>
-<li>每个实例都有隐式原型 __ proto __</li>
-<li>实例的隐式原型 __ proto __ 指向对应的 class 的显示原型 prototype</li>
-<li>获取实例身上属性或执行方法时，先在自身属性和方法寻找，如果找不到则自动去隐式原型指向的父类显式原型对象中查找 ，然后顺着与原型链去查找。</li>
-</ul>
-</li>
-<li><p>手写一个简易的 jQuery，考虑插件和扩展性</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">jQuery</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">selector</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 首先 DOM 查询</span></span><br><span class="line">        <span class="keyword">const</span> result = <span class="built_in">document</span>.querySelectorAll(selector)</span><br><span class="line">        <span class="keyword">const</span> length = result.length</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对查出的结果进行遍历</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="comment">// 把遍历的每个结果都放到 this 上</span></span><br><span class="line">            <span class="built_in">this</span>[i] = result[i]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">this</span>.length = length</span><br><span class="line">        <span class="built_in">this</span>.selector = selector</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jQuery 中的 get 方法</span></span><br><span class="line">    <span class="function"><span class="title">get</span>(<span class="params">index</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>[index]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// each 遍历</span></span><br><span class="line">    <span class="function"><span class="title">each</span>(<span class="params">fn</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">            <span class="keyword">const</span> elem = <span class="built_in">this</span>[i]</span><br><span class="line">            fn(elem)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// on 监听方法</span></span><br><span class="line">    <span class="function"><span class="title">on</span>(<span class="params">type, fn</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.each(<span class="function"><span class="params">elem</span> =&gt;</span> &#123;</span><br><span class="line">            elem.addEventListener(type, fn, <span class="literal">false</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 还可扩展很多 DOM 操作 API</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const $p = new jQuery(&#x27;p&#x27;)</span></span><br><span class="line"><span class="comment">// $p.get(1)</span></span><br><span class="line"><span class="comment">// $p.each((elem) =&gt; console.log(elem.nodeName))</span></span><br><span class="line"><span class="comment">// $p.on(&#x27;click&#x27;, () =&gt; alert(&#x27;clicked&#x27;))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 插件机制（做一个插件，但其实用的还是 jQuery）</span></span><br><span class="line">jQuery.prototype.dialog = <span class="function"><span class="keyword">function</span> (<span class="params">info</span>) </span>&#123;</span><br><span class="line">    alert(info)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $p.dialog(&#x27;123456&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// &quot;造轮子&quot; (复写机制)</span></span><br><span class="line"><span class="comment">// 就是基于这个 jQuery 去造一个更加完美的 myJQuery 供使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myJQuery</span> <span class="keyword">extends</span> <span class="title">jQuery</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">selector</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// super 的好处体现，直接使用 jQuery 的复杂 constructor，无需再写一遍逻辑</span></span><br><span class="line">        <span class="built_in">super</span>(selector)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 扩展自己的方法...</span></span><br><span class="line">    <span class="function"><span class="title">addClass</span>(<span class="params">className</span>)</span> &#123; &#125;</span><br><span class="line">    <span class="function"><span class="title">style</span>(<span class="params">data</span>)</span> &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>原型和原型链</tag>
       </tags>
   </entry>
   <entry>
