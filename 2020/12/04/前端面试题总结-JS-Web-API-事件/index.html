@@ -23,32 +23,22 @@
     var CONFIG = {"hostname":"morningstar175.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="使用github&#x2F;gitee pages服务搭建博客的好处有：   全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以绑定自己的域名； 数据安全，基于github的版本管理，想恢复到哪个历史版本都行； 博客内容可以轻松打包、转移、发布到其它平台； &#x3D; &#x3D;">
+  <meta name="description" content="事件不会，等于残废，必考！！！ 事件知识点  事件绑定 事件冒泡 事件代理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="将hexo博客部署到github或gitee">
-<meta property="og:url" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/index.html">
+<meta property="og:title" content="前端面试题总结-JS-Web-API-事件">
+<meta property="og:url" content="https://morningstar175.gitee.io/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E4%BA%8B%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Chao&#39;s Blog · 专注技术分享">
-<meta property="og:description" content="使用github&#x2F;gitee pages服务搭建博客的好处有：   全是静态文件，访问速度快； 免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台； 可以绑定自己的域名； 数据安全，基于github的版本管理，想恢复到哪个历史版本都行； 博客内容可以轻松打包、转移、发布到其它平台； &#x3D; &#x3D;">
+<meta property="og:description" content="事件不会，等于残废，必考！！！ 事件知识点  事件绑定 事件冒泡 事件代理">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/newrepository.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/newsave.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/%E9%83%A8%E7%BD%B211.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/%E9%83%A8%E7%BD%B2222.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/%E8%AE%BF%E9%97%AE11.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/gitee%E6%9C%8D%E5%8A%A1.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg">
-<meta property="og:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/MyblogAdress.jpg">
-<meta property="article:published_time" content="2020-11-18T11:12:17.000Z">
-<meta property="article:modified_time" content="2020-11-18T12:51:50.000Z">
+<meta property="article:published_time" content="2020-12-04T11:48:14.000Z">
+<meta property="article:modified_time" content="2020-12-04T11:49:50.897Z">
 <meta property="article:author" content="Morningstar">
-<meta property="article:tag" content="部署博客到远端">
+<meta property="article:tag" content="JS基础">
+<meta property="article:tag" content="知识点总结">
+<meta property="article:tag" content="JS-Web-API-BOM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/newrepository.jpg">
 
-<link rel="canonical" href="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/">
+<link rel="canonical" href="https://morningstar175.gitee.io/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E4%BA%8B%E4%BB%B6/">
 
 
 <script id="page-configurations">
@@ -61,7 +51,7 @@
   };
 </script>
 
-  <title>将hexo博客部署到github或gitee | Chao's Blog · 专注技术分享</title>
+  <title>前端面试题总结-JS-Web-API-事件 | Chao's Blog · 专注技术分享</title>
   
 
 
@@ -214,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://morningstar175.gitee.io/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/">
+    <link itemprop="mainEntityOfPage" href="https://morningstar175.gitee.io/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E4%BA%8B%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -227,7 +217,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          将hexo博客部署到github或gitee
+          前端面试题总结-JS-Web-API-事件
         </h1>
 
         <div class="post-meta">
@@ -238,7 +228,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-11-18 19:12:17 / 修改时间：20:51:50" itemprop="dateCreated datePublished" datetime="2020-11-18T19:12:17+08:00">2020-11-18</time>
+              <time title="创建时间：2020-12-04 19:48:14 / 修改时间：19:49:50" itemprop="dateCreated datePublished" datetime="2020-12-04T19:48:14+08:00">2020-12-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +236,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E4%BB%8E0%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%8F%8A%E7%BE%8E%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">从0搭建博客及美化</span></a>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">前端面试题</span></a>
                 </span>
             </span>
 
@@ -263,14 +253,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>993</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -282,61 +272,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>使用github/gitee pages服务搭建博客的好处有： </p>
+        <p>事件不会，等于残废，必考！！！</p>
+<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p><strong>知识点</strong></p>
 <ul>
-<li>全是静态文件，访问速度快；</li>
-<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
-<li>可以绑定自己的域名；</li>
-<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
-<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
-<li>= =</li>
+<li>事件绑定</li>
+<li>事件冒泡</li>
+<li>事件代理</li>
 </ul>
 <a id="more"></a>
 
-<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
-<li>优点：部署比较简单，且不用频繁的更新部署</li>
-<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 事件绑定</span></span><br><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&quot;btn1&quot;</span>)</span><br><span class="line">btn.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;clicked&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件冒泡</span></span><br><span class="line"><span class="comment">// 当子元素触发点击后，其父元素，或其所在的向上层级元素，都会截获点击事件</span></span><br><span class="line"><span class="keyword">const</span> body = <span class="built_in">document</span>.body</span><br><span class="line">bindEvent(body, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;body clicked&#x27;</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(event.target) <span class="comment">// 获取触发的元素</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阻止冒泡</span></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">bindEvent(p1, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    event.stopPropagation() <span class="comment">// 阻止冒泡</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 事件代理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// HTML</span></span><br><span class="line"><span class="comment">/* &lt;div id=&quot;div3&quot;&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a1&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a2&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a3&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a4&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;button&gt;加载更多...&lt;/button&gt;</span></span><br><span class="line"><span class="comment">&lt;/div&gt; */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 代理绑定</span></span><br><span class="line"><span class="comment">// 就是把事件绑定到一些不好每个都去绑定事件的情况</span></span><br><span class="line"><span class="comment">// 我们把它绑定到父元素上，然后做一些判断是否为我们想要的元素</span></span><br><span class="line"><span class="comment">// 然后再做其他的一些动作</span></span><br><span class="line"><span class="keyword">const</span> div3 = <span class="built_in">document</span>.getElementById(<span class="string">&quot;div3&quot;</span>)</span><br><span class="line">bindEvent(div3, <span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    event.preventDefault()</span><br><span class="line">    <span class="keyword">const</span> target = event.target</span><br><span class="line">    <span class="keyword">if</span> (target.nodeName === <span class="string">&quot;A&quot;</span>) &#123;</span><br><span class="line">        alert(target.innerHTML)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h2><ul>
+<li>代码简洁</li>
+<li>减少浏览器内存占用（如果 a 标签非常多的话，每个 a 标签都去挂一个事件，数量过多会非常耗费内存，但是我们只在父元素挂一次事件就不会耗费那么多内存）</li>
+<li>但是，不要滥用（在瀑布流、结构复杂不好每一个都绑定事件的这种情况下去用）</li>
 </ul>
-<p>登录github后，点击右上角的＋，然后点击new repository</p>
-<p><img src="newrepository.jpg"></p>
-<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
-<p><img src="newsave.jpg"></p>
-<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
-<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
-<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<h2 id="通用的事件绑定函数-重点"><a href="#通用的事件绑定函数-重点" class="headerlink" title="通用的事件绑定函数(重点)"></a>通用的事件绑定函数(重点)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, selector, fn</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入参数个数</span></span><br><span class="line">    <span class="keyword">if</span> (fn == <span class="literal">null</span>) &#123;</span><br><span class="line">        fn = selector</span><br><span class="line">        selector = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    elem.addEventListener(type, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> target = event.target</span><br><span class="line">        <span class="keyword">if</span> (selector) &#123;</span><br><span class="line">            <span class="comment">// 需要代理绑定</span></span><br><span class="line">            <span class="comment">// 判断一个 DOM 元素是不是符合一个 CSS 选择器</span></span><br><span class="line">            <span class="keyword">if</span> (target.matches(selector)) &#123;</span><br><span class="line">                fn.call(target, event)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; eles &#123;</span><br><span class="line">            <span class="comment">// 不需要代理绑定</span></span><br><span class="line">            fn.call(target, event)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
-<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
-<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
-<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
-<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
-<li>优点：访问速度快，中文页面友好</li>
-<li>缺点：每次部署后都需要服务中点击更新部署</li>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
+<li><p>编写一个通用的事件监听函数</p>
+<p>参考上面代码</p>
+</li>
 </ul>
-<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
-<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
-<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
-<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
-<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
-<p><img src="MyblogAdress.jpg"></p>
-<p>注意：每次执行完命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
-
-<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
-<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
+<ul>
+<li><p>描述事件冒泡的流程</p>
+<p>1.基于 DOM 树形结构</p>
+<p>2.事件会顺着触发元素往上冒泡</p>
+<p>3.应用场景：代理</p>
+</li>
+</ul>
+<ul>
+<li><p>无限下拉的图片列表，如何监听每个图片的点击</p>
+<p>1.事件代理</p>
+<p>2.用 event.target 获取触发元素</p>
+<p>3.用 matches 来判断是否触发元素</p>
+</li>
+</ul>
 
     </div>
 
@@ -385,7 +359,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0%E8%BF%9C%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 部署博客到远端</a>
+              <a href="/tags/JS%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> JS基础</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" rel="tag"><i class="fa fa-tag"></i> 知识点总结</a>
+              <a href="/tags/JS-Web-API-BOM/" rel="tag"><i class="fa fa-tag"></i> JS-Web-API-BOM</a>
           </div>
 
         
@@ -394,13 +370,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/18/hexo-next%E4%B8%BB%E9%A2%98%E6%A0%B7%E5%BC%8F%E7%BE%8E%E5%8C%96/" rel="prev" title="hexo+next主题样式美化">
-      <i class="fa fa-chevron-left"></i> hexo+next主题样式美化
+    <a href="/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-BOM/" rel="prev" title="前端面试题总结-JS-Web-API-BOM">
+      <i class="fa fa-chevron-left"></i> 前端面试题总结-JS-Web-API-BOM
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" rel="next" title="前端面试刷题的方法和注意事项">
-      前端面试刷题的方法和注意事项 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -464,7 +437,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0%E8%BF%9C%E7%AB%AF"><span class="nav-number">1.</span> <span class="nav-text">部署到远端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#github%E9%83%A8%E7%BD%B2%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">github部署的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitee%EF%BC%88%E7%A0%81%E4%BA%91%EF%BC%89%E9%83%A8%E7%BD%B2%E5%88%B0%E8%BF%9C%E7%AB%AF"><span class="nav-number">1.2.</span> <span class="nav-text">gitee（码云）部署到远端</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">事件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E4%BB%A3%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">事件代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A%E5%87%BD%E6%95%B0-%E9%87%8D%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">通用的事件绑定函数(重点)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">题目</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
