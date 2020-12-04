@@ -156,34 +156,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PowerShell字符串缺少终止符错误</title>
-    <url>/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/</url>
-    <content><![CDATA[<p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">字符串缺少终止符: <span class="string">&#x27;。</span></span><br><span class="line"><span class="string">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString</span></span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<p>然后毫无以外的 powershell 文件夹切换也没成功。。。</p>
-<p>直接 powershell 用切换命令，毫无意外的也跪了…</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d <span class="string">&quot;D:\Chao&#x27;s Blog&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>看了一眼报错信息发现是没有终止字符，我的文件夹的名如下图</p>
-<p><img src="image-20201201082804013.png" alt="image-20201201082804013"></p>
-<p>原来是这个单引号 ‘ 搞的，<strong>先说解决方法</strong>，<strong>直接删掉这个 ‘s 前面的 ‘</strong> </p>
-<p>如果此时末尾给个闭合的 ‘ , 会报如下的错误</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Location</span> : 找不到接受实际参数“s”的位置形式参数。</span><br><span class="line">所在位置 行:<span class="number">1</span> 字符: <span class="number">1</span></span><br><span class="line">+ <span class="built_in">Set-Location</span> <span class="literal">-literalPath</span> <span class="string">&#x27;D:\Chao&#x27;</span>s Blog<span class="string">&#x27;&#x27;</span></span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidArgument: (:) [<span class="built_in">Set-Location</span>]，ParameterBindingException</span><br><span class="line">    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand</span><br></pre></td></tr></table></figure>
-
-<p>所以平时我们命名文件夹，不建议加符号之类的。</p>
-]]></content>
-      <categories>
-        <category>PowerShell命令行报错</category>
-      </categories>
-      <tags>
-        <tag>PowerShell</tag>
-        <tag>字符串缺少终止符</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo框架搭建个人博客</title>
     <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
@@ -229,6 +201,60 @@
       <tags>
         <tag>hexo框架</tag>
         <tag>博客搭建前的准备工作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PowerShell字符串缺少终止符错误</title>
+    <url>/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">字符串缺少终止符: <span class="string">&#x27;。</span></span><br><span class="line"><span class="string">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>然后毫无以外的 powershell 文件夹切换也没成功。。。</p>
+<p>直接 powershell 用切换命令，毫无意外的也跪了…</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d <span class="string">&quot;D:\Chao&#x27;s Blog&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>看了一眼报错信息发现是没有终止字符，我的文件夹的名如下图</p>
+<p><img src="image-20201201082804013.png" alt="image-20201201082804013"></p>
+<p>原来是这个单引号 ‘ 搞的，<strong>先说解决方法</strong>，<strong>直接删掉这个 ‘s 前面的 ‘</strong> </p>
+<p>如果此时末尾给个闭合的 ‘ , 会报如下的错误</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Location</span> : 找不到接受实际参数“s”的位置形式参数。</span><br><span class="line">所在位置 行:<span class="number">1</span> 字符: <span class="number">1</span></span><br><span class="line">+ <span class="built_in">Set-Location</span> <span class="literal">-literalPath</span> <span class="string">&#x27;D:\Chao&#x27;</span>s Blog<span class="string">&#x27;&#x27;</span></span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidArgument: (:) [<span class="built_in">Set-Location</span>]，ParameterBindingException</span><br><span class="line">    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand</span><br></pre></td></tr></table></figure>
+
+<p>所以平时我们命名文件夹，不建议加符号之类的。</p>
+]]></content>
+      <categories>
+        <category>PowerShell命令行报错</category>
+      </categories>
+      <tags>
+        <tag>PowerShell</tag>
+        <tag>字符串缺少终止符</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS-Web-API-BOM</title>
+    <url>/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-BOM/</url>
+    <content><![CDATA[<p>内容虽然不多，但是不可不会</p>
+<h1 id="BOM-操作-（Browser-Object-Model）"><a href="#BOM-操作-（Browser-Object-Model）" class="headerlink" title="BOM 操作 （Browser Object Model）"></a>BOM 操作 （Browser Object Model）</h1><p>这一块在面试中考点相对较少</p>
+<a id="more"></a>
+
+<p><strong>知识点</strong></p>
+<ul>
+<li><strong>navigator</strong></li>
+<li>screen</li>
+<li><strong>location</strong></li>
+<li>history</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// navigator</span></span><br><span class="line"><span class="comment">// 识别浏览器类型</span></span><br><span class="line"><span class="keyword">const</span> ua = navigator.userAgent</span><br><span class="line"><span class="keyword">const</span> isEdge = ua.indexOf(<span class="string">&quot;Edg&quot;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(isEdge)</span><br><span class="line"></span><br><span class="line"><span class="comment">// screen</span></span><br><span class="line"><span class="built_in">console</span>.log(screen.width)   <span class="comment">// 浏览器屏幕宽度</span></span><br><span class="line"><span class="built_in">console</span>.log(screen.height)  <span class="comment">// 浏览器屏幕高度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// location</span></span><br><span class="line"><span class="built_in">console</span>.log(location.href)        <span class="comment">// 网址</span></span><br><span class="line"><span class="built_in">console</span>.log(location.protocol)    <span class="comment">// 协议</span></span><br><span class="line"><span class="built_in">console</span>.log(location.host)        <span class="comment">// 域名</span></span><br><span class="line"><span class="built_in">console</span>.log(location.pathname)    <span class="comment">// 浏览器路径</span></span><br><span class="line"><span class="built_in">console</span>.log(location.search)      <span class="comment">// 查询参数</span></span><br><span class="line"><span class="built_in">console</span>.log(location.hash)		  <span class="comment">// 哈希值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// history</span></span><br><span class="line">history.back()      <span class="comment">// 操作页面后退</span></span><br><span class="line">history.forward()   <span class="comment">// 操作页面前进</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>JS-Web-API-BOM</tag>
       </tags>
   </entry>
   <entry>
@@ -460,50 +486,6 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>异步进阶</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题总结-JS基础之单线程和异步</title>
-    <url>/2020/12/01/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%BC%82%E6%AD%A5/</url>
-    <content><![CDATA[<p>三座大山之三，必考！</p>
-<h1 id="单线程和异步"><a href="#单线程和异步" class="headerlink" title="单线程和异步"></a>单线程和异步</h1><ul>
-<li>JS 是单线程语言，只能同时做一件事</li>
-<li>浏览器和 nodejs 已经支持 JS启动进程，如 Web Worker</li>
-<li>JS 和 DOM 渲染共用一个线程，因为 JS 可以修改 DOM 结构</li>
-</ul>
-<p>因此</p>
-<a id="more"></a>
-
-<ul>
-<li>遇到等待（网络请求、定时任务）不能卡住</li>
-<li>需要异步（解决单线程等待的这种问题）</li>
-<li>异步是基于 callback 函数形式</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 异步 通过 callback 函数，这里是 () =&gt; &#123; console.log(200) &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">alert(<span class="number">200</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="异步的应用场景"><a href="#异步的应用场景" class="headerlink" title="异步的应用场景"></a>异步的应用场景</h2><ul>
-<li>网络请求，如 Ajax、图片加载</li>
-<li>定时任务，如 setTimeout</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ajax</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line">$.get(<span class="string">&quot;./data.json&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;end&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 图片加载</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;loaded&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(end)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setTimeout</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setInterval</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
-
-<h1 id="callback-hell"><a href="#callback-hell" class="headerlink" title="callback hell"></a>callback hell</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// callback hell (回调地狱)</span></span><br><span class="line"><span class="comment">// 获取第一份数据</span></span><br><span class="line">$.get(url1, <span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data1)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取第二份数据</span></span><br><span class="line">    $.get(url2, <span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取第三份数据</span></span><br><span class="line">        $.get(url3, <span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data3)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 还可能获取更多的数据</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Promise 主要解决的是 callback hell 的问题</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url,</span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">                resolve(data)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="title">error</span>(<span class="params">err</span>)</span> &#123;</span><br><span class="line">                reject(err)</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url1 = <span class="string">&quot;./data1.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./data2.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url3 = <span class="string">&quot;./data3.json&quot;</span></span><br><span class="line">getData(url1)</span><br><span class="line">    .then(<span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data1)</span><br><span class="line">        <span class="keyword">return</span> getData(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line">        <span class="keyword">return</span> getData(url3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.error(err))</span><br></pre></td></tr></table></figure>
-
-<h1 id="同步与异步的区别"><a href="#同步与异步的区别" class="headerlink" title="同步与异步的区别"></a>同步与异步的区别</h1><ul>
-<li>异步是基于 JS 是单线程语言</li>
-<li>异步不会阻塞代码执行</li>
-<li>同步会阻塞代码执行</li>
-</ul>
-<h1 id="手写-Promise-加载两张图片"><a href="#手写-Promise-加载两张图片" class="headerlink" title="手写 Promise 加载两张图片"></a>手写 Promise 加载两张图片</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err)</span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> urll = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./2.jpg&quot;</span></span><br><span class="line">loadImg(urll)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.width)</span><br><span class="line">        <span class="comment">// 返回一个普通对象</span></span><br><span class="line">        <span class="keyword">return</span> img1</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.height)</span><br><span class="line">        <span class="comment">// 返回一个 Promise 实例</span></span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.width)</span><br><span class="line">        <span class="keyword">return</span> img2</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.height)</span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>变量类型和计算</tag>
       </tags>
   </entry>
   <entry>
@@ -755,6 +737,50 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>作用域和闭包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS基础之单线程和异步</title>
+    <url>/2020/12/01/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%BC%82%E6%AD%A5/</url>
+    <content><![CDATA[<p>三座大山之三，必考！</p>
+<h1 id="单线程和异步"><a href="#单线程和异步" class="headerlink" title="单线程和异步"></a>单线程和异步</h1><ul>
+<li>JS 是单线程语言，只能同时做一件事</li>
+<li>浏览器和 nodejs 已经支持 JS启动进程，如 Web Worker</li>
+<li>JS 和 DOM 渲染共用一个线程，因为 JS 可以修改 DOM 结构</li>
+</ul>
+<p>因此</p>
+<a id="more"></a>
+
+<ul>
+<li>遇到等待（网络请求、定时任务）不能卡住</li>
+<li>需要异步（解决单线程等待的这种问题）</li>
+<li>异步是基于 callback 函数形式</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 异步 通过 callback 函数，这里是 () =&gt; &#123; console.log(200) &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">alert(<span class="number">200</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="异步的应用场景"><a href="#异步的应用场景" class="headerlink" title="异步的应用场景"></a>异步的应用场景</h2><ul>
+<li>网络请求，如 Ajax、图片加载</li>
+<li>定时任务，如 setTimeout</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ajax</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line">$.get(<span class="string">&quot;./data.json&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;end&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 图片加载</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;loaded&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(end)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setTimeout</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setInterval</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="callback-hell"><a href="#callback-hell" class="headerlink" title="callback hell"></a>callback hell</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// callback hell (回调地狱)</span></span><br><span class="line"><span class="comment">// 获取第一份数据</span></span><br><span class="line">$.get(url1, <span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data1)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取第二份数据</span></span><br><span class="line">    $.get(url2, <span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取第三份数据</span></span><br><span class="line">        $.get(url3, <span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data3)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 还可能获取更多的数据</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Promise 主要解决的是 callback hell 的问题</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url,</span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">                resolve(data)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="title">error</span>(<span class="params">err</span>)</span> &#123;</span><br><span class="line">                reject(err)</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url1 = <span class="string">&quot;./data1.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./data2.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url3 = <span class="string">&quot;./data3.json&quot;</span></span><br><span class="line">getData(url1)</span><br><span class="line">    .then(<span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data1)</span><br><span class="line">        <span class="keyword">return</span> getData(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line">        <span class="keyword">return</span> getData(url3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.error(err))</span><br></pre></td></tr></table></figure>
+
+<h1 id="同步与异步的区别"><a href="#同步与异步的区别" class="headerlink" title="同步与异步的区别"></a>同步与异步的区别</h1><ul>
+<li>异步是基于 JS 是单线程语言</li>
+<li>异步不会阻塞代码执行</li>
+<li>同步会阻塞代码执行</li>
+</ul>
+<h1 id="手写-Promise-加载两张图片"><a href="#手写-Promise-加载两张图片" class="headerlink" title="手写 Promise 加载两张图片"></a>手写 Promise 加载两张图片</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err)</span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> urll = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./2.jpg&quot;</span></span><br><span class="line">loadImg(urll)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.width)</span><br><span class="line">        <span class="comment">// 返回一个普通对象</span></span><br><span class="line">        <span class="keyword">return</span> img1</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.height)</span><br><span class="line">        <span class="comment">// 返回一个 Promise 实例</span></span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.width)</span><br><span class="line">        <span class="keyword">return</span> img2</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.height)</span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>变量类型和计算</tag>
       </tags>
   </entry>
   <entry>
