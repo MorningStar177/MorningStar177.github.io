@@ -23,17 +23,22 @@
     var CONFIG = {"hostname":"morningstar175.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="越努力越幸运">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Chao&#39;s Blog · 专注技术分享">
-<meta property="og:url" content="https://morningstar175.gitee.io/archives/2020/index.html">
+  <meta name="description" content="存储知识点  cookie localStorage 和 session Storage">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试题总结-JS-Web-API-存储">
+<meta property="og:url" content="https://morningstar175.gitee.io/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E5%AD%98%E5%82%A8/index.html">
 <meta property="og:site_name" content="Chao&#39;s Blog · 专注技术分享">
-<meta property="og:description" content="越努力越幸运">
+<meta property="og:description" content="存储知识点  cookie localStorage 和 session Storage">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-08T07:41:40.000Z">
+<meta property="article:modified_time" content="2020-12-08T07:43:18.240Z">
 <meta property="article:author" content="Morningstar">
+<meta property="article:tag" content="JS基础">
+<meta property="article:tag" content="知识点总结">
+<meta property="article:tag" content="JS-Web-API-Ajax">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://morningstar175.gitee.io/archives/2020/">
+<link rel="canonical" href="https://morningstar175.gitee.io/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E5%AD%98%E5%82%A8/">
 
 
 <script id="page-configurations">
@@ -41,12 +46,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | Chao's Blog · 专注技术分享</title>
+  <title>前端面试题总结-JS-Web-API-存储 | Chao's Blog · 专注技术分享</title>
   
 
 
@@ -192,239 +197,198 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 18 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://morningstar175.gitee.io/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E5%AD%98%E5%82%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Morningstar">
+      <meta itemprop="description" content="越努力越幸运">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chao's Blog · 专注技术分享">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端面试题总结-JS-Web-API-存储
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-08 15:41:40 / 修改时间：15:43:18" itemprop="dateCreated datePublished" datetime="2020-12-08T15:41:40+08:00">2020-12-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">前端面试题</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>406</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        <h1 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h1><p>知识点</p>
+<ul>
+<li>cookie</li>
+<li>localStorage 和 session Storage</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><ul>
+<li><p>本身用于浏览器和 server 通讯</p>
+</li>
+<li><p>被”借用”到本地存储</p>
+</li>
+<li><p>可用 document.cookie = ‘…’ 来修改</p>
+</li>
+</ul>
+<h2 id="cookie-缺点"><a href="#cookie-缺点" class="headerlink" title="cookie 缺点"></a>cookie 缺点</h2><ul>
+<li>存储大小，最大 4k</li>
+<li>http 请求时需要发送到服务端，增加请求数据量</li>
+<li>只能用 document.cookie = ‘…’ 来修改，太过简陋</li>
+<li>cookie 的安全性过低</li>
+</ul>
+<h2 id="localStorage-和-sessionStorage"><a href="#localStorage-和-sessionStorage" class="headerlink" title="localStorage 和 sessionStorage"></a>localStorage 和 sessionStorage</h2><ul>
+<li>HTML5 专门为存储而设计，最大可存 5M</li>
+<li>API 简单易用 setItem、getItem</li>
+<li>不会随着 http 请求被发送出去</li>
+</ul>
+<p><strong>二者区别</strong></p>
+<ul>
+<li>localStorage 数据会永久存储，除非代码或手动删除</li>
+<li>sessionStorage 数据只存在于当前会话，浏览器关闭则清空</li>
+<li>一般用 localStorage 会更多一些</li>
+</ul>
+<h1 id="描述-cookie、localStorage、sessionStorage区别"><a href="#描述-cookie、localStorage、sessionStorage区别" class="headerlink" title="描述 cookie、localStorage、sessionStorage区别"></a>描述 cookie、localStorage、sessionStorage区别</h1><ul>
+<li>容量</li>
+<li>API 易用性</li>
+<li>是否跟随 http 请求发送出去</li>
+</ul>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-08T15:41:40+08:00"
-              content="2020-12-08">
-          12-08
-        </time>
+    
+    
+    
+        <div class="reward-container">
+  <div>如果文章对您有帮助，您可以鼓励一下作者.</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Morningstar 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Morningstar 支付宝">
+        <p>支付宝</p>
       </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E5%AD%98%E5%82%A8/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS-Web-API-存储</span>
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
           </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-08T15:05:28+08:00"
-              content="2020-12-08">
-          12-08
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-Ajax/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS-Web-API-Ajax</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-04T19:48:14+08:00"
-              content="2020-12-04">
-          12-04
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E4%BA%8B%E4%BB%B6/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS-Web-API-事件</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-04T18:16:28+08:00"
-              content="2020-12-04">
-          12-04
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-BOM/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS-Web-API-BOM</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-04T12:41:02+08:00"
-              content="2020-12-04">
-          12-04
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-DOM/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS-Web-API-DOM</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-03T11:51:24+08:00"
-              content="2020-12-03">
-          12-03
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/03/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E4%B9%8B%E5%BC%82%E6%AD%A5%E8%BF%9B%E9%98%B62/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS之异步进阶2</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-02T21:54:29+08:00"
-              content="2020-12-02">
-          12-02
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/02/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E4%B9%8B%E5%BC%82%E6%AD%A5%E8%BF%9B%E9%98%B61/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS之异步进阶1</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-01T22:06:07+08:00"
-              content="2020-12-01">
-          12-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/01/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%BC%82%E6%AD%A5/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS基础之单线程和异步</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-12-01T08:38:37+08:00"
-              content="2020-12-01">
-          12-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/" itemprop="url">
-            <span itemprop="name">PowerShell字符串缺少终止符错误</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-11-30T20:52:23+08:00"
-              content="2020-11-30">
-          11-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/11/30/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85/" itemprop="url">
-            <span itemprop="name">前端面试题总结-JS基础之作用域和闭包</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-
+        </div>
     </div>
   </div>
-  
-  
-  
 
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JS%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> JS基础</a>
+              <a href="/tags/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" rel="tag"><i class="fa fa-tag"></i> 知识点总结</a>
+              <a href="/tags/JS-Web-API-Ajax/" rel="tag"><i class="fa fa-tag"></i> JS-Web-API-Ajax</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-Ajax/" rel="prev" title="前端面试题总结-JS-Web-API-Ajax">
+      <i class="fa fa-chevron-left"></i> 前端面试题总结-JS-Web-API-Ajax
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="extend next" rel="next" href="/archives/2020/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
+  
+  
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MTgzOC8yODMxOQ=="></div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -471,6 +435,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8"><span class="nav-number">1.</span> <span class="nav-text">存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie"><span class="nav-number">1.1.</span> <span class="nav-text">cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie-%E7%BC%BA%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">cookie 缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#localStorage-%E5%92%8C-sessionStorage"><span class="nav-number">1.3.</span> <span class="nav-text">localStorage 和 sessionStorage</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0-cookie%E3%80%81localStorage%E3%80%81sessionStorage%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">描述 cookie、localStorage、sessionStorage区别</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -645,6 +610,21 @@
 
     
 
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
 
   
   <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
