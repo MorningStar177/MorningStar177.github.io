@@ -1,6 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>hexo更换next主题及部分配置功能的启用</title>
+    <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
+    <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
+<a id="more"></a>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
+<li><p>已经生成hexo博客主页（可以参考我的上一篇博客）</p>
+</li>
+<li><p>代码编辑器（sublime、vscode等）</p>
+</li>
+<li><p>支持MarkDown语言的编辑器（推荐Typora）</p>
+</li>
+</ul>
+<p>注：站点配置文件指的是博客文件夹根目录中的_config.yml，主题配置文件指的是next主题文件夹下的_config.yml</p>
+<h1 id="下载、启用及配置next主题"><a href="#下载、启用及配置next主题" class="headerlink" title="下载、启用及配置next主题"></a>下载、启用及配置next主题</h1><h2 id="下载next主题"><a href="#下载next主题" class="headerlink" title="下载next主题"></a>下载next主题</h2><p>点击链接跳转到github页面下载next主题压缩包<a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
+<p>解压至站点（博客文件夹根目录）的 themes 目录下，并将解压后的文件夹名称更改为next。</p>
+<h2 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h2><p>打开站点配置文件，推荐使用sublime, Ctrl+L快捷键输入theme找到 theme 字段，并将其值更改为 next（保证与themes文件夹下面next主题文件夹名字一致否则主题失效）。</p>
+<p><img src="%E5%90%AF%E7%94%A8next%E4%B8%BB%E9%A2%98.jpg"></p>
+<p>更改后在命令行中Ctrl+C打断正在运行的服务，hexo s重新启动服务器，并在浏览器中刷新输入命令行中的本地地址，当出现下面的页面说明更换主题成功。</p>
+<p><img src="%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F.jpg"></p>
+<p>注：根据个人意愿删除themes文件夹下的landscape主题。</p>
+<h2 id="更改主题配置文件"><a href="#更改主题配置文件" class="headerlink" title="更改主题配置文件"></a>更改主题配置文件</h2><h3 id="更改主题为中文"><a href="#更改主题为中文" class="headerlink" title="更改主题为中文"></a>更改主题为中文</h3><p>在主题配置文件文件中找到language字段修改为zh-CN，如下图  </p>
+<p><img src="zh-CN.jpg"></p>
+<p>按顺序在命令行中执行命令hexo clean、hexo g、hexo s，重启服务器后刷新页面即可生效。</p>
+<p>小小吐槽一下：这步本人遇到了一点小坑，官方网站配置的参考如下图</p>
+<p><img src="%E5%AE%98%E6%96%B9zh.jpg"></p>
+<p>然而配置完成后并没有生效，检查了一下next主题的根目录下的languages，发现有zh-CN.yml语言配置文件，于是值改成zh-CN后中文就生效了…</p>
+<h3 id="增加标签页、分类页"><a href="#增加标签页、分类页" class="headerlink" title="增加标签页、分类页"></a>增加标签页、分类页</h3><p>打开主题配置文件，找到menu字段，将下图白色箭头所示的注释打开（直接删掉前面的#或者注释快捷键都可以），在首页刷新，就可以看到红色箭头所示的效果（但是此时点开标签会报错空内容）。  </p>
+<p><img src="%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE%E9%A1%B5%E3%80%81%E5%88%86%E7%B1%BB%E9%A1%B5.jpg"></p>
+<p>关掉博客服务，然后输入命令hexo n page tags</p>
+<p>命令执行完成后会在source目录下新增一个tags文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
+<p><img src="newtags.jpg"></p>
+<p>再开启服务，刷新后点开首页中的标签就会有内容了。</p>
+<p>关掉服务，输入命令hexo n page categories，命令执行完成后会在source目录下新增一个categories文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
+<p><img src="newcategories.jpg"></p>
+<p>再开启服务，刷新后点开首页中的分类就会有内容了。</p>
+<h3 id="next主题页面布局样式更改"><a href="#next主题页面布局样式更改" class="headerlink" title="next主题页面布局样式更改"></a>next主题页面布局样式更改</h3><p>进入站点配置文件，找到Scheme 字段，根据自己的喜欢更改主题的样式（打开一个，将其他注释），每次修改完成后都可以在浏览器中刷新查看主题样式的变化。</p>
+<p><img src="next%E4%B8%BB%E9%A2%98%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F%E6%9B%B4%E6%94%B9.jpg"></p>
+<h3 id="设置主题的头像"><a href="#设置主题的头像" class="headerlink" title="设置主题的头像"></a>设置主题的头像</h3><p>在主题配置文件中查找avatar，url后面的#号去掉，并按照你自己头像的后缀更改此处的头像名后缀，在主题next下的\source\images文件夹中删掉avatar.gif，替换为你此处在url中的命名图片即可，刷新页面就会有头像显示。  </p>
+<p><img src="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98%E7%9A%84%E5%A4%B4%E5%83%8F.jpg"></p>
+<h3 id="更改标题及作者"><a href="#更改标题及作者" class="headerlink" title="更改标题及作者"></a>更改标题及作者</h3><p>在站点配置文件中找到这几行，按需修改即可</p>
+<p><img src="%E6%9B%B4%E6%94%B9%E6%A0%87%E9%A2%98%E5%8F%8A%E4%BD%9C%E8%80%85.jpg"></p>
+<h3 id="启用左边社交栏链接"><a href="#启用左边社交栏链接" class="headerlink" title="启用左边社交栏链接"></a>启用左边社交栏链接</h3><p>在博客的_config.yml中找到这几行，按需修改即可  </p>
+<p><img src="%E5%90%AF%E7%94%A8%E5%B7%A6%E4%BE%A7%E7%A4%BE%E4%BA%A4%E6%A0%8F%E9%93%BE%E6%8E%A5.jpg"></p>
+<p> 如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo更换主题</tag>
+        <tag>next主题</tag>
+        <tag>next主题配置功能启用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PowerShell字符串缺少终止符错误</title>
+    <url>/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">字符串缺少终止符: <span class="string">&#x27;。</span></span><br><span class="line"><span class="string">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>然后毫无以外的 powershell 文件夹切换也没成功。。。</p>
+<p>直接 powershell 用切换命令，毫无意外的也跪了…</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d <span class="string">&quot;D:\Chao&#x27;s Blog&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>看了一眼报错信息发现是没有终止字符，我的文件夹的名如下图</p>
+<p><img src="image-20201201082804013.png" alt="image-20201201082804013"></p>
+<p>原来是这个单引号 ‘ 搞的，<strong>先说解决方法</strong>，<strong>直接删掉这个 ‘s 前面的 ‘</strong> </p>
+<p>如果此时末尾给个闭合的 ‘ , 会报如下的错误</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Location</span> : 找不到接受实际参数“s”的位置形式参数。</span><br><span class="line">所在位置 行:<span class="number">1</span> 字符: <span class="number">1</span></span><br><span class="line">+ <span class="built_in">Set-Location</span> <span class="literal">-literalPath</span> <span class="string">&#x27;D:\Chao&#x27;</span>s Blog<span class="string">&#x27;&#x27;</span></span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidArgument: (:) [<span class="built_in">Set-Location</span>]，ParameterBindingException</span><br><span class="line">    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand</span><br></pre></td></tr></table></figure>
+
+<p>所以平时我们命名文件夹，不建议加符号之类的。</p>
+]]></content>
+      <categories>
+        <category>PowerShell命令行报错</category>
+      </categories>
+      <tags>
+        <tag>PowerShell</tag>
+        <tag>字符串缺少终止符</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo框架搭建个人博客</title>
+    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
+<p>在搭建博客开始之前，你必须已经</p>
+<a id="more"></a>
+
+<ul>
+<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
+</li>
+<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
+</li>
+<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
+<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
+<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
+<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
+</li>
+</ul>
+<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
+<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
+<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
+<ul>
+<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
+<li>重新执行此次命令</li>
+<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
+</ul>
+<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
+<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
+<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
+<p><img src="1.jpg"></p>
+<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
+<p>这时候我们可以启动我们的博客</p>
+<p>命令行：hexo s     （注：s为start的简写）</p>
+<p><img src="2.jpg"></p>
+<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
+<p> <img src="3.jpg"></p>
+<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
+<p>后续还会更新更换其他主题及页面样式的美化。</p>
+<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo框架</tag>
+        <tag>博客搭建前的准备工作</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo+next主题样式美化</title>
     <url>/2020/11/18/hexo-next%E4%B8%BB%E9%A2%98%E6%A0%B7%E5%BC%8F%E7%BE%8E%E5%8C%96/</url>
     <content><![CDATA[<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>首先新建一篇文章，在命令行输入：hexo n “文章名”，就会在博客的根目录的\source_posts下面新增一篇命名的文章，此时就可以使用Typora编辑器写博客了。</p>
@@ -100,138 +232,6 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo更换next主题及部分配置功能的启用</title>
-    <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
-    <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
-<a id="more"></a>
-
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ul>
-<li><p>已经生成hexo博客主页（可以参考我的上一篇博客）</p>
-</li>
-<li><p>代码编辑器（sublime、vscode等）</p>
-</li>
-<li><p>支持MarkDown语言的编辑器（推荐Typora）</p>
-</li>
-</ul>
-<p>注：站点配置文件指的是博客文件夹根目录中的_config.yml，主题配置文件指的是next主题文件夹下的_config.yml</p>
-<h1 id="下载、启用及配置next主题"><a href="#下载、启用及配置next主题" class="headerlink" title="下载、启用及配置next主题"></a>下载、启用及配置next主题</h1><h2 id="下载next主题"><a href="#下载next主题" class="headerlink" title="下载next主题"></a>下载next主题</h2><p>点击链接跳转到github页面下载next主题压缩包<a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></p>
-<p>解压至站点（博客文件夹根目录）的 themes 目录下，并将解压后的文件夹名称更改为next。</p>
-<h2 id="启用next主题"><a href="#启用next主题" class="headerlink" title="启用next主题"></a>启用next主题</h2><p>打开站点配置文件，推荐使用sublime, Ctrl+L快捷键输入theme找到 theme 字段，并将其值更改为 next（保证与themes文件夹下面next主题文件夹名字一致否则主题失效）。</p>
-<p><img src="%E5%90%AF%E7%94%A8next%E4%B8%BB%E9%A2%98.jpg"></p>
-<p>更改后在命令行中Ctrl+C打断正在运行的服务，hexo s重新启动服务器，并在浏览器中刷新输入命令行中的本地地址，当出现下面的页面说明更换主题成功。</p>
-<p><img src="%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F.jpg"></p>
-<p>注：根据个人意愿删除themes文件夹下的landscape主题。</p>
-<h2 id="更改主题配置文件"><a href="#更改主题配置文件" class="headerlink" title="更改主题配置文件"></a>更改主题配置文件</h2><h3 id="更改主题为中文"><a href="#更改主题为中文" class="headerlink" title="更改主题为中文"></a>更改主题为中文</h3><p>在主题配置文件文件中找到language字段修改为zh-CN，如下图  </p>
-<p><img src="zh-CN.jpg"></p>
-<p>按顺序在命令行中执行命令hexo clean、hexo g、hexo s，重启服务器后刷新页面即可生效。</p>
-<p>小小吐槽一下：这步本人遇到了一点小坑，官方网站配置的参考如下图</p>
-<p><img src="%E5%AE%98%E6%96%B9zh.jpg"></p>
-<p>然而配置完成后并没有生效，检查了一下next主题的根目录下的languages，发现有zh-CN.yml语言配置文件，于是值改成zh-CN后中文就生效了…</p>
-<h3 id="增加标签页、分类页"><a href="#增加标签页、分类页" class="headerlink" title="增加标签页、分类页"></a>增加标签页、分类页</h3><p>打开主题配置文件，找到menu字段，将下图白色箭头所示的注释打开（直接删掉前面的#或者注释快捷键都可以），在首页刷新，就可以看到红色箭头所示的效果（但是此时点开标签会报错空内容）。  </p>
-<p><img src="%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE%E9%A1%B5%E3%80%81%E5%88%86%E7%B1%BB%E9%A1%B5.jpg"></p>
-<p>关掉博客服务，然后输入命令hexo n page tags</p>
-<p>命令执行完成后会在source目录下新增一个tags文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
-<p><img src="newtags.jpg"></p>
-<p>再开启服务，刷新后点开首页中的标签就会有内容了。</p>
-<p>关掉服务，输入命令hexo n page categories，命令执行完成后会在source目录下新增一个categories文件夹，内容为一个名为index.md的文件，可以用Typora打开并编辑。</p>
-<p><img src="newcategories.jpg"></p>
-<p>再开启服务，刷新后点开首页中的分类就会有内容了。</p>
-<h3 id="next主题页面布局样式更改"><a href="#next主题页面布局样式更改" class="headerlink" title="next主题页面布局样式更改"></a>next主题页面布局样式更改</h3><p>进入站点配置文件，找到Scheme 字段，根据自己的喜欢更改主题的样式（打开一个，将其他注释），每次修改完成后都可以在浏览器中刷新查看主题样式的变化。</p>
-<p><img src="next%E4%B8%BB%E9%A2%98%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F%E6%9B%B4%E6%94%B9.jpg"></p>
-<h3 id="设置主题的头像"><a href="#设置主题的头像" class="headerlink" title="设置主题的头像"></a>设置主题的头像</h3><p>在主题配置文件中查找avatar，url后面的#号去掉，并按照你自己头像的后缀更改此处的头像名后缀，在主题next下的\source\images文件夹中删掉avatar.gif，替换为你此处在url中的命名图片即可，刷新页面就会有头像显示。  </p>
-<p><img src="%E8%AE%BE%E7%BD%AE%E4%B8%BB%E9%A2%98%E7%9A%84%E5%A4%B4%E5%83%8F.jpg"></p>
-<h3 id="更改标题及作者"><a href="#更改标题及作者" class="headerlink" title="更改标题及作者"></a>更改标题及作者</h3><p>在站点配置文件中找到这几行，按需修改即可</p>
-<p><img src="%E6%9B%B4%E6%94%B9%E6%A0%87%E9%A2%98%E5%8F%8A%E4%BD%9C%E8%80%85.jpg"></p>
-<h3 id="启用左边社交栏链接"><a href="#启用左边社交栏链接" class="headerlink" title="启用左边社交栏链接"></a>启用左边社交栏链接</h3><p>在博客的_config.yml中找到这几行，按需修改即可  </p>
-<p><img src="%E5%90%AF%E7%94%A8%E5%B7%A6%E4%BE%A7%E7%A4%BE%E4%BA%A4%E6%A0%8F%E9%93%BE%E6%8E%A5.jpg"></p>
-<p> 如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。 </p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>hexo更换主题</tag>
-        <tag>next主题</tag>
-        <tag>next主题配置功能启用</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo框架搭建个人博客</title>
-    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
-<p>在搭建博客开始之前，你必须已经</p>
-<a id="more"></a>
-
-<ul>
-<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
-</li>
-<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
-</li>
-<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
-<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
-<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
-<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
-</li>
-</ul>
-<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
-<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
-<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
-<ul>
-<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
-<li>重新执行此次命令</li>
-<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
-</ul>
-<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
-<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
-<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
-<p><img src="1.jpg"></p>
-<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
-<p>这时候我们可以启动我们的博客</p>
-<p>命令行：hexo s     （注：s为start的简写）</p>
-<p><img src="2.jpg"></p>
-<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
-<p> <img src="3.jpg"></p>
-<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
-<p>后续还会更新更换其他主题及页面样式的美化。</p>
-<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>hexo框架</tag>
-        <tag>博客搭建前的准备工作</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PowerShell字符串缺少终止符错误</title>
-    <url>/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/</url>
-    <content><![CDATA[<p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">字符串缺少终止符: <span class="string">&#x27;。</span></span><br><span class="line"><span class="string">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString</span></span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<p>然后毫无以外的 powershell 文件夹切换也没成功。。。</p>
-<p>直接 powershell 用切换命令，毫无意外的也跪了…</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d <span class="string">&quot;D:\Chao&#x27;s Blog&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>看了一眼报错信息发现是没有终止字符，我的文件夹的名如下图</p>
-<p><img src="image-20201201082804013.png" alt="image-20201201082804013"></p>
-<p>原来是这个单引号 ‘ 搞的，<strong>先说解决方法</strong>，<strong>直接删掉这个 ‘s 前面的 ‘</strong> </p>
-<p>如果此时末尾给个闭合的 ‘ , 会报如下的错误</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Location</span> : 找不到接受实际参数“s”的位置形式参数。</span><br><span class="line">所在位置 行:<span class="number">1</span> 字符: <span class="number">1</span></span><br><span class="line">+ <span class="built_in">Set-Location</span> <span class="literal">-literalPath</span> <span class="string">&#x27;D:\Chao&#x27;</span>s Blog<span class="string">&#x27;&#x27;</span></span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidArgument: (:) [<span class="built_in">Set-Location</span>]，ParameterBindingException</span><br><span class="line">    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand</span><br></pre></td></tr></table></figure>
-
-<p>所以平时我们命名文件夹，不建议加符号之类的。</p>
-]]></content>
-      <categories>
-        <category>PowerShell命令行报错</category>
-      </categories>
-      <tags>
-        <tag>PowerShell</tag>
-        <tag>字符串缺少终止符</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>前端面试刷题的方法和注意事项</title>
     <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
@@ -279,6 +279,165 @@
         <tag>刷题方法</tag>
         <tag>刷题注意事项</tag>
         <tag>高效学习三步曲</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS-Web-API-BOM</title>
+    <url>/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-BOM/</url>
+    <content><![CDATA[<p>内容虽然不多，但是不可不会</p>
+<h1 id="BOM-操作-（Browser-Object-Model）"><a href="#BOM-操作-（Browser-Object-Model）" class="headerlink" title="BOM 操作 （Browser Object Model）"></a>BOM 操作 （Browser Object Model）</h1><p>这一块在面试中考点相对较少</p>
+<a id="more"></a>
+
+<p><strong>知识点</strong></p>
+<ul>
+<li><strong>navigator</strong></li>
+<li>screen</li>
+<li><strong>location</strong></li>
+<li>history</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// navigator</span></span><br><span class="line"><span class="comment">// 识别浏览器类型</span></span><br><span class="line"><span class="keyword">const</span> ua = navigator.userAgent</span><br><span class="line"><span class="keyword">const</span> isEdge = ua.indexOf(<span class="string">&quot;Edg&quot;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(isEdge)</span><br><span class="line"></span><br><span class="line"><span class="comment">// screen</span></span><br><span class="line"><span class="built_in">console</span>.log(screen.width)   <span class="comment">// 浏览器屏幕宽度</span></span><br><span class="line"><span class="built_in">console</span>.log(screen.height)  <span class="comment">// 浏览器屏幕高度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// location</span></span><br><span class="line"><span class="built_in">console</span>.log(location.href)        <span class="comment">// 网址</span></span><br><span class="line"><span class="built_in">console</span>.log(location.protocol)    <span class="comment">// 协议</span></span><br><span class="line"><span class="built_in">console</span>.log(location.host)        <span class="comment">// 域名</span></span><br><span class="line"><span class="built_in">console</span>.log(location.pathname)    <span class="comment">// 浏览器路径</span></span><br><span class="line"><span class="built_in">console</span>.log(location.search)      <span class="comment">// 查询参数</span></span><br><span class="line"><span class="built_in">console</span>.log(location.hash)		  <span class="comment">// 哈希值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// history</span></span><br><span class="line">history.back()      <span class="comment">// 操作页面后退</span></span><br><span class="line">history.forward()   <span class="comment">// 操作页面前进</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>JS-Web-API-BOM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS-Web-API-Ajax</title>
+    <url>/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-Ajax/</url>
+    <content><![CDATA[<p>每个工程师都必须熟练掌握的技能</p>
+<h1 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h1><h2 id="手写一个-XMLHttpRequest"><a href="#手写一个-XMLHttpRequest" class="headerlink" title="手写一个 XMLHttpRequest"></a>手写一个 XMLHttpRequest</h2><a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// get 请求</span></span><br><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line"><span class="comment">// true 的意思是异步的请求, false 是同步</span></span><br><span class="line"><span class="comment">// 网络请求不能卡顿影响页面，所以需要异步</span></span><br><span class="line">xhr.open(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;./test.json&quot;</span>, <span class="literal">true</span>) </span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 必须三等</span></span><br><span class="line">    <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">            alert(xhr.responseText)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;其他情况&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 由于是 get 请求，不用发送任何数据，直接 null 即可</span></span><br><span class="line">xhr.send(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// post 请求</span></span><br><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">xhr.open(<span class="string">&quot;POST&quot;</span>, <span class="string">&quot;./test.json&quot;</span>, <span class="literal">false</span>) </span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">            alert(xhr.responseText)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;其他情况&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> postData = &#123;</span><br><span class="line">    name: <span class="string">&quot;zs&quot;</span>,</span><br><span class="line">    password: <span class="string">&quot;xxx&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将 json 数据变成字符串发送</span></span><br><span class="line">xhr.send(<span class="built_in">JSON</span>.stringify(postData))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="xhr-readyState"><a href="#xhr-readyState" class="headerlink" title="xhr.readyState"></a>xhr.readyState</h2><ul>
+<li>0 -（未初始化）还没有调用 send（）方法</li>
+<li>1 -（载入）已调用 send（）方法，正在发送请求</li>
+<li>2 -（载入完成）send（）方法执行完成，已经接收到全部响应内容</li>
+<li>3 -（交互）正在解析响应内容</li>
+<li>4 -（完成）响应内容解析完成，可以在客户端调用</li>
+</ul>
+<h2 id="xhr-status"><a href="#xhr-status" class="headerlink" title="xhr.status"></a>xhr.status</h2><ul>
+<li>2xx - 表示成功处理请求，如 200</li>
+<li>3xx - 需要重定向，浏览器直接跳转，如 301（永久重定向）、302（临时重定向）、304（资源未改变）</li>
+<li>4xx - 客户端请求错误，如 404（请求地址有误，或者服务端没有）、403（客户端没有权限，在内部系统应用较多）</li>
+<li>5xx - 服务器端错误（出 bug 了）</li>
+</ul>
+<h1 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h1><ul>
+<li><p>什么是跨域（同源策略）</p>
+<p><strong>同源策略</strong></p>
+<ul>
+<li>ajax 请求时，<strong>浏览器要求</strong>当前网页和 server 端必须同源（安全）</li>
+<li>同源：协议、端口、域名，三者必须一致</li>
+<li>前端: <a href="http://a.com:8080/">http://a.com:8080/</a> ；server: <a href="https://b.com/api/xxx">https://b.com/api/xxx</a> , 二者三个要求均不同</li>
+</ul>
+<p><strong>加载图片、CSS、JS 可无视同源策略</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src&#x3D;跨域的图片地址 &#x2F;&gt;</span><br><span class="line">&lt;link href&#x3D;跨域的图片地址 &#x2F;&gt;</span><br><span class="line">&lt;script src&#x3D;跨域的 JS 地址&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img &#x2F;&gt; 可用于统计打点，可使用第三方统计服务</span><br><span class="line">&lt;link &#x2F;&gt; &lt;script&gt; 可使用 CDN , CDN 一般都是外域</span><br><span class="line">&lt;script&gt; 可实现 JSONP</span><br></pre></td></tr></table></figure>
+
+<p><strong>跨域</strong></p>
+<ul>
+<li>所有的跨域，都必须经过 server 端允许和配合</li>
+<li>未经 server 端允许就实现跨域，说明浏览器有漏洞，危险信号</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>JSONP</p>
+<ul>
+<li>访问知乎或者虎扑，服务端一定返回同一个 html 文件吗？</li>
+<li>服务器可以任意动态拼接数据返回，只要符合 html 格式要求</li>
+<li>同理访问 script 的一个 js 文件，不一定返回的是一个静态的 js 文件，而是服务端可以任意拼接符合 js 不报错即可</li>
+</ul>
+<p><strong>JSONP 原理</strong></p>
+<p>**1.**通过 script 可绕过跨域限制</p>
+<p>**2.**服务器可以任意动态拼接数据返回</p>
+<p>**3.**所以，script 标签就可以获得跨域的数据，只要服务端愿意返回</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- JSONP 代码演示 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.abc = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(data)</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:8002/jsonp.js?username=xxx&amp;callback=abc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- jsonp.js --&gt;</span></span><br><span class="line">abc(</span><br><span class="line">    &#123; name: &#x27;xxx&#x27; &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>CORS（服务器端支持）</p>
+<p><strong>CORS - 服务器设置 http header</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第二个参数填写允许跨域的域名称，不建议直接写 &quot;*&quot;</span></span><br><span class="line">response.setHeader(<span class="string">&quot;Access-Control-Allow-Origin&quot;</span>, <span class="string">&quot;http://localhost:8011&quot;</span>);</span><br><span class="line"><span class="comment">// 该字段表明服务端支持的请求方法</span></span><br><span class="line">response.setHeader(<span class="string">&quot;Access-Control-Allow-Methods&quot;</span>, <span class="string">&quot;PUT,POST,GET,DELETE,OPTIONS&quot;</span>);</span><br><span class="line"><span class="comment">// 实际请求将携带的自定义请求首部字段</span></span><br><span class="line">response.setHeader(<span class="string">&quot;Access-Control-Allow-Headers&quot;</span>, <span class="string">&quot;X-Requested-With&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接收跨域的 cookie</span></span><br><span class="line">response.setHeader(<span class="string">&quot;Access-Control-Allow-Credentials&quot;</span>, <span class="string">&quot;true&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="手写一个简易的-Ajax"><a href="#手写一个简易的-Ajax" class="headerlink" title="手写一个简易的 Ajax"></a>手写一个简易的 Ajax</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 结合 Promise 使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params">url, type, success</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">        xhr.open(type, url, <span class="literal">true</span>)</span><br><span class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">                    resolve(<span class="built_in">JSON</span>.parse(xhr.responseText))</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (xhr.status === <span class="number">404</span>) &#123;</span><br><span class="line">                    reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;404 not found&quot;</span>))</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        xhr.send(<span class="literal">null</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> url = <span class="string">&quot;./test.json&quot;</span></span><br><span class="line">ajax(url, <span class="string">&quot;GET&quot;</span>)</span><br><span class="line">    .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="实际项目中-Ajax-的常用插件"><a href="#实际项目中-Ajax-的常用插件" class="headerlink" title="实际项目中 Ajax 的常用插件"></a>实际项目中 Ajax 的常用插件</h1><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch">使用 Fetch - Web API 接口参考 | MDN (mozilla.org)</a></p>
+<p><a href="http://www.axios-js.com/zh-cn/docs/">axios中文文档|axios中文网 | axios (axios-js.com)</a></p>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>JS-Web-API-Ajax</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS-Web-API-事件</title>
+    <url>/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E4%BA%8B%E4%BB%B6/</url>
+    <content><![CDATA[<p>事件不会，等于残废，必考！！！</p>
+<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p><strong>知识点</strong></p>
+<ul>
+<li>事件绑定</li>
+<li>事件冒泡</li>
+<li>事件代理</li>
+</ul>
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件绑定</span></span><br><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&quot;btn1&quot;</span>)</span><br><span class="line">btn.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;clicked&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件冒泡</span></span><br><span class="line"><span class="comment">// 当子元素触发点击后，其父元素，或其所在的向上层级元素，都会截获点击事件</span></span><br><span class="line"><span class="keyword">const</span> body = <span class="built_in">document</span>.body</span><br><span class="line">bindEvent(body, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;body clicked&#x27;</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(event.target) <span class="comment">// 获取触发的元素</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阻止冒泡</span></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">bindEvent(p1, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    event.stopPropagation() <span class="comment">// 阻止冒泡</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件代理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// HTML</span></span><br><span class="line"><span class="comment">/* &lt;div id=&quot;div3&quot;&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a1&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a2&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a3&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a4&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;button&gt;加载更多...&lt;/button&gt;</span></span><br><span class="line"><span class="comment">&lt;/div&gt; */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 代理绑定</span></span><br><span class="line"><span class="comment">// 就是把事件绑定到一些不好每个都去绑定事件的情况</span></span><br><span class="line"><span class="comment">// 我们把它绑定到父元素上，然后做一些判断是否为我们想要的元素</span></span><br><span class="line"><span class="comment">// 然后再做其他的一些动作</span></span><br><span class="line"><span class="keyword">const</span> div3 = <span class="built_in">document</span>.getElementById(<span class="string">&quot;div3&quot;</span>)</span><br><span class="line">bindEvent(div3, <span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    event.preventDefault()</span><br><span class="line">    <span class="keyword">const</span> target = event.target</span><br><span class="line">    <span class="keyword">if</span> (target.nodeName === <span class="string">&quot;A&quot;</span>) &#123;</span><br><span class="line">        alert(target.innerHTML)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h2><ul>
+<li>代码简洁</li>
+<li>减少浏览器内存占用（如果 a 标签非常多的话，每个 a 标签都去挂一个事件，数量过多会非常耗费内存，但是我们只在父元素挂一次事件就不会耗费那么多内存）</li>
+<li>但是，不要滥用（在瀑布流、结构复杂不好每一个都绑定事件的这种情况下去用）</li>
+</ul>
+<h2 id="通用的事件绑定函数-重点"><a href="#通用的事件绑定函数-重点" class="headerlink" title="通用的事件绑定函数(重点)"></a>通用的事件绑定函数(重点)</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, selector, fn</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入参数个数</span></span><br><span class="line">    <span class="keyword">if</span> (fn == <span class="literal">null</span>) &#123;</span><br><span class="line">        fn = selector</span><br><span class="line">        selector = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    elem.addEventListener(type, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> target = event.target</span><br><span class="line">        <span class="keyword">if</span> (selector) &#123;</span><br><span class="line">            <span class="comment">// 需要代理绑定</span></span><br><span class="line">            <span class="comment">// 判断一个 DOM 元素是不是符合一个 CSS 选择器</span></span><br><span class="line">            <span class="keyword">if</span> (target.matches(selector)) &#123;</span><br><span class="line">                fn.call(target, event)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; eles &#123;</span><br><span class="line">            <span class="comment">// 不需要代理绑定</span></span><br><span class="line">            fn.call(target, event)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
+<li><p>编写一个通用的事件监听函数</p>
+<p>参考上面代码</p>
+</li>
+</ul>
+<ul>
+<li><p>描述事件冒泡的流程</p>
+<p>1.基于 DOM 树形结构</p>
+<p>2.事件会顺着触发元素往上冒泡</p>
+<p>3.应用场景：代理</p>
+</li>
+</ul>
+<ul>
+<li><p>无限下拉的图片列表，如何监听每个图片的点击</p>
+<p>1.事件代理</p>
+<p>2.用 event.target 获取触发元素</p>
+<p>3.用 matches 来判断是否触发元素</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>JS-Web-API-BOM</tag>
       </tags>
   </entry>
   <entry>
@@ -365,32 +524,6 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>JS-Web-API-DOM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题总结-JS-Web-API-BOM</title>
-    <url>/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-BOM/</url>
-    <content><![CDATA[<p>内容虽然不多，但是不可不会</p>
-<h1 id="BOM-操作-（Browser-Object-Model）"><a href="#BOM-操作-（Browser-Object-Model）" class="headerlink" title="BOM 操作 （Browser Object Model）"></a>BOM 操作 （Browser Object Model）</h1><p>这一块在面试中考点相对较少</p>
-<a id="more"></a>
-
-<p><strong>知识点</strong></p>
-<ul>
-<li><strong>navigator</strong></li>
-<li>screen</li>
-<li><strong>location</strong></li>
-<li>history</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// navigator</span></span><br><span class="line"><span class="comment">// 识别浏览器类型</span></span><br><span class="line"><span class="keyword">const</span> ua = navigator.userAgent</span><br><span class="line"><span class="keyword">const</span> isEdge = ua.indexOf(<span class="string">&quot;Edg&quot;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(isEdge)</span><br><span class="line"></span><br><span class="line"><span class="comment">// screen</span></span><br><span class="line"><span class="built_in">console</span>.log(screen.width)   <span class="comment">// 浏览器屏幕宽度</span></span><br><span class="line"><span class="built_in">console</span>.log(screen.height)  <span class="comment">// 浏览器屏幕高度</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// location</span></span><br><span class="line"><span class="built_in">console</span>.log(location.href)        <span class="comment">// 网址</span></span><br><span class="line"><span class="built_in">console</span>.log(location.protocol)    <span class="comment">// 协议</span></span><br><span class="line"><span class="built_in">console</span>.log(location.host)        <span class="comment">// 域名</span></span><br><span class="line"><span class="built_in">console</span>.log(location.pathname)    <span class="comment">// 浏览器路径</span></span><br><span class="line"><span class="built_in">console</span>.log(location.search)      <span class="comment">// 查询参数</span></span><br><span class="line"><span class="built_in">console</span>.log(location.hash)		  <span class="comment">// 哈希值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// history</span></span><br><span class="line">history.back()      <span class="comment">// 操作页面后退</span></span><br><span class="line">history.forward()   <span class="comment">// 操作页面前进</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>JS-Web-API-BOM</tag>
       </tags>
   </entry>
   <entry>
@@ -550,45 +683,138 @@
       </tags>
   </entry>
   <entry>
-    <title>前端面试题总结-JS-Web-API-事件</title>
-    <url>/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E4%BA%8B%E4%BB%B6/</url>
-    <content><![CDATA[<p>事件不会，等于残废，必考！！！</p>
-<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p><strong>知识点</strong></p>
+    <title>前端面试题总结-JS-Web-API-存储</title>
+    <url>/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E5%AD%98%E5%82%A8/</url>
+    <content><![CDATA[<h1 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h1><p>知识点</p>
 <ul>
-<li>事件绑定</li>
-<li>事件冒泡</li>
-<li>事件代理</li>
+<li>cookie</li>
+<li>localStorage 和 session Storage</li>
 </ul>
 <a id="more"></a>
 
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件绑定</span></span><br><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&quot;btn1&quot;</span>)</span><br><span class="line">btn.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;clicked&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件冒泡</span></span><br><span class="line"><span class="comment">// 当子元素触发点击后，其父元素，或其所在的向上层级元素，都会截获点击事件</span></span><br><span class="line"><span class="keyword">const</span> body = <span class="built_in">document</span>.body</span><br><span class="line">bindEvent(body, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;body clicked&#x27;</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(event.target) <span class="comment">// 获取触发的元素</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阻止冒泡</span></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">bindEvent(p1, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    event.stopPropagation() <span class="comment">// 阻止冒泡</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件代理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// HTML</span></span><br><span class="line"><span class="comment">/* &lt;div id=&quot;div3&quot;&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a1&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a2&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a3&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a4&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;button&gt;加载更多...&lt;/button&gt;</span></span><br><span class="line"><span class="comment">&lt;/div&gt; */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 代理绑定</span></span><br><span class="line"><span class="comment">// 就是把事件绑定到一些不好每个都去绑定事件的情况</span></span><br><span class="line"><span class="comment">// 我们把它绑定到父元素上，然后做一些判断是否为我们想要的元素</span></span><br><span class="line"><span class="comment">// 然后再做其他的一些动作</span></span><br><span class="line"><span class="keyword">const</span> div3 = <span class="built_in">document</span>.getElementById(<span class="string">&quot;div3&quot;</span>)</span><br><span class="line">bindEvent(div3, <span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    event.preventDefault()</span><br><span class="line">    <span class="keyword">const</span> target = event.target</span><br><span class="line">    <span class="keyword">if</span> (target.nodeName === <span class="string">&quot;A&quot;</span>) &#123;</span><br><span class="line">        alert(target.innerHTML)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h2><ul>
-<li>代码简洁</li>
-<li>减少浏览器内存占用（如果 a 标签非常多的话，每个 a 标签都去挂一个事件，数量过多会非常耗费内存，但是我们只在父元素挂一次事件就不会耗费那么多内存）</li>
-<li>但是，不要滥用（在瀑布流、结构复杂不好每一个都绑定事件的这种情况下去用）</li>
-</ul>
-<h2 id="通用的事件绑定函数-重点"><a href="#通用的事件绑定函数-重点" class="headerlink" title="通用的事件绑定函数(重点)"></a>通用的事件绑定函数(重点)</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, selector, fn</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入参数个数</span></span><br><span class="line">    <span class="keyword">if</span> (fn == <span class="literal">null</span>) &#123;</span><br><span class="line">        fn = selector</span><br><span class="line">        selector = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    elem.addEventListener(type, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> target = event.target</span><br><span class="line">        <span class="keyword">if</span> (selector) &#123;</span><br><span class="line">            <span class="comment">// 需要代理绑定</span></span><br><span class="line">            <span class="comment">// 判断一个 DOM 元素是不是符合一个 CSS 选择器</span></span><br><span class="line">            <span class="keyword">if</span> (target.matches(selector)) &#123;</span><br><span class="line">                fn.call(target, event)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; eles &#123;</span><br><span class="line">            <span class="comment">// 不需要代理绑定</span></span><br><span class="line">            fn.call(target, event)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
-<li><p>编写一个通用的事件监听函数</p>
-<p>参考上面代码</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><ul>
+<li><p>本身用于浏览器和 server 通讯</p>
+</li>
+<li><p>被”借用”到本地存储</p>
+</li>
+<li><p>可用 document.cookie = ‘…’ 来修改</p>
 </li>
 </ul>
-<ul>
-<li><p>描述事件冒泡的流程</p>
-<p>1.基于 DOM 树形结构</p>
-<p>2.事件会顺着触发元素往上冒泡</p>
-<p>3.应用场景：代理</p>
-</li>
+<h2 id="cookie-缺点"><a href="#cookie-缺点" class="headerlink" title="cookie 缺点"></a>cookie 缺点</h2><ul>
+<li>存储大小，最大 4k</li>
+<li>http 请求时需要发送到服务端，增加请求数据量</li>
+<li>只能用 document.cookie = ‘…’ 来修改，太过简陋</li>
+<li>cookie 的安全性过低</li>
 </ul>
+<h2 id="localStorage-和-sessionStorage"><a href="#localStorage-和-sessionStorage" class="headerlink" title="localStorage 和 sessionStorage"></a>localStorage 和 sessionStorage</h2><ul>
+<li>HTML5 专门为存储而设计，最大可存 5M</li>
+<li>API 简单易用 setItem、getItem</li>
+<li>不会随着 http 请求被发送出去</li>
+</ul>
+<p><strong>二者区别</strong></p>
 <ul>
-<li><p>无限下拉的图片列表，如何监听每个图片的点击</p>
-<p>1.事件代理</p>
-<p>2.用 event.target 获取触发元素</p>
-<p>3.用 matches 来判断是否触发元素</p>
+<li>localStorage 数据会永久存储，除非代码或手动删除</li>
+<li>sessionStorage 数据只存在于当前会话，浏览器关闭则清空</li>
+<li>一般用 localStorage 会更多一些</li>
+</ul>
+<h1 id="描述-cookie、localStorage、sessionStorage区别"><a href="#描述-cookie、localStorage、sessionStorage区别" class="headerlink" title="描述 cookie、localStorage、sessionStorage区别"></a>描述 cookie、localStorage、sessionStorage区别</h1><ul>
+<li>容量</li>
+<li>API 易用性</li>
+<li>是否跟随 http 请求发送出去</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>JS-Web-API-Ajax</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS基础之作用域和闭包</title>
+    <url>/2020/11/30/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85/</url>
+    <content><![CDATA[<p>三座大山之二，不会闭包，基本不会通过！</p>
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><ul>
+<li>全局作用域</li>
+<li>函数作用域</li>
+<li>块级作用域（ES6新增）</li>
+</ul>
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ES6 块级作用域</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(x)  <span class="comment">// 会报错</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="自由变量"><a href="#自由变量" class="headerlink" title="自由变量"></a>自由变量</h2><ul>
+<li>一个变量没有被当前作用域定义，但被使用了</li>
+<li>向上级作用域，一层一层依次寻找，直到找到为止</li>
+<li>如果到全局作用域都没找到，则报错 xx is not defined</li>
+</ul>
+<img src="1606279652721.png" alt="1606279652721" style="zoom: 80%;" />
+
+<p>如上图，a、a1、a2 都是自由变量，a3则是在当前函数作用域下定义过</p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>其实是作用域应用的特殊情况，有两种表现:</p>
+<ul>
+<li>函数作为参数被传递</li>
+<li>函数作为返回值被返回</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为返回值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 此处的 a 是一个自由变量，向上级作用域寻找</span></span><br><span class="line">        <span class="built_in">console</span>.log(a)  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> fn = create()</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">fn()  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">    fn()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// a 是自由变量，上级作用域为全局作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line">print(fn)  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>总结：所有的自由变量的查找，是在函数定义的地方向上级作用域查找，不是在执行的地方！！！</strong></p>
+<h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><ul>
+<li>作为普通函数被调用</li>
+<li>使用 call、apply、bind 调用</li>
+<li>作为对象方法被调用</li>
+<li>在 class 方法中调用</li>
+<li>在箭头函数中调用</li>
+</ul>
+<p><strong>切记，this 在上诉场景中取什么样的值，是在函数执行的时候确认的，不是在定义的时候确认的</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn1()  <span class="comment">// window</span></span><br><span class="line"></span><br><span class="line">fn1.call(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;) <span class="comment">// &#123; x: 100 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.bind(&#123; <span class="attr">x</span>: <span class="number">200</span> &#125;)  <span class="comment">// bind返回一个新的函数</span></span><br><span class="line">fn2()  <span class="comment">// &#123; x: 200 &#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">wait</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// this === window</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;, <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">waitAgain</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">            <span class="comment">// 箭头函数里面的 this 取值是取上级作用域的 this 值</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">        <span class="built_in">this</span>.age = <span class="number">20</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> zs = <span class="keyword">new</span> People(<span class="string">&quot;张三&quot;</span>)</span><br><span class="line">zs.sayHi()   <span class="comment">// zs 对象</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="this-不同应用场景如何取值"><a href="#this-不同应用场景如何取值" class="headerlink" title="this  不同应用场景如何取值"></a>this  不同应用场景如何取值</h2><ul>
+<li>作为普通函数调用（包括立即执行函数），this 指向 window</li>
+<li>使用 call、apply、bind 调用，传入什么 this 就指向的是什么</li>
+<li>在对象方法中调用，如果有 settimeout 则 this 指向 window ，若无 settimeout ，则指向当前对象本身</li>
+<li>在箭头函数中的 this 取上级作用域的 this 的值</li>
+<li>在 class 方法中调用 this ，则指向实例本身</li>
+</ul>
+<h2 id="手写-bind-函数"><a href="#手写-bind-函数" class="headerlink" title="手写 bind 函数"></a>手写 bind 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种 通过 call 或 apply 实现</span></span><br><span class="line"><span class="comment">// 通过在构造函数原型对象上增加一个 myBind 来模拟 bind</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将参数拆解为数组</span></span><br><span class="line">    <span class="comment">// const args = Array.prototype.slice.call(arguments)</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 this 并将数组第一项 this 挖出去</span></span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fn1.myBind(...) 中的 fn1</span></span><br><span class="line">    <span class="comment">// 由于是 fn1 调用的 bind2</span></span><br><span class="line">    <span class="comment">// 所以这里的 this 指向 fn1</span></span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> self.apply(t, args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种 不通过 call、apply 方法实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myBind = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     const bindObj = args.shift()</span></span><br><span class="line"><span class="comment">//     bindObj.fn = this</span></span><br><span class="line"><span class="comment">//     return function () &#123;</span></span><br><span class="line"><span class="comment">//         const result = bindObj.fn(...args)</span></span><br><span class="line"><span class="comment">//         delete bindObj.fn</span></span><br><span class="line"><span class="comment">//         return result</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;this&#x27;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;this is fn1&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.myBind(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;, <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>)</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">相当于返回了一个函数</span></span><br><span class="line"><span class="comment">const fn2 = function () &#123;</span></span><br><span class="line"><span class="comment">    return fn1.apply(&#123; x: 100 &#125;, [10, 20, 30])</span></span><br><span class="line"><span class="comment">&#125; </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> res = fn2()</span><br><span class="line"><span class="built_in">console</span>.log(res)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="手写-call-函数"><a href="#手写-call-函数" class="headerlink" title="手写 call 函数"></a>手写 call 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是无参数判断逻辑，并通过 apply 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="built_in">console</span>.log(self)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 apply 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myCall = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const self = args.shift()</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     self.fn = this</span></span><br><span class="line"><span class="comment">//     const result = self.fn(...args)</span></span><br><span class="line"><span class="comment">//     delete self.fn</span></span><br><span class="line"><span class="comment">//     return result</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(&#123; <span class="attr">a</span>: <span class="number">100</span> &#125;, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是实现参数判断逻辑</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入的第一个参数是否为一个对象且不能为 null</span></span><br><span class="line">    <span class="comment">// 如果不是则 this 为 window</span></span><br><span class="line">    <span class="comment">// const flag = arguments.length &gt;= 2 &amp;&amp; typeof arguments[0] === &#x27;object&#x27; &amp;&amp; arguments[0] !== &#x27;null&#x27;</span></span><br><span class="line">    <span class="comment">// 上下两种逻辑均可</span></span><br><span class="line">    <span class="keyword">const</span> flag = <span class="built_in">arguments</span>.length &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">arguments</span>[<span class="number">0</span>] <span class="keyword">instanceof</span> <span class="built_in">Object</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">let</span> t</span><br><span class="line">    <span class="comment">// 如果有绑定的对象则将这个对象从数组中挖出来</span></span><br><span class="line">    <span class="keyword">if</span> (flag) t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="手写-apply-函数"><a href="#手写-apply-函数" class="headerlink" title="手写 apply 函数"></a>手写 apply 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种实现方式 通过 call 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> that = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> self = args.shift()</span><br><span class="line">    <span class="comment">// arguments 里面是一个对象 + 数组</span></span><br><span class="line">    <span class="comment">// 通过扩展运算符,并取出第一个对象后</span></span><br><span class="line">    <span class="comment">// 此时里面的 index 为 0 的数据是一个数组，所以需要 args[0]</span></span><br><span class="line">    <span class="keyword">const</span> result = that.call(self, ...args[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 call 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myApply = function (thisArg, args) &#123;</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&#x27;fn&#x27;)        // 声明一个独有的Symbol属性, 防止fn覆盖已有属性</span></span><br><span class="line"><span class="comment">//     thisArg = thisArg || window    // 若没有传入this, 默认绑定window对象</span></span><br><span class="line"><span class="comment">//     thisArg.fn = this              // this指向调用call的对象,即我们要改变this指向的函数</span></span><br><span class="line"><span class="comment">//     const result = thisArg.fn(...args)  // 执行当前函数</span></span><br><span class="line"><span class="comment">//     delete thisArg.fn              // 删除我们声明的fn属性</span></span><br><span class="line"><span class="comment">//     return result                  // 返回函数执行结果</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b)</span><br><span class="line">&#125;</span><br><span class="line">foo.myApply(&#123; <span class="attr">x</span>: <span class="number">300</span> &#125;, [<span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong><em>注：Symbol 生成一个全局唯一的值</em></strong></p>
+<h2 id="三兄弟区别"><a href="#三兄弟区别" class="headerlink" title="三兄弟区别"></a>三兄弟区别</h2><ul>
+<li>三兄弟接收的第一个参数都是要绑定的 this 指向</li>
+<li>apply 的第二个参数是一个参数数组，call 和 bind 的第二个及之后的参数作为函数实参按顺序传入</li>
+<li>bind 不会立即调用，其他两个会立即调用</li>
+</ul>
+<h1 id="实际开发中闭包的应用"><a href="#实际开发中闭包的应用" class="headerlink" title="实际开发中闭包的应用"></a>实际开发中闭包的应用</h1><ul>
+<li><p>隐藏数据</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 闭包隐藏数据，只提供 API</span></span><br><span class="line"><span class="comment">// 做一个简单的 cache 工具</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createCache</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123;&#125; <span class="comment">// 闭包中的数据，被隐藏，不被外界访问</span></span><br><span class="line">    <span class="comment">// 闭包的一种方式，返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        set: <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">            data[key] = value</span><br><span class="line">        &#125;,</span><br><span class="line">        get: <span class="function"><span class="keyword">function</span> (<span class="params">key</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> data[key]</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果我们不通过 set、get 无法修改 data 的值</span></span><br><span class="line"><span class="comment">// 因为 data 是在 createCache 作用域里面的，不会被外界所访问</span></span><br><span class="line"><span class="keyword">const</span> c = createCache()</span><br><span class="line">c.set(<span class="string">&quot;a&quot;</span>, <span class="number">100</span>)</span><br><span class="line"><span class="built_in">console</span>.log(c.get(<span class="string">&quot;a&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 点击 a 标签弹出对应的标签序号</span></span><br><span class="line"><span class="keyword">let</span> a</span><br><span class="line"><span class="comment">// let i 是定义了一个 for 里面的块级作用域</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    a = <span class="built_in">document</span>.createElement(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">    a.innerHTML = i + <span class="string">&quot;&lt;br&gt;&quot;</span></span><br><span class="line">    a.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        e.preventDefault()</span><br><span class="line">        alert(i)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者也可使用立即执行函数来实现。</p>
 </li>
 </ul>
 ]]></content>
@@ -598,7 +824,7 @@
       <tags>
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
-        <tag>JS-Web-API-BOM</tag>
+        <tag>作用域和闭包</tag>
       </tags>
   </entry>
   <entry>
@@ -741,101 +967,6 @@
       </tags>
   </entry>
   <entry>
-    <title>前端面试题总结-JS基础之作用域和闭包</title>
-    <url>/2020/11/30/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%97%AD%E5%8C%85/</url>
-    <content><![CDATA[<p>三座大山之二，不会闭包，基本不会通过！</p>
-<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><ul>
-<li>全局作用域</li>
-<li>函数作用域</li>
-<li>块级作用域（ES6新增）</li>
-</ul>
-<a id="more"></a>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ES6 块级作用域</span></span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">100</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(x)  <span class="comment">// 会报错</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="自由变量"><a href="#自由变量" class="headerlink" title="自由变量"></a>自由变量</h2><ul>
-<li>一个变量没有被当前作用域定义，但被使用了</li>
-<li>向上级作用域，一层一层依次寻找，直到找到为止</li>
-<li>如果到全局作用域都没找到，则报错 xx is not defined</li>
-</ul>
-<img src="1606279652721.png" alt="1606279652721" style="zoom: 80%;" />
-
-<p>如上图，a、a1、a2 都是自由变量，a3则是在当前函数作用域下定义过</p>
-<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>其实是作用域应用的特殊情况，有两种表现:</p>
-<ul>
-<li>函数作为参数被传递</li>
-<li>函数作为返回值被返回</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为返回值</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 此处的 a 是一个自由变量，向上级作用域寻找</span></span><br><span class="line">        <span class="built_in">console</span>.log(a)  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> fn = create()</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">fn()  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 函数作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> a = <span class="number">200</span></span><br><span class="line">    fn()</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">100</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// a 是自由变量，上级作用域为全局作用域</span></span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line">print(fn)  <span class="comment">// 100</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>总结：所有的自由变量的查找，是在函数定义的地方向上级作用域查找，不是在执行的地方！！！</strong></p>
-<h1 id="this"><a href="#this" class="headerlink" title="this"></a>this</h1><ul>
-<li>作为普通函数被调用</li>
-<li>使用 call、apply、bind 调用</li>
-<li>作为对象方法被调用</li>
-<li>在 class 方法中调用</li>
-<li>在箭头函数中调用</li>
-</ul>
-<p><strong>切记，this 在上诉场景中取什么样的值，是在函数执行的时候确认的，不是在定义的时候确认的</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">&#125;</span><br><span class="line">fn1()  <span class="comment">// window</span></span><br><span class="line"></span><br><span class="line">fn1.call(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;) <span class="comment">// &#123; x: 100 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.bind(&#123; <span class="attr">x</span>: <span class="number">200</span> &#125;)  <span class="comment">// bind返回一个新的函数</span></span><br><span class="line">fn2()  <span class="comment">// &#123; x: 200 &#125;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">wait</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="comment">// this === window</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;, <span class="number">100</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> zs = &#123;</span><br><span class="line">    name: <span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">waitAgain</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// this 即当前对象 zs</span></span><br><span class="line">            <span class="comment">// 箭头函数里面的 this 取值是取上级作用域的 this 值</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name</span><br><span class="line">        <span class="built_in">this</span>.age = <span class="number">20</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">sayHi</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> zs = <span class="keyword">new</span> People(<span class="string">&quot;张三&quot;</span>)</span><br><span class="line">zs.sayHi()   <span class="comment">// zs 对象</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="this-不同应用场景如何取值"><a href="#this-不同应用场景如何取值" class="headerlink" title="this  不同应用场景如何取值"></a>this  不同应用场景如何取值</h2><ul>
-<li>作为普通函数调用（包括立即执行函数），this 指向 window</li>
-<li>使用 call、apply、bind 调用，传入什么 this 就指向的是什么</li>
-<li>在对象方法中调用，如果有 settimeout 则 this 指向 window ，若无 settimeout ，则指向当前对象本身</li>
-<li>在箭头函数中的 this 取上级作用域的 this 的值</li>
-<li>在 class 方法中调用 this ，则指向实例本身</li>
-</ul>
-<h2 id="手写-bind-函数"><a href="#手写-bind-函数" class="headerlink" title="手写 bind 函数"></a>手写 bind 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种 通过 call 或 apply 实现</span></span><br><span class="line"><span class="comment">// 通过在构造函数原型对象上增加一个 myBind 来模拟 bind</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将参数拆解为数组</span></span><br><span class="line">    <span class="comment">// const args = Array.prototype.slice.call(arguments)</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 this 并将数组第一项 this 挖出去</span></span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fn1.myBind(...) 中的 fn1</span></span><br><span class="line">    <span class="comment">// 由于是 fn1 调用的 bind2</span></span><br><span class="line">    <span class="comment">// 所以这里的 this 指向 fn1</span></span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> self.apply(t, args)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二种 不通过 call、apply 方法实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myBind = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     const bindObj = args.shift()</span></span><br><span class="line"><span class="comment">//     bindObj.fn = this</span></span><br><span class="line"><span class="comment">//     return function () &#123;</span></span><br><span class="line"><span class="comment">//         const result = bindObj.fn(...args)</span></span><br><span class="line"><span class="comment">//         delete bindObj.fn</span></span><br><span class="line"><span class="comment">//         return result</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;this&#x27;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;this is fn1&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn2 = fn1.myBind(&#123; <span class="attr">x</span>: <span class="number">100</span> &#125;, <span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>)</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">相当于返回了一个函数</span></span><br><span class="line"><span class="comment">const fn2 = function () &#123;</span></span><br><span class="line"><span class="comment">    return fn1.apply(&#123; x: 100 &#125;, [10, 20, 30])</span></span><br><span class="line"><span class="comment">&#125; </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> res = fn2()</span><br><span class="line"><span class="built_in">console</span>.log(res)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="手写-call-函数"><a href="#手写-call-函数" class="headerlink" title="手写 call 函数"></a>手写 call 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是无参数判断逻辑，并通过 apply 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="built_in">console</span>.log(self)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 apply 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myCall = function () &#123;</span></span><br><span class="line"><span class="comment">//     const args = [...arguments]</span></span><br><span class="line"><span class="comment">//     const self = args.shift()</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&quot;fn&quot;)</span></span><br><span class="line"><span class="comment">//     self.fn = this</span></span><br><span class="line"><span class="comment">//     const result = self.fn(...args)</span></span><br><span class="line"><span class="comment">//     delete self.fn</span></span><br><span class="line"><span class="comment">//     return result</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(&#123; <span class="attr">a</span>: <span class="number">100</span> &#125;, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这一段是实现参数判断逻辑</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入的第一个参数是否为一个对象且不能为 null</span></span><br><span class="line">    <span class="comment">// 如果不是则 this 为 window</span></span><br><span class="line">    <span class="comment">// const flag = arguments.length &gt;= 2 &amp;&amp; typeof arguments[0] === &#x27;object&#x27; &amp;&amp; arguments[0] !== &#x27;null&#x27;</span></span><br><span class="line">    <span class="comment">// 上下两种逻辑均可</span></span><br><span class="line">    <span class="keyword">const</span> flag = <span class="built_in">arguments</span>.length &gt;= <span class="number">2</span> &amp;&amp; <span class="built_in">arguments</span>[<span class="number">0</span>] <span class="keyword">instanceof</span> <span class="built_in">Object</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">let</span> t</span><br><span class="line">    <span class="comment">// 如果有绑定的对象则将这个对象从数组中挖出来</span></span><br><span class="line">    <span class="keyword">if</span> (flag) t = args.shift()</span><br><span class="line">    <span class="keyword">const</span> self = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> result = self.apply(t, args)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">a, b, c</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;this&quot;</span>, <span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line">a.myCall(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="手写-apply-函数"><a href="#手写-apply-函数" class="headerlink" title="手写 apply 函数"></a>手写 apply 函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第一种实现方式 通过 call 实现</span></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> that = <span class="built_in">this</span></span><br><span class="line">    <span class="keyword">const</span> args = [...arguments]</span><br><span class="line">    <span class="keyword">const</span> self = args.shift()</span><br><span class="line">    <span class="comment">// arguments 里面是一个对象 + 数组</span></span><br><span class="line">    <span class="comment">// 通过扩展运算符,并取出第一个对象后</span></span><br><span class="line">    <span class="comment">// 此时里面的 index 为 0 的数据是一个数组，所以需要 args[0]</span></span><br><span class="line">    <span class="keyword">const</span> result = that.call(self, ...args[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二种实现方式 不通过 call 实现</span></span><br><span class="line"><span class="comment">// Function.prototype.myApply = function (thisArg, args) &#123;</span></span><br><span class="line"><span class="comment">//     const fn = Symbol(&#x27;fn&#x27;)        // 声明一个独有的Symbol属性, 防止fn覆盖已有属性</span></span><br><span class="line"><span class="comment">//     thisArg = thisArg || window    // 若没有传入this, 默认绑定window对象</span></span><br><span class="line"><span class="comment">//     thisArg.fn = this              // this指向调用call的对象,即我们要改变this指向的函数</span></span><br><span class="line"><span class="comment">//     const result = thisArg.fn(...args)  // 执行当前函数</span></span><br><span class="line"><span class="comment">//     delete thisArg.fn              // 删除我们声明的fn属性</span></span><br><span class="line"><span class="comment">//     return result                  // 返回函数执行结果</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(a, b)</span><br><span class="line">&#125;</span><br><span class="line">foo.myApply(&#123; <span class="attr">x</span>: <span class="number">300</span> &#125;, [<span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-
-<p><strong><em>注：Symbol 生成一个全局唯一的值</em></strong></p>
-<h2 id="三兄弟区别"><a href="#三兄弟区别" class="headerlink" title="三兄弟区别"></a>三兄弟区别</h2><ul>
-<li>三兄弟接收的第一个参数都是要绑定的 this 指向</li>
-<li>apply 的第二个参数是一个参数数组，call 和 bind 的第二个及之后的参数作为函数实参按顺序传入</li>
-<li>bind 不会立即调用，其他两个会立即调用</li>
-</ul>
-<h1 id="实际开发中闭包的应用"><a href="#实际开发中闭包的应用" class="headerlink" title="实际开发中闭包的应用"></a>实际开发中闭包的应用</h1><ul>
-<li><p>隐藏数据</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 闭包隐藏数据，只提供 API</span></span><br><span class="line"><span class="comment">// 做一个简单的 cache 工具</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createCache</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123;&#125; <span class="comment">// 闭包中的数据，被隐藏，不被外界访问</span></span><br><span class="line">    <span class="comment">// 闭包的一种方式，返回一个函数</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        set: <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">            data[key] = value</span><br><span class="line">        &#125;,</span><br><span class="line">        get: <span class="function"><span class="keyword">function</span> (<span class="params">key</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> data[key]</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果我们不通过 set、get 无法修改 data 的值</span></span><br><span class="line"><span class="comment">// 因为 data 是在 createCache 作用域里面的，不会被外界所访问</span></span><br><span class="line"><span class="keyword">const</span> c = createCache()</span><br><span class="line">c.set(<span class="string">&quot;a&quot;</span>, <span class="number">100</span>)</span><br><span class="line"><span class="built_in">console</span>.log(c.get(<span class="string">&quot;a&quot;</span>))</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 点击 a 标签弹出对应的标签序号</span></span><br><span class="line"><span class="keyword">let</span> a</span><br><span class="line"><span class="comment">// let i 是定义了一个 for 里面的块级作用域</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    a = <span class="built_in">document</span>.createElement(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">    a.innerHTML = i + <span class="string">&quot;&lt;br&gt;&quot;</span></span><br><span class="line">    a.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        e.preventDefault()</span><br><span class="line">        alert(i)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(a)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>或者也可使用立即执行函数来实现。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>作用域和闭包</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>前端面试题总结-JS基础之原型和原型链</title>
     <url>/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
     <content><![CDATA[<p><strong>三座大山之一，必考！！！</strong></p>
@@ -945,6 +1076,362 @@
       </tags>
   </entry>
   <entry>
+    <title>前端面试题总结-http 面试题</title>
+    <url>/2020/12/09/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-http-%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
+    <content><![CDATA[<p>前后端分离的时代，网络请求是前端的生命线！</p>
+<p>http 面试题</p>
+<ul>
+<li>前端工程师开发界面</li>
+<li>需要调用后端的接口，提交/获取 数据 —— http 协议</li>
+<li>要求事先掌握好 ajax</li>
+</ul>
+<a id="more"></a>
+
+<p>首先看题目</p>
+<ul>
+<li>http 常见的状态码有哪些？</li>
+<li>http 常见的 header 有哪些？</li>
+<li>什么是 Restful api</li>
+<li>描述一下 http 的缓存机制（重要）</li>
+</ul>
+<h1 id="http-状态码"><a href="#http-状态码" class="headerlink" title="http 状态码"></a>http 状态码</h1><h2 id="状态码分类"><a href="#状态码分类" class="headerlink" title="状态码分类"></a>状态码分类</h2><ul>
+<li>1xx 服务器接收到请求</li>
+<li>2xx 请求成功，如 200</li>
+<li>3xx 重定向，如 302</li>
+<li>4xx 客户端错误，如 404</li>
+<li>5xx 服务器端错误，如 500</li>
+</ul>
+<h2 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h2><ul>
+<li>200 成功</li>
+<li>301 永久重定向（配合 location 新的地址，浏览器自动处理）</li>
+<li>302 临时重定向（配合 location 新的地址，浏览器自动处理）</li>
+<li>304 资源未被修改</li>
+<li>404 资源未找到</li>
+<li>403 没有权限</li>
+<li>500 服务器错误</li>
+<li>504 网关超时</li>
+</ul>
+<h1 id="http-methods"><a href="#http-methods" class="headerlink" title="http methods"></a>http methods</h1><h2 id="传统的-methods"><a href="#传统的-methods" class="headerlink" title="传统的 methods"></a>传统的 methods</h2><ul>
+<li>get 获取服务器的数据</li>
+<li>post 向服务器提交数据</li>
+<li>简单的网页功能就这两个操作</li>
+</ul>
+<h2 id="现在的-methods"><a href="#现在的-methods" class="headerlink" title="现在的 methods"></a>现在的 methods</h2><ul>
+<li>get 获取数据</li>
+<li>post 新建数据（数据还没有，要创建一个新的，比如一个新的留言、新的博客）</li>
+<li>patch / put 更新数据</li>
+<li>delete 删除数据</li>
+</ul>
+<h1 id="Restful-API"><a href="#Restful-API" class="headerlink" title="Restful API"></a>Restful API</h1><ul>
+<li>一种新的 API 设计方法（早已推广使用）</li>
+<li><strong>传统 API 设计：把每个 url 当做一个功能</strong></li>
+<li><strong>Restful API 设计：把每个 url 当做一个唯一的资源的标识</strong></li>
+</ul>
+<h2 id="如何设计一个唯一的资源"><a href="#如何设计一个唯一的资源" class="headerlink" title="如何设计一个唯一的资源"></a>如何设计一个唯一的资源</h2><ul>
+<li><p><strong>尽量不用 url 参数</strong></p>
+<p><strong>传统 API 设计</strong>：      /api/list?pageInde=2 ，有点像问号前面是一个函数，然后问号后面是一个参数</p>
+<p><strong>Restful API 设计</strong>： /api/list/2 ，就是一个资源的标识，不会与其他重复</p>
+</li>
+<li><p><strong>用 method 表示操作类型</strong></p>
+<p><strong>传统 API 设计</strong></p>
+<p>​    post 请求： /api/create-blog</p>
+<p>​    post 请求： /api/update-blog?id=100</p>
+<p>​    get 请求：   /api/get-blog?id=100</p>
+<p><strong>Restful API 设计</strong></p>
+<p>​    post请求：    /api/blog<br>​    patch请求：  /api/blog/100<br>​    get请求：      /api/blog/100</p>
+</li>
+</ul>
+<h1 id="http-headers"><a href="#http-headers" class="headerlink" title="http headers"></a>http headers</h1><h2 id="常见的-Request-Headers"><a href="#常见的-Request-Headers" class="headerlink" title="常见的 Request Headers"></a>常见的 Request Headers</h2><ul>
+<li>Accept：浏览器可接收的数据格式</li>
+<li>Accept-Encoding：浏览器可接收的压缩算法，如 gzip (如原来内容100kb，最小压缩到 30kb)</li>
+<li>Accept-Language：浏览器可接受的语言，如 zh-CN</li>
+<li>Connection:keep-aive 一次 TCP 连接重复使用</li>
+<li>cookie</li>
+<li>Host：域名</li>
+<li>User-Agent（简称 UA）浏览器信息</li>
+<li>Content-type：发送数据的格式，如 application/json</li>
+</ul>
+<h2 id="常见的-Response-Headers"><a href="#常见的-Response-Headers" class="headerlink" title="常见的 Response Headers"></a>常见的 Response Headers</h2><ul>
+<li>Content-type：返回数据的格式，如 application/json</li>
+<li>Content-length：返回数据的大小，多少字节</li>
+<li>Content-Encoding：返回数据的压缩算法，如 gzip</li>
+<li>Set-Cookie</li>
+</ul>
+<h1 id="http-缓存策略"><a href="#http-缓存策略" class="headerlink" title="http 缓存策略"></a>http 缓存策略</h1><h2 id="关于缓存"><a href="#关于缓存" class="headerlink" title="关于缓存"></a>关于缓存</h2><p>当第一次用浏览器访问一个新的网站时（本地无该网站任何信息），服务端会原原本本把所有的数据返回给浏览器，但是当第二次访问时，可以把没有必要重新获取的东西不再重新获取。</p>
+<h2 id="关于为什么需要缓存"><a href="#关于为什么需要缓存" class="headerlink" title="关于为什么需要缓存"></a>关于为什么需要缓存</h2><p>最大的目的是为了让页面加载的更快一些。</p>
+<p>网络请求的加载到相比于 CPU 的计算，包括页面的渲染都是非常慢的一个事情，所以如果要做性能优化，让页面显示的更快，因此要从最带的瓶颈——网络请求下手，<strong>尽量减少网络请求的体积和数量，让网络请求更快一些</strong>。</p>
+<p>**可以被缓存的资源 **—— 静态资源（js、css、img），可根据文件内容生成一个哈希值，如果内容变了，哈希值会变，输出的文件名也会变，这样文件缓存就没有问题了，但访问 html 时无法再后面加入哈希值。</p>
+<h2 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h2><p>初次请求，浏览器返回资源和 Cache-Control ，浏览器有了资源之后可继续工作，这个时候如果服务端感觉资源可以被缓存，就会加一个 Cache-Control ，如果服务端感觉资源不适合被缓存就不会加 Cache-Control 。</p>
+<img src="image-20201208212554249.png" alt="image-20201208212554249" style="zoom: 33%;" />
+
+<h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><ul>
+<li>在 Response Headers 中（服务端控制）</li>
+<li>控制强制缓存的逻辑</li>
+<li>例如 Cache- Control:max-age=31536000（单位是秒），一年</li>
+</ul>
+<p>百度的 logo  Cache- Control 是一年</p>
+<img src="image-20201208213526848.png" alt="image-20201208213526848" style="zoom: 50%;" />
+
+<p>因此在此请求的时候只要判断 Cache- Control 时间还没过期，然后浏览器就会在本地缓存里面去找这个资源，不会到服务端，然后直接返回这个资源。因此该次请求未经过网络，直接读取的本地缓存会非常快，所以此次请求会更快一些，</p>
+<img src="image-20201208213852916.png" alt="image-20201208213852916" style="zoom: 33%;" />
+
+<img src="image-20201208214312281.png" alt="image-20201208214312281" style="zoom: 50%;" />
+
+<p>如果缓存过期失效了，就会再次请求服务端，服务端重新返回资源和 Cache- Control ，然后又会设置一遍过期时间，这样如果近期再请求，就会命中了本地缓存，很快的返回资源。</p>
+<img src="image-20201208214414482.png" alt="image-20201208214414482" style="zoom:33%;" />
+
+<h3 id="Cache-Control-的值"><a href="#Cache-Control-的值" class="headerlink" title="Cache- Control 的值"></a>Cache- Control 的值</h3><ul>
+<li>max-age：缓存最大过期时间</li>
+<li>no-cache：不用强制缓存，正常向服务端请求</li>
+<li>no-store：不用强制缓存而且不用服务端的缓存措施，直接简单粗暴的把资源再重新返回一份，比较彻底，但不常见</li>
+<li>private</li>
+<li>public</li>
+</ul>
+<h3 id="关于-Expries（知道即可）"><a href="#关于-Expries（知道即可）" class="headerlink" title="关于 Expries（知道即可）"></a>关于 Expries（知道即可）</h3><ul>
+<li>同在 Response Headers 中</li>
+<li>同为控制缓存过期</li>
+<li>已被 Cache- Control 代替</li>
+</ul>
+<h2 id="协商缓存（对比缓存）"><a href="#协商缓存（对比缓存）" class="headerlink" title="协商缓存（对比缓存）"></a>协商缓存（对比缓存）</h2><ul>
+<li>服务器端缓存策略（服务端判断资源是否可以用浏览器中缓存的内容）</li>
+<li>服务器判断客户端资源，是否和服务端资源一样</li>
+<li>一致则返回 304，否则返回 200 和最新的资源</li>
+</ul>
+<img src="image-20201208220028941.png" alt="image-20201208220028941" style="zoom:33%;" />
+
+<h3 id="资源标识"><a href="#资源标识" class="headerlink" title="资源标识"></a>资源标识</h3><p>在 Response Headers （因为是服务端返回的）中，有两种：</p>
+<ul>
+<li>Last-Modified 资源的最后修改时间</li>
+<li>Etag 资源的唯一标识（一个字符串，类似人类的指纹）</li>
+</ul>
+<h4 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h4><p>If-Modified-Since 永远返回浏览器缓存中最近一次修改的时间</p>
+<img src="image-20201208220458639.png" alt="image-20201208220458639" style="zoom:33%;" />
+
+<h4 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h4><p>If-None-Match 就是上一次服务器端返回的 Etag 字符串</p>
+<img src="image-20201208220923688.png" alt="image-20201208220923688" style="zoom:33%;" />
+
+<img src="image-20201208221644782.png" alt="image-20201208221644782" style="zoom: 33%;" />
+
+<p>第一次访问：</p>
+<img src="image-20201208221747981.png" alt="image-20201208221747981" style="zoom:25%;" />
+
+<p>第二次访问（通过 Last-Modified 或 Etag 命中缓存）：</p>
+<img src="image-20201208221815899.png" alt="image-20201208221815899" style="zoom:25%;" />
+
+<p>可以看出两次资源请求的 size 差的很多</p>
+<h4 id="Last-Modified-和-Etag-共存"><a href="#Last-Modified-和-Etag-共存" class="headerlink" title="Last-Modified 和 Etag 共存"></a>Last-Modified 和 Etag 共存</h4><ul>
+<li><p>会优先使用 Etag</p>
+<p>Last-Modified 只能精确到秒级，对计算机来说秒级还是一个比较宽泛的时间段，一般以 mm 或以内为单位</p>
+</li>
+<li><p>如果资源被重复生成，而内容不变，则 Etag 更精确（Etag 根据内容计算），而 Last-Modified 每次都会重新请求</p>
+</li>
+</ul>
+<h2 id="http-缓存-综述"><a href="#http-缓存-综述" class="headerlink" title="http 缓存-综述"></a>http 缓存-综述</h2><img src="image-20201208222322100.png" alt="image-20201208222322100" style="zoom: 50%;" />
+
+<h2 id="三种刷新操作"><a href="#三种刷新操作" class="headerlink" title="三种刷新操作"></a>三种刷新操作</h2><ul>
+<li>正常操作：地址栏输入 url，跳转链接，前进后退等</li>
+<li>手动刷新：F5，点击刷新按钮，右击菜单刷新</li>
+<li>强制刷新：ctrl+F5</li>
+</ul>
+<h3 id="不同刷新操作，不同的缓存策略"><a href="#不同刷新操作，不同的缓存策略" class="headerlink" title="不同刷新操作，不同的缓存策略"></a>不同刷新操作，不同的缓存策略</h3><ul>
+<li>正常操作：强制缓存有效，协商缓存有效</li>
+<li>手动刷新：强制缓存失效，协商缓存有效</li>
+<li>强制刷新：强制缓存失效，协商缓存失效</li>
+</ul>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
+<li>http 常见的状态码有哪些</li>
+<li>http 常见的 header 有哪些</li>
+<li>什么是 Restful API</li>
+<li>描述一下 http 的缓存机制（重要，上面流程图一定要会）</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>HTTP 面试题</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-开发环境</title>
+    <url>/2020/12/09/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>不会这些，你就会被认定是菜鸟小白，没做过项目</p>
+<h1 id="关于开发环境"><a href="#关于开发环境" class="headerlink" title="关于开发环境"></a>关于开发环境</h1><ul>
+<li>面试官想通过开发环境了解候选人的实际工作情况</li>
+<li>开发环境的工具，能体现工作产出的效率</li>
+<li>会以聊天形式为主，不会问具体的问题</li>
+</ul>
+<a id="more"></a>
+
+<p><strong>开发环境</strong></p>
+<ul>
+<li>git</li>
+<li>调试工具</li>
+<li>抓包</li>
+<li>webpack、babel</li>
+<li>linux 常用命令</li>
+</ul>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><ul>
+<li>最常用的代码版本管理工具</li>
+<li>大型项目需要多人协作开发，必须熟用 git</li>
+<li>如果不知道或者之前不用git，不会通过面试</li>
+<li>Mac os 自带 git 命令， windows 可去官网下载安装</li>
+<li>git 服务端常见的有 github、coding. net 等</li>
+<li>大公司会搭建自己的内网 git 服务</li>
+</ul>
+<h2 id="常用的-git-命令"><a href="#常用的-git-命令" class="headerlink" title="常用的 git 命令"></a>常用的 git 命令</h2><ul>
+<li>git add .</li>
+<li>git checkout xxx </li>
+<li>git commit -m “xxx” </li>
+<li>git push origin master </li>
+<li>git pull origin master</li>
+<li>git branch</li>
+<li>git checkout -b xxx</li>
+<li>git merge xxx</li>
+<li>git diff</li>
+<li>git log</li>
+<li>git fetch</li>
+<li>git stash</li>
+<li>git reset –hard id</li>
+<li>git stash</li>
+<li>git stash pop</li>
+</ul>
+<p><a href="https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单（单击访问）</a></p>
+<p><strong>Git 思维导图</strong></p>
+<p><img src="https://img-blog.csdn.net/20180808170716549?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTA4NTk2NTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h2 id="chrome-调试工具"><a href="#chrome-调试工具" class="headerlink" title="chrome 调试工具"></a>chrome 调试工具</h2><ul>
+<li>Elements</li>
+<li>Console</li>
+<li>Network</li>
+<li>debugger（需在代码片段中引入该断点命令）</li>
+<li>Application</li>
+</ul>
+<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><ul>
+<li>移动端 h5 页，查看网络请求，需要用工具抓包</li>
+<li>windows 一般用 fiddler </li>
+<li>Mac os 一般用 charles</li>
+</ul>
+<p><strong>移动端</strong>（<a href="https://www.cnblogs.com/yyhh/p/5140852.html">Fiddler抓包工具总结</a>）</p>
+<ul>
+<li>手机和电脑连同一个局域网</li>
+<li>将手机代理到电脑上</li>
+<li>手机浏览网页，即可抓包</li>
+</ul>
+<h2 id="webpack-和-babel"><a href="#webpack-和-babel" class="headerlink" title="webpack 和 babel"></a>webpack 和 babel</h2><ul>
+<li>ES6 模块化，浏览器暂不支持</li>
+<li>ES6 语法，浏览器并不完全支持</li>
+<li>压缩代码，整合代码，以让网页加载更快</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码演示（需nodejs）</span></span><br><span class="line"><span class="comment">// 根目录 npm init -y</span></span><br><span class="line"><span class="comment">// 接着命令行安装（此处借助淘宝代理） cnpm install webpack webpack-cli -D</span></span><br><span class="line"><span class="comment">// 根目录新建 src 文件夹及子文件 index.js（里面内容随便打印个就可）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 根目录新建文件 webpack.config.js ， 内容如下</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&quot;development&quot;</span>, <span class="comment">// production</span></span><br><span class="line">    entry: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.js&quot;</span>), <span class="comment">// 文件入口</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">&quot;bundle.js&quot;</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">&quot;dist&quot;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 然后可尝试运行（可在 package.json 文件中的 script 里面加入 &quot;build&quot;: &quot;webpack&quot; 简化执行操作）</span></span><br><span class="line"><span class="comment">// 根目录命令行 npm run build</span></span><br><span class="line"><span class="comment">// 打包完毕，根目录会生成 dist 文件夹及子文件 bundle.js</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在网页中显示</span></span><br><span class="line"><span class="comment">// src 文件夹下新建 index.html ,随便生成个 html 框架（无需引入 index.js）</span></span><br><span class="line"><span class="comment">// 命令行安装插件（解析 html） cnpm install html-webpack-plugin -D</span></span><br><span class="line"><span class="comment">// 命令行安装插件（启动服务的插件） cnpm install webpack-dev-server -D</span></span><br><span class="line"><span class="comment">// 安装完成后可在 package.json 的 devDependencies 中查看安装信息</span></span><br><span class="line"><span class="comment">// webpack.config.js 代码</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> htmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">&quot;html-webpack-plugin&quot;</span>) <span class="comment">// 引入插件</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&quot;development&quot;</span>, <span class="comment">// production</span></span><br><span class="line">    entry: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.js&quot;</span>), <span class="comment">// 文件入口</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">&quot;bundle.js&quot;</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">&quot;dist&quot;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 配置插件</span></span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> htmlWebpackPlugin(&#123;</span><br><span class="line">            template: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.html&quot;</span>), <span class="comment">// 找到已有的 index.html</span></span><br><span class="line">            filename: <span class="string">&quot;index.html&quot;</span>, <span class="comment">// 产出文件名</span></span><br><span class="line">        &#125;),</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// 启动本地服务</span></span><br><span class="line">    devServer: &#123;</span><br><span class="line">        port: <span class="number">3000</span>, <span class="comment">// 端口</span></span><br><span class="line">        contentBase: path.join(__dirname, <span class="string">&quot;dist&quot;</span>), <span class="comment">// 当前目录</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 最终在 package.json 的 scripts 中添加代码： &quot;dev&quot;: &quot;webpack-dev-server&quot;</span></span><br><span class="line"><span class="comment">// 成功之后可在浏览器中访问 http://localhost:3000/index.html 即可</span></span><br><span class="line"><span class="comment">// 能加载出来原因是因为引入了 bundle.js 文件，并且其中包括了 index.js 的代码</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 关于版本报错问题，可尝试下列版本，nodejs 版本过高也可能导致报错</span></span><br><span class="line"><span class="string">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;html-webpack-plugin&quot;</span>: <span class="string">&quot;^4.5.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack&quot;</span>: <span class="string">&quot;^4.41.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack-cli&quot;</span>: <span class="string">&quot;^3.3.9&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack-dev-server&quot;</span>: <span class="string">&quot;^3.8.2&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ES6</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 如果在 index.js 中写一个箭头函数，当打包之后，在 bundle.js 中还是一个 ES6 的箭头函数，此时就需要 babel 的编译</span></span><br><span class="line"><span class="comment">// 需要安装 babel ：(@符号为组的意思)</span></span><br><span class="line"><span class="comment">// npm install @babel/core @babel/preset-env babel-loader -D --registry=https://registry.npm.taobao.org    </span></span><br><span class="line"><span class="comment">// 在根目录新建文件 .babelrc 文件，代码如下</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;presets&quot;</span>: [<span class="string">&quot;@babel/preset-env&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 module.exports 里面加入代码：</span></span><br><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">            test: <span class="regexp">/\.js$/</span>, <span class="comment">// 只要是 .js 结尾的都走 babel-loader</span></span><br><span class="line">            loader: [<span class="string">&quot;babel-loader&quot;</span>],</span><br><span class="line">            include: path.join(__dirname, <span class="string">&quot;src&quot;</span>), <span class="comment">// 包含哪些目录需要走这个 loader</span></span><br><span class="line">            exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    ],</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// npm run dev 之后在 bundle.js 里面的箭头函数就会被转译为 ES5 语法</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="ES6-模块化"><a href="#ES6-模块化" class="headerlink" title="ES6 模块化"></a>ES6 模块化</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刚才在上个文件的 src 目录下新建 a.js ,代码如下：</span></span><br><span class="line"><span class="comment">// 单个导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(fn)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name = <span class="string">&quot;a&quot;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zhangsan&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 一块导出简写</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;fn&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> name = <span class="string">&quot;a&quot;</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zhangsan&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">exports</span> &#123;</span><br><span class="line">    fn, <span class="comment">// ES5 中需写成 fn: fn ,ES6 中 key 与 value 值一样则可省略 value</span></span><br><span class="line">    name,</span><br><span class="line">    obj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 然后在 index.js 文件下的头部引入并输出）</span></span><br><span class="line"><span class="keyword">import</span> &#123; fn, name, obj &#125; <span class="keyword">from</span> <span class="string">&quot;./a&quot;</span>  <span class="comment">// 解构赋值</span></span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(name)</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者，但是这种方法没办法用解构赋值，只能挨个导入</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zs&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    obj,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="如何配置-webpack-生产环境"><a href="#如何配置-webpack-生产环境" class="headerlink" title="如何配置 webpack 生产环境"></a>如何配置 webpack 生产环境</h2><p>根目录下新建 webpack.prod.js （一共两个配置文件，一个开发环境下的，一个生产环境下的）</p>
+<p><strong>1</strong>.可先复制一份 webpack.config.js 然后将里面的 mode 修改 production</p>
+<p><strong>2</strong>.将 devServer 配置项全部删掉</p>
+<p><strong>3</strong>.将 output 中的 filename 改为 “bundle.[contenthash].js”</p>
+<p>  - 根据代码内容算出哈希的值，如果内容变了，这个哈希值也会跟着变，内容不变则不会变</p>
+<p><strong>4</strong>.改 package.json 里面的 build ，之前默认的是启动服务，但此时不需要所以改变为 </p>
+<p> - “build”: “webpack –config webpack.prod.js”</p>
+<p>此时再次 npm run build</p>
+<p>dist 文件夹下的 bundle.js 文件名称跟着长串字符（配置的 [contenthash] ），这个长串字符就是内容变则变，内容不变则不变</p>
+<p>目地是最大程度命中 http 的缓存，让页面加载的更快</p>
+<p>内容也是经过压缩，体积小、执行快、下载快</p>
+<h2 id="Linux-命令"><a href="#Linux-命令" class="headerlink" title="Linux 命令"></a>Linux 命令</h2><ul>
+<li>公司的线上机器一般都是 linux （参考阿里云）</li>
+<li>测试机也要保持一致，用 linux</li>
+<li>测试机或者线上机出了问题，本地有不能复现，需要去排查（非常常见）</li>
+</ul>
+<p><a href="https://www.runoob.com/linux/linux-command-manual.html">Linux 命令大全</a></p>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>知识点总结</tag>
+        <tag>前端开发环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将hexo博客部署到github或gitee</title>
+    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
+    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
+<ul>
+<li>全是静态文件，访问速度快；</li>
+<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
+<li>可以绑定自己的域名；</li>
+<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
+<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
+<li>= =</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
+<li>优点：部署比较简单，且不用频繁的更新部署</li>
+<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
+</ul>
+<p>登录github后，点击右上角的＋，然后点击new repository</p>
+<p><img src="newrepository.jpg"></p>
+<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
+<p><img src="newsave.jpg"></p>
+<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
+<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
+<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
+<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
+<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
+<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
+<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
+<li>优点：访问速度快，中文页面友好</li>
+<li>缺点：每次部署后都需要服务中点击更新部署</li>
+</ul>
+<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
+<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
+<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
+<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
+<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
+<p><img src="MyblogAdress.jpg"></p>
+<p>注意：每次执行完命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
+
+<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
+<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>部署博客到远端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前端面试题总结-JS基础之变量类型和计算</title>
     <url>/2020/11/24/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%92%8C%E8%AE%A1%E7%AE%97/</url>
     <content><![CDATA[<p><strong>变量是每个语言最开始的基础，不会变量，别说你会JS！</strong></p>
@@ -1023,72 +1510,6 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>变量类型和计算</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>将hexo博客部署到github或gitee</title>
-    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
-    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
-<ul>
-<li>全是静态文件，访问速度快；</li>
-<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
-<li>可以绑定自己的域名；</li>
-<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
-<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
-<li>= =</li>
-</ul>
-<a id="more"></a>
-
-<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
-<li>优点：部署比较简单，且不用频繁的更新部署</li>
-<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
-</ul>
-<p>登录github后，点击右上角的＋，然后点击new repository</p>
-<p><img src="newrepository.jpg"></p>
-<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
-<p><img src="newsave.jpg"></p>
-<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
-<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
-<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
-<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
-<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
-<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
-<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
-<li>优点：访问速度快，中文页面友好</li>
-<li>缺点：每次部署后都需要服务中点击更新部署</li>
-</ul>
-<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
-<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
-<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
-<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
-<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
-<p><img src="MyblogAdress.jpg"></p>
-<p>注意：每次执行完命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
-
-<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
-<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>部署博客到远端</tag>
       </tags>
   </entry>
   <entry>
@@ -1310,316 +1731,6 @@
       <tags>
         <tag>知识点总结</tag>
         <tag>HTML、CSS面试题</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题总结-JS-Web-API-Ajax</title>
-    <url>/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-Ajax/</url>
-    <content><![CDATA[<p>每个工程师都必须熟练掌握的技能</p>
-<h1 id="Ajax"><a href="#Ajax" class="headerlink" title="Ajax"></a>Ajax</h1><h2 id="手写一个-XMLHttpRequest"><a href="#手写一个-XMLHttpRequest" class="headerlink" title="手写一个 XMLHttpRequest"></a>手写一个 XMLHttpRequest</h2><a id="more"></a>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// get 请求</span></span><br><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line"><span class="comment">// true 的意思是异步的请求, false 是同步</span></span><br><span class="line"><span class="comment">// 网络请求不能卡顿影响页面，所以需要异步</span></span><br><span class="line">xhr.open(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;./test.json&quot;</span>, <span class="literal">true</span>) </span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 必须三等</span></span><br><span class="line">    <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">            alert(xhr.responseText)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;其他情况&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 由于是 get 请求，不用发送任何数据，直接 null 即可</span></span><br><span class="line">xhr.send(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// post 请求</span></span><br><span class="line"><span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">xhr.open(<span class="string">&quot;POST&quot;</span>, <span class="string">&quot;./test.json&quot;</span>, <span class="literal">false</span>) </span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">            alert(xhr.responseText)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;其他情况&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> postData = &#123;</span><br><span class="line">    name: <span class="string">&quot;zs&quot;</span>,</span><br><span class="line">    password: <span class="string">&quot;xxx&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将 json 数据变成字符串发送</span></span><br><span class="line">xhr.send(<span class="built_in">JSON</span>.stringify(postData))</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="xhr-readyState"><a href="#xhr-readyState" class="headerlink" title="xhr.readyState"></a>xhr.readyState</h2><ul>
-<li>0 -（未初始化）还没有调用 send（）方法</li>
-<li>1 -（载入）已调用 send（）方法，正在发送请求</li>
-<li>2 -（载入完成）send（）方法执行完成，已经接收到全部响应内容</li>
-<li>3 -（交互）正在解析响应内容</li>
-<li>4 -（完成）响应内容解析完成，可以在客户端调用</li>
-</ul>
-<h2 id="xhr-status"><a href="#xhr-status" class="headerlink" title="xhr.status"></a>xhr.status</h2><ul>
-<li>2xx - 表示成功处理请求，如 200</li>
-<li>3xx - 需要重定向，浏览器直接跳转，如 301（永久重定向）、302（临时重定向）、304（资源未改变）</li>
-<li>4xx - 客户端请求错误，如 404（请求地址有误，或者服务端没有）、403（客户端没有权限，在内部系统应用较多）</li>
-<li>5xx - 服务器端错误（出 bug 了）</li>
-</ul>
-<h1 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h1><ul>
-<li><p>什么是跨域（同源策略）</p>
-<p><strong>同源策略</strong></p>
-<ul>
-<li>ajax 请求时，<strong>浏览器要求</strong>当前网页和 server 端必须同源（安全）</li>
-<li>同源：协议、端口、域名，三者必须一致</li>
-<li>前端: <a href="http://a.com:8080/">http://a.com:8080/</a> ；server: <a href="https://b.com/api/xxx">https://b.com/api/xxx</a> , 二者三个要求均不同</li>
-</ul>
-<p><strong>加载图片、CSS、JS 可无视同源策略</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img src&#x3D;跨域的图片地址 &#x2F;&gt;</span><br><span class="line">&lt;link href&#x3D;跨域的图片地址 &#x2F;&gt;</span><br><span class="line">&lt;script src&#x3D;跨域的 JS 地址&gt;&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;img &#x2F;&gt; 可用于统计打点，可使用第三方统计服务</span><br><span class="line">&lt;link &#x2F;&gt; &lt;script&gt; 可使用 CDN , CDN 一般都是外域</span><br><span class="line">&lt;script&gt; 可实现 JSONP</span><br></pre></td></tr></table></figure>
-
-<p><strong>跨域</strong></p>
-<ul>
-<li>所有的跨域，都必须经过 server 端允许和配合</li>
-<li>未经 server 端允许就实现跨域，说明浏览器有漏洞，危险信号</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>JSONP</p>
-<ul>
-<li>访问知乎或者虎扑，服务端一定返回同一个 html 文件吗？</li>
-<li>服务器可以任意动态拼接数据返回，只要符合 html 格式要求</li>
-<li>同理访问 script 的一个 js 文件，不一定返回的是一个静态的 js 文件，而是服务端可以任意拼接符合 js 不报错即可</li>
-</ul>
-<p><strong>JSONP 原理</strong></p>
-<p>**1.**通过 script 可绕过跨域限制</p>
-<p>**2.**服务器可以任意动态拼接数据返回</p>
-<p>**3.**所以，script 标签就可以获得跨域的数据，只要服务端愿意返回</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- JSONP 代码演示 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- html --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.abc = <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(data)</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;http://localhost:8002/jsonp.js?username=xxx&amp;callback=abc&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- jsonp.js --&gt;</span></span><br><span class="line">abc(</span><br><span class="line">    &#123; name: &#x27;xxx&#x27; &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ul>
-<li><p>CORS（服务器端支持）</p>
-<p><strong>CORS - 服务器设置 http header</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 第二个参数填写允许跨域的域名称，不建议直接写 &quot;*&quot;</span></span><br><span class="line">response.setHeader(<span class="string">&quot;Access-Control-Allow-Origin&quot;</span>, <span class="string">&quot;http://localhost:8011&quot;</span>);</span><br><span class="line"><span class="comment">// 该字段表明服务端支持的请求方法</span></span><br><span class="line">response.setHeader(<span class="string">&quot;Access-Control-Allow-Methods&quot;</span>, <span class="string">&quot;PUT,POST,GET,DELETE,OPTIONS&quot;</span>);</span><br><span class="line"><span class="comment">// 实际请求将携带的自定义请求首部字段</span></span><br><span class="line">response.setHeader(<span class="string">&quot;Access-Control-Allow-Headers&quot;</span>, <span class="string">&quot;X-Requested-With&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接收跨域的 cookie</span></span><br><span class="line">response.setHeader(<span class="string">&quot;Access-Control-Allow-Credentials&quot;</span>, <span class="string">&quot;true&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h1 id="手写一个简易的-Ajax"><a href="#手写一个简易的-Ajax" class="headerlink" title="手写一个简易的 Ajax"></a>手写一个简易的 Ajax</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 结合 Promise 使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params">url, type, success</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line">        xhr.open(type, url, <span class="literal">true</span>)</span><br><span class="line">        xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (xhr.status === <span class="number">200</span>) &#123;</span><br><span class="line">                    resolve(<span class="built_in">JSON</span>.parse(xhr.responseText))</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (xhr.status === <span class="number">404</span>) &#123;</span><br><span class="line">                    reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;404 not found&quot;</span>))</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        xhr.send(<span class="literal">null</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> url = <span class="string">&quot;./test.json&quot;</span></span><br><span class="line">ajax(url, <span class="string">&quot;GET&quot;</span>)</span><br><span class="line">    .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-
-<h1 id="实际项目中-Ajax-的常用插件"><a href="#实际项目中-Ajax-的常用插件" class="headerlink" title="实际项目中 Ajax 的常用插件"></a>实际项目中 Ajax 的常用插件</h1><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch">使用 Fetch - Web API 接口参考 | MDN (mozilla.org)</a></p>
-<p><a href="http://www.axios-js.com/zh-cn/docs/">axios中文文档|axios中文网 | axios (axios-js.com)</a></p>
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>JS-Web-API-Ajax</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题总结-JS-Web-API-存储</title>
-    <url>/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E5%AD%98%E5%82%A8/</url>
-    <content><![CDATA[<h1 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h1><p>知识点</p>
-<ul>
-<li>cookie</li>
-<li>localStorage 和 session Storage</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><ul>
-<li><p>本身用于浏览器和 server 通讯</p>
-</li>
-<li><p>被”借用”到本地存储</p>
-</li>
-<li><p>可用 document.cookie = ‘…’ 来修改</p>
-</li>
-</ul>
-<h2 id="cookie-缺点"><a href="#cookie-缺点" class="headerlink" title="cookie 缺点"></a>cookie 缺点</h2><ul>
-<li>存储大小，最大 4k</li>
-<li>http 请求时需要发送到服务端，增加请求数据量</li>
-<li>只能用 document.cookie = ‘…’ 来修改，太过简陋</li>
-<li>cookie 的安全性过低</li>
-</ul>
-<h2 id="localStorage-和-sessionStorage"><a href="#localStorage-和-sessionStorage" class="headerlink" title="localStorage 和 sessionStorage"></a>localStorage 和 sessionStorage</h2><ul>
-<li>HTML5 专门为存储而设计，最大可存 5M</li>
-<li>API 简单易用 setItem、getItem</li>
-<li>不会随着 http 请求被发送出去</li>
-</ul>
-<p><strong>二者区别</strong></p>
-<ul>
-<li>localStorage 数据会永久存储，除非代码或手动删除</li>
-<li>sessionStorage 数据只存在于当前会话，浏览器关闭则清空</li>
-<li>一般用 localStorage 会更多一些</li>
-</ul>
-<h1 id="描述-cookie、localStorage、sessionStorage区别"><a href="#描述-cookie、localStorage、sessionStorage区别" class="headerlink" title="描述 cookie、localStorage、sessionStorage区别"></a>描述 cookie、localStorage、sessionStorage区别</h1><ul>
-<li>容量</li>
-<li>API 易用性</li>
-<li>是否跟随 http 请求发送出去</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>JS-Web-API-Ajax</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题总结-http 面试题</title>
-    <url>/2020/12/09/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-http-%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-    <content><![CDATA[<p>前后端分离的时代，网络请求是前端的生命线！</p>
-<p>http 面试题</p>
-<ul>
-<li>前端工程师开发界面</li>
-<li>需要调用后端的接口，提交/获取 数据 —— http 协议</li>
-<li>要求事先掌握好 ajax</li>
-</ul>
-<a id="more"></a>
-
-<p>首先看题目</p>
-<ul>
-<li>http 常见的状态码有哪些？</li>
-<li>http 常见的 header 有哪些？</li>
-<li>什么是 Restful api</li>
-<li>描述一下 http 的缓存机制（重要）</li>
-</ul>
-<h1 id="http-状态码"><a href="#http-状态码" class="headerlink" title="http 状态码"></a>http 状态码</h1><h2 id="状态码分类"><a href="#状态码分类" class="headerlink" title="状态码分类"></a>状态码分类</h2><ul>
-<li>1xx 服务器接收到请求</li>
-<li>2xx 请求成功，如 200</li>
-<li>3xx 重定向，如 302</li>
-<li>4xx 客户端错误，如 404</li>
-<li>5xx 服务器端错误，如 500</li>
-</ul>
-<h2 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h2><ul>
-<li>200 成功</li>
-<li>301 永久重定向（配合 location 新的地址，浏览器自动处理）</li>
-<li>302 临时重定向（配合 location 新的地址，浏览器自动处理）</li>
-<li>304 资源未被修改</li>
-<li>404 资源未找到</li>
-<li>403 没有权限</li>
-<li>500 服务器错误</li>
-<li>504 网关超时</li>
-</ul>
-<h1 id="http-methods"><a href="#http-methods" class="headerlink" title="http methods"></a>http methods</h1><h2 id="传统的-methods"><a href="#传统的-methods" class="headerlink" title="传统的 methods"></a>传统的 methods</h2><ul>
-<li>get 获取服务器的数据</li>
-<li>post 向服务器提交数据</li>
-<li>简单的网页功能就这两个操作</li>
-</ul>
-<h2 id="现在的-methods"><a href="#现在的-methods" class="headerlink" title="现在的 methods"></a>现在的 methods</h2><ul>
-<li>get 获取数据</li>
-<li>post 新建数据（数据还没有，要创建一个新的，比如一个新的留言、新的博客）</li>
-<li>patch / put 更新数据</li>
-<li>delete 删除数据</li>
-</ul>
-<h1 id="Restful-API"><a href="#Restful-API" class="headerlink" title="Restful API"></a>Restful API</h1><ul>
-<li>一种新的 API 设计方法（早已推广使用）</li>
-<li><strong>传统 API 设计：把每个 url 当做一个功能</strong></li>
-<li><strong>Restful API 设计：把每个 url 当做一个唯一的资源的标识</strong></li>
-</ul>
-<h2 id="如何设计一个唯一的资源"><a href="#如何设计一个唯一的资源" class="headerlink" title="如何设计一个唯一的资源"></a>如何设计一个唯一的资源</h2><ul>
-<li><p><strong>尽量不用 url 参数</strong></p>
-<p><strong>传统 API 设计</strong>：      /api/list?pageInde=2 ，有点像问号前面是一个函数，然后问号后面是一个参数</p>
-<p><strong>Restful API 设计</strong>： /api/list/2 ，就是一个资源的标识，不会与其他重复</p>
-</li>
-<li><p><strong>用 method 表示操作类型</strong></p>
-<p><strong>传统 API 设计</strong></p>
-<p>​    post 请求： /api/create-blog</p>
-<p>​    post 请求： /api/update-blog?id=100</p>
-<p>​    get 请求：   /api/get-blog?id=100</p>
-<p><strong>Restful API 设计</strong></p>
-<p>​    post请求：    /api/blog<br>​    patch请求：  /api/blog/100<br>​    get请求：      /api/blog/100</p>
-</li>
-</ul>
-<h1 id="http-headers"><a href="#http-headers" class="headerlink" title="http headers"></a>http headers</h1><h2 id="常见的-Request-Headers"><a href="#常见的-Request-Headers" class="headerlink" title="常见的 Request Headers"></a>常见的 Request Headers</h2><ul>
-<li>Accept：浏览器可接收的数据格式</li>
-<li>Accept-Encoding：浏览器可接收的压缩算法，如 gzip (如原来内容100kb，最小压缩到 30kb)</li>
-<li>Accept-Language：浏览器可接受的语言，如 zh-CN</li>
-<li>Connection:keep-aive 一次 TCP 连接重复使用</li>
-<li>cookie</li>
-<li>Host：域名</li>
-<li>User-Agent（简称 UA）浏览器信息</li>
-<li>Content-type：发送数据的格式，如 application/json</li>
-</ul>
-<h2 id="常见的-Response-Headers"><a href="#常见的-Response-Headers" class="headerlink" title="常见的 Response Headers"></a>常见的 Response Headers</h2><ul>
-<li>Content-type：返回数据的格式，如 application/json</li>
-<li>Content-length：返回数据的大小，多少字节</li>
-<li>Content-Encoding：返回数据的压缩算法，如 gzip</li>
-<li>Set-Cookie</li>
-</ul>
-<h1 id="http-缓存策略"><a href="#http-缓存策略" class="headerlink" title="http 缓存策略"></a>http 缓存策略</h1><h2 id="关于缓存"><a href="#关于缓存" class="headerlink" title="关于缓存"></a>关于缓存</h2><p>当第一次用浏览器访问一个新的网站时（本地无该网站任何信息），服务端会原原本本把所有的数据返回给浏览器，但是当第二次访问时，可以把没有必要重新获取的东西不再重新获取。</p>
-<h2 id="关于为什么需要缓存"><a href="#关于为什么需要缓存" class="headerlink" title="关于为什么需要缓存"></a>关于为什么需要缓存</h2><p>最大的目的是为了让页面加载的更快一些。</p>
-<p>网络请求的加载到相比于 CPU 的计算，包括页面的渲染都是非常慢的一个事情，所以如果要做性能优化，让页面显示的更快，因此要从最带的瓶颈——网络请求下手，<strong>尽量减少网络请求的体积和数量，让网络请求更快一些</strong>。</p>
-<p>**可以被缓存的资源 **—— 静态资源（js、css、img），可根据文件内容生成一个哈希值，如果内容变了，哈希值会变，输出的文件名也会变，这样文件缓存就没有问题了，但访问 html 时无法再后面加入哈希值。</p>
-<h2 id="强制缓存"><a href="#强制缓存" class="headerlink" title="强制缓存"></a>强制缓存</h2><p>初次请求，浏览器返回资源和 Cache-Control ，浏览器有了资源之后可继续工作，这个时候如果服务端感觉资源可以被缓存，就会加一个 Cache-Control ，如果服务端感觉资源不适合被缓存就不会加 Cache-Control 。</p>
-<img src="image-20201208212554249.png" alt="image-20201208212554249" style="zoom: 33%;" />
-
-<h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><ul>
-<li>在 Response Headers 中（服务端控制）</li>
-<li>控制强制缓存的逻辑</li>
-<li>例如 Cache- Control:max-age=31536000（单位是秒），一年</li>
-</ul>
-<p>百度的 logo  Cache- Control 是一年</p>
-<img src="image-20201208213526848.png" alt="image-20201208213526848" style="zoom: 50%;" />
-
-<p>因此在此请求的时候只要判断 Cache- Control 时间还没过期，然后浏览器就会在本地缓存里面去找这个资源，不会到服务端，然后直接返回这个资源。因此该次请求未经过网络，直接读取的本地缓存会非常快，所以此次请求会更快一些，</p>
-<img src="image-20201208213852916.png" alt="image-20201208213852916" style="zoom: 33%;" />
-
-<img src="image-20201208214312281.png" alt="image-20201208214312281" style="zoom: 50%;" />
-
-<p>如果缓存过期失效了，就会再次请求服务端，服务端重新返回资源和 Cache- Control ，然后又会设置一遍过期时间，这样如果近期再请求，就会命中了本地缓存，很快的返回资源。</p>
-<img src="image-20201208214414482.png" alt="image-20201208214414482" style="zoom:33%;" />
-
-<h3 id="Cache-Control-的值"><a href="#Cache-Control-的值" class="headerlink" title="Cache- Control 的值"></a>Cache- Control 的值</h3><ul>
-<li>max-age：缓存最大过期时间</li>
-<li>no-cache：不用强制缓存，正常向服务端请求</li>
-<li>no-store：不用强制缓存而且不用服务端的缓存措施，直接简单粗暴的把资源再重新返回一份，比较彻底，但不常见</li>
-<li>private</li>
-<li>public</li>
-</ul>
-<h3 id="关于-Expries（知道即可）"><a href="#关于-Expries（知道即可）" class="headerlink" title="关于 Expries（知道即可）"></a>关于 Expries（知道即可）</h3><ul>
-<li>同在 Response Headers 中</li>
-<li>同为控制缓存过期</li>
-<li>已被 Cache- Control 代替</li>
-</ul>
-<h2 id="协商缓存（对比缓存）"><a href="#协商缓存（对比缓存）" class="headerlink" title="协商缓存（对比缓存）"></a>协商缓存（对比缓存）</h2><ul>
-<li>服务器端缓存策略（服务端判断资源是否可以用浏览器中缓存的内容）</li>
-<li>服务器判断客户端资源，是否和服务端资源一样</li>
-<li>一致则返回 304，否则返回 200 和最新的资源</li>
-</ul>
-<img src="image-20201208220028941.png" alt="image-20201208220028941" style="zoom:33%;" />
-
-<h3 id="资源标识"><a href="#资源标识" class="headerlink" title="资源标识"></a>资源标识</h3><p>在 Response Headers （因为是服务端返回的）中，有两种：</p>
-<ul>
-<li>Last-Modified 资源的最后修改时间</li>
-<li>Etag 资源的唯一标识（一个字符串，类似人类的指纹）</li>
-</ul>
-<h4 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h4><p>If-Modified-Since 永远返回浏览器缓存中最近一次修改的时间</p>
-<img src="image-20201208220458639.png" alt="image-20201208220458639" style="zoom:33%;" />
-
-<h4 id="Etag"><a href="#Etag" class="headerlink" title="Etag"></a>Etag</h4><p>If-None-Match 就是上一次服务器端返回的 Etag 字符串</p>
-<img src="image-20201208220923688.png" alt="image-20201208220923688" style="zoom:33%;" />
-
-<img src="image-20201208221644782.png" alt="image-20201208221644782" style="zoom: 33%;" />
-
-<p>第一次访问：</p>
-<img src="image-20201208221747981.png" alt="image-20201208221747981" style="zoom:25%;" />
-
-<p>第二次访问（通过 Last-Modified 或 Etag 命中缓存）：</p>
-<img src="image-20201208221815899.png" alt="image-20201208221815899" style="zoom:25%;" />
-
-<p>可以看出两次资源请求的 size 差的很多</p>
-<h4 id="Last-Modified-和-Etag-共存"><a href="#Last-Modified-和-Etag-共存" class="headerlink" title="Last-Modified 和 Etag 共存"></a>Last-Modified 和 Etag 共存</h4><ul>
-<li><p>会优先使用 Etag</p>
-<p>Last-Modified 只能精确到秒级，对计算机来说秒级还是一个比较宽泛的时间段，一般以 mm 或以内为单位</p>
-</li>
-<li><p>如果资源被重复生成，而内容不变，则 Etag 更精确（Etag 根据内容计算），而 Last-Modified 每次都会重新请求</p>
-</li>
-</ul>
-<h2 id="http-缓存-综述"><a href="#http-缓存-综述" class="headerlink" title="http 缓存-综述"></a>http 缓存-综述</h2><img src="image-20201208222322100.png" alt="image-20201208222322100" style="zoom: 50%;" />
-
-<h2 id="三种刷新操作"><a href="#三种刷新操作" class="headerlink" title="三种刷新操作"></a>三种刷新操作</h2><ul>
-<li>正常操作：地址栏输入 url，跳转链接，前进后退等</li>
-<li>手动刷新：F5，点击刷新按钮，右击菜单刷新</li>
-<li>强制刷新：ctrl+F5</li>
-</ul>
-<h3 id="不同刷新操作，不同的缓存策略"><a href="#不同刷新操作，不同的缓存策略" class="headerlink" title="不同刷新操作，不同的缓存策略"></a>不同刷新操作，不同的缓存策略</h3><ul>
-<li>正常操作：强制缓存有效，协商缓存有效</li>
-<li>手动刷新：强制缓存失效，协商缓存有效</li>
-<li>强制刷新：强制缓存失效，协商缓存失效</li>
-</ul>
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
-<li>http 常见的状态码有哪些</li>
-<li>http 常见的 header 有哪些</li>
-<li>什么是 Restful API</li>
-<li>描述一下 http 的缓存机制（重要，上面流程图一定要会）</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>HTTP 面试题</tag>
       </tags>
   </entry>
 </search>
