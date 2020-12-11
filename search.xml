@@ -100,132 +100,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PowerShell字符串缺少终止符错误</title>
-    <url>/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/</url>
-    <content><![CDATA[<p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">字符串缺少终止符: <span class="string">&#x27;。</span></span><br><span class="line"><span class="string">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString</span></span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<p>然后毫无以外的 powershell 文件夹切换也没成功。。。</p>
-<p>直接 powershell 用切换命令，毫无意外的也跪了…</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d <span class="string">&quot;D:\Chao&#x27;s Blog&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>看了一眼报错信息发现是没有终止字符，我的文件夹的名如下图</p>
-<p><img src="image-20201201082804013.png" alt="image-20201201082804013"></p>
-<p>原来是这个单引号 ‘ 搞的，<strong>先说解决方法</strong>，<strong>直接删掉这个 ‘s 前面的 ‘</strong> </p>
-<p>如果此时末尾给个闭合的 ‘ , 会报如下的错误</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Location</span> : 找不到接受实际参数“s”的位置形式参数。</span><br><span class="line">所在位置 行:<span class="number">1</span> 字符: <span class="number">1</span></span><br><span class="line">+ <span class="built_in">Set-Location</span> <span class="literal">-literalPath</span> <span class="string">&#x27;D:\Chao&#x27;</span>s Blog<span class="string">&#x27;&#x27;</span></span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidArgument: (:) [<span class="built_in">Set-Location</span>]，ParameterBindingException</span><br><span class="line">    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand</span><br></pre></td></tr></table></figure>
-
-<p>所以平时我们命名文件夹，不建议加符号之类的。</p>
-]]></content>
-      <categories>
-        <category>PowerShell命令行报错</category>
-      </categories>
-      <tags>
-        <tag>PowerShell</tag>
-        <tag>字符串缺少终止符</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo框架搭建个人博客</title>
-    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
-<p>在搭建博客开始之前，你必须已经</p>
-<a id="more"></a>
-
-<ul>
-<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
-</li>
-<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
-</li>
-<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
-<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
-<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
-<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
-</li>
-</ul>
-<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
-<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
-<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
-<ul>
-<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
-<li>重新执行此次命令</li>
-<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
-</ul>
-<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
-<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
-<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
-<p><img src="1.jpg"></p>
-<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
-<p>这时候我们可以启动我们的博客</p>
-<p>命令行：hexo s     （注：s为start的简写）</p>
-<p><img src="2.jpg"></p>
-<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
-<p> <img src="3.jpg"></p>
-<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
-<p>后续还会更新更换其他主题及页面样式的美化。</p>
-<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
-]]></content>
-      <categories>
-        <category>从0搭建博客及美化</category>
-      </categories>
-      <tags>
-        <tag>hexo框架</tag>
-        <tag>博客搭建前的准备工作</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试刷题的方法和注意事项</title>
-    <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
-<a id="more"></a>
-
-<h1 id="刷题方法"><a href="#刷题方法" class="headerlink" title="刷题方法"></a>刷题方法</h1><p>这位前辈针对刷面试题方法一共提出了<strong>四点建议</strong>，分别是：</p>
-<ul>
-<li><p>遇到面试题，先看到的应该是题的考点，其次，脑子里都要思考四个问题</p>
-<p>1.是什么 </p>
-<p>2.原理</p>
-<p>3.解决什么问题 </p>
-<p>4.怎么用</p>
-</li>
-<li><p>会的题，应该怎么用有逻辑性的语言表达出来（建议分条）</p>
-</li>
-<li><p>每道题（如跨域）要会其主流的流程，并且以主流为重点说，其他的可以稍微提一下</p>
-</li>
-<li><p>这一点是在第二点的基础上，往自己开发的项目上靠，例如自己平时做项目的时候是用什么什么方法解决的。</p>
-</li>
-</ul>
-<p>在平时刷题的时候养成这种好习惯，相信对刷题的效率一定会有所提升。</p>
-<h1 id="刷题注意事项"><a href="#刷题注意事项" class="headerlink" title="刷题注意事项"></a>刷题注意事项</h1><p>这一块主要是自己平时逛社区看到的，总结了一下分享出来：</p>
-<p><strong>1.大厂偏爱考察基础，特别是对于工作经验少的人，因此基础题一定要完全掌握</strong></p>
-<p><strong>2.做不完的题海：以不变应万变，题可变，考点是不会变的，如Promis解决什么问题，这一定与异步有关</strong></p>
-<h1 id="高效学习三步曲"><a href="#高效学习三步曲" class="headerlink" title="高效学习三步曲"></a>高效学习三步曲</h1><p>这块是慕课网上的老师讲到的，感觉讲的非常好，拿出来mark一下</p>
-<ul>
-<li><p><strong>找准知识体系</strong></p>
-<p>这一步很重要很重要，也很难，这个知识体系是一个<strong>结构化的知识范围</strong>，就像一棵树一样，有根有树干，再往下分树枝、树叶这些，<strong>有组织</strong>，<strong>易扩展</strong>，这种知识体系便于我们的记忆（推荐<strong>思维导图</strong>）。</p>
-</li>
-<li><p><strong>刻意训练</strong></p>
-<p>这一块不用多说，练就完事了！</p>
-</li>
-<li><p><strong>及时反馈</strong></p>
-<p>可以通过在技术交流社区中写文章这种方式，总结输出自己的知识点，另一方面，如果写得好还会有人点赞，或者哪地方有进步的空间大家还可以互相交流。</p>
-</li>
-</ul>
-<p>自己也搜罗整理了一些面试资料（包括面试的知识体系），如果有兴趣可以通过下方的二维码、留言或首页社交块与我联系。</p>
-]]></content>
-      <categories>
-        <category>前端刷题</category>
-      </categories>
-      <tags>
-        <tag>前端</tag>
-        <tag>面试题</tag>
-        <tag>刷题方法</tag>
-        <tag>刷题注意事项</tag>
-        <tag>高效学习三步曲</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo更换next主题及部分配置功能的启用</title>
     <url>/2020/11/18/hexo%E6%9B%B4%E6%8D%A2next%E4%B8%BB%E9%A2%98%E5%8F%8A%E9%83%A8%E5%88%86%E9%85%8D%E7%BD%AE%E5%8A%9F%E8%83%BD%E7%9A%84%E5%90%AF%E7%94%A8/</url>
     <content><![CDATA[<p>默认hexo博客框架使用的主题是landscape，而每个人对自己页面主题样式文本的喜好不同，所以接下来通过next主题案例来介绍如何更换主题及部分配置功能启用。更多主题参考链接：<a href="https://hexo.io/themes/">https://hexo.io/themes/</a> </p>
@@ -279,6 +153,132 @@
         <tag>hexo更换主题</tag>
         <tag>next主题</tag>
         <tag>next主题配置功能启用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo框架搭建个人博客</title>
+    <url>/2020/11/18/hexo%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建前的准备工作</p>
+<p>在搭建博客开始之前，你必须已经</p>
+<a id="more"></a>
+
+<ul>
+<li><p>有一个github/gitee账号，没有的话去注册一个；</p>
+</li>
+<li><p>安装了node.js（博客是基于node.js搭建的）、npm（这两步相对简单百度即可，npm -v验证是否安装成功）；</p>
+</li>
+<li><p>切换npm的淘宝镜像源（为了加快下载包的速度，不然npm的下载速度会非常非常慢，如能忍受这一步可忽略）</p>
+<p>淘宝镜像源是基于npm安装好的情况下，在cmd或者powershell命令行中执行以下命令：</p>
+<p>npm install –g cnpm –registry=<a href="http://registry.npm.taobao.org/">http://registry.npm.taobao.org</a>  </p>
+<p>安装成功后 cnpm -v可查看当前是否安装成功，出现cnpm的版本号即为安装成功。</p>
+</li>
+</ul>
+<h1 id="搭建hexo博客"><a href="#搭建hexo博客" class="headerlink" title="搭建hexo博客"></a>搭建hexo博客</h1><h2 id="全局安装hexo博客框架"><a href="#全局安装hexo博客框架" class="headerlink" title="全局安装hexo博客框架"></a>全局安装hexo博客框架</h2><p>说明：如果你没有安装cnpm，那么接下来的命令行中的cnpm要用npm代替，这里默认你已经安装cnpm。</p>
+<p>在powershell（个人比较习惯用）或者cmd命令行中全局安装hexo，输入命令：cnpm install -g hexo-cli</p>
+<p>如果出现红色英文或者很长时间命令行没有反应，可以Ctrl+C打断这次安装操作，解决办法：</p>
+<ul>
+<li>如果没有切换淘宝镜像源可以按照上面的准备工作中的方法切换</li>
+<li>重新执行此次命令</li>
+<li>如果是笔记本连手机热点（我自己很多次就是这样解决的…）</li>
+</ul>
+<h2 id="使用hexo生成博客"><a href="#使用hexo生成博客" class="headerlink" title="使用hexo生成博客"></a>使用hexo生成博客</h2><p>在新的文件夹下，打开powershell窗口（快捷键：shift+鼠标右键，列表中会有在此处打开powershell）</p>
+<p>命令行中输入命令：hexo init  （过程非常简单，但是下载的时间比较长，耐心等待…）</p>
+<p><em>提示：如果搭建博客过程中有问题，大不了把文件夹干掉重来，无需畏惧</em></p>
+<p><img src="1.jpg"></p>
+<p> 当出现Start blogging with Hexo！字样的时候表示博客已经安装完成  </p>
+<p>这时候我们可以启动我们的博客</p>
+<p>命令行：hexo s     （注：s为start的简写）</p>
+<p><img src="2.jpg"></p>
+<p>此时可以选中其中的地址，输入到浏览器中访问我们的博客 。</p>
+<p> <img src="3.jpg"></p>
+<p>此处默认使用的主题为landscape，可以根据自己不同的主题喜好更改（具体配置修改参考<a href="https://hexo.io/zh-cn/docs/themes.html%EF%BC%89">https://hexo.io/zh-cn/docs/themes.html）</a><br>这里默认为我们创建了第一篇文章。<br>标题名为Hello World，多么熟悉的语句~<br>文章简述了hexo怎样使用，可以简单的看一看。<br>顺便提一句，这里文章创作推荐使用Typora 这款Markdown的编辑器来写。</p>
+<p>后续还会更新更换其他主题及页面样式的美化。</p>
+<p>如果有什么问题或者技术交流，欢迎在博客首页左下角社交或者下方发布渠道二维码与我联系。</p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>hexo框架</tag>
+        <tag>博客搭建前的准备工作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PowerShell字符串缺少终止符错误</title>
+    <url>/2020/12/01/powershell%E6%8A%A5%E5%AD%97%E7%AC%A6%E9%94%99%E7%BC%BA%E5%B0%91%E7%BB%88%E6%AD%A2%E7%AC%A6%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<p>通常我打开某个文件夹 powershell 的方式是在这个文件夹下同时按 shift + 鼠标右键，但是今天在打开的时候 powershell 居然报了下面的错误：</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">字符串缺少终止符: <span class="string">&#x27;。</span></span><br><span class="line"><span class="string">    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException</span></span><br><span class="line"><span class="string">    + FullyQualifiedErrorId : TerminatorExpectedAtEndOfString</span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>然后毫无以外的 powershell 文件夹切换也没成功。。。</p>
+<p>直接 powershell 用切换命令，毫无意外的也跪了…</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /d <span class="string">&quot;D:\Chao&#x27;s Blog&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>看了一眼报错信息发现是没有终止字符，我的文件夹的名如下图</p>
+<p><img src="image-20201201082804013.png" alt="image-20201201082804013"></p>
+<p>原来是这个单引号 ‘ 搞的，<strong>先说解决方法</strong>，<strong>直接删掉这个 ‘s 前面的 ‘</strong> </p>
+<p>如果此时末尾给个闭合的 ‘ , 会报如下的错误</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Set-Location</span> : 找不到接受实际参数“s”的位置形式参数。</span><br><span class="line">所在位置 行:<span class="number">1</span> 字符: <span class="number">1</span></span><br><span class="line">+ <span class="built_in">Set-Location</span> <span class="literal">-literalPath</span> <span class="string">&#x27;D:\Chao&#x27;</span>s Blog<span class="string">&#x27;&#x27;</span></span><br><span class="line">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span><br><span class="line">    + CategoryInfo          : InvalidArgument: (:) [<span class="built_in">Set-Location</span>]，ParameterBindingException</span><br><span class="line">    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.SetLocationCommand</span><br></pre></td></tr></table></figure>
+
+<p>所以平时我们命名文件夹，不建议加符号之类的。</p>
+]]></content>
+      <categories>
+        <category>PowerShell命令行报错</category>
+      </categories>
+      <tags>
+        <tag>PowerShell</tag>
+        <tag>字符串缺少终止符</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试刷题的方法和注意事项</title>
+    <url>/2020/11/19/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E5%88%B7%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>针对我自己刷前端面试题方法效率低，刷过的题一看就会一做就废的这个毛病，我请教了一位几年前端工作经验并且为许多学生引过路的前辈，了解到了一些刷题的方法以及应该注意的问题。在这里我将这些方法记录并分享出来，希望能够帮助到正在刷题的你。</p>
+<a id="more"></a>
+
+<h1 id="刷题方法"><a href="#刷题方法" class="headerlink" title="刷题方法"></a>刷题方法</h1><p>这位前辈针对刷面试题方法一共提出了<strong>四点建议</strong>，分别是：</p>
+<ul>
+<li><p>遇到面试题，先看到的应该是题的考点，其次，脑子里都要思考四个问题</p>
+<p>1.是什么 </p>
+<p>2.原理</p>
+<p>3.解决什么问题 </p>
+<p>4.怎么用</p>
+</li>
+<li><p>会的题，应该怎么用有逻辑性的语言表达出来（建议分条）</p>
+</li>
+<li><p>每道题（如跨域）要会其主流的流程，并且以主流为重点说，其他的可以稍微提一下</p>
+</li>
+<li><p>这一点是在第二点的基础上，往自己开发的项目上靠，例如自己平时做项目的时候是用什么什么方法解决的。</p>
+</li>
+</ul>
+<p>在平时刷题的时候养成这种好习惯，相信对刷题的效率一定会有所提升。</p>
+<h1 id="刷题注意事项"><a href="#刷题注意事项" class="headerlink" title="刷题注意事项"></a>刷题注意事项</h1><p>这一块主要是自己平时逛社区看到的，总结了一下分享出来：</p>
+<p><strong>1.大厂偏爱考察基础，特别是对于工作经验少的人，因此基础题一定要完全掌握</strong></p>
+<p><strong>2.做不完的题海：以不变应万变，题可变，考点是不会变的，如Promis解决什么问题，这一定与异步有关</strong></p>
+<h1 id="高效学习三步曲"><a href="#高效学习三步曲" class="headerlink" title="高效学习三步曲"></a>高效学习三步曲</h1><p>这块是慕课网上的老师讲到的，感觉讲的非常好，拿出来mark一下</p>
+<ul>
+<li><p><strong>找准知识体系</strong></p>
+<p>这一步很重要很重要，也很难，这个知识体系是一个<strong>结构化的知识范围</strong>，就像一棵树一样，有根有树干，再往下分树枝、树叶这些，<strong>有组织</strong>，<strong>易扩展</strong>，这种知识体系便于我们的记忆（推荐<strong>思维导图</strong>）。</p>
+</li>
+<li><p><strong>刻意训练</strong></p>
+<p>这一块不用多说，练就完事了！</p>
+</li>
+<li><p><strong>及时反馈</strong></p>
+<p>可以通过在技术交流社区中写文章这种方式，总结输出自己的知识点，另一方面，如果写得好还会有人点赞，或者哪地方有进步的空间大家还可以互相交流。</p>
+</li>
+</ul>
+<p>自己也搜罗整理了一些面试资料（包括面试的知识体系），如果有兴趣可以通过下方的二维码、留言或首页社交块与我联系。</p>
+]]></content>
+      <categories>
+        <category>前端刷题</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>面试题</tag>
+        <tag>刷题方法</tag>
+        <tag>刷题注意事项</tag>
+        <tag>高效学习三步曲</tag>
       </tags>
   </entry>
   <entry>
@@ -360,6 +360,58 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>JS-Web-API-Ajax</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS-Web-API-事件</title>
+    <url>/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E4%BA%8B%E4%BB%B6/</url>
+    <content><![CDATA[<p>事件不会，等于残废，必考！！！</p>
+<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p><strong>知识点</strong></p>
+<ul>
+<li>事件绑定</li>
+<li>事件冒泡</li>
+<li>事件代理</li>
+</ul>
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件绑定</span></span><br><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&quot;btn1&quot;</span>)</span><br><span class="line">btn.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;clicked&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件冒泡</span></span><br><span class="line"><span class="comment">// 当子元素触发点击后，其父元素，或其所在的向上层级元素，都会截获点击事件</span></span><br><span class="line"><span class="keyword">const</span> body = <span class="built_in">document</span>.body</span><br><span class="line">bindEvent(body, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;body clicked&#x27;</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(event.target) <span class="comment">// 获取触发的元素</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阻止冒泡</span></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">bindEvent(p1, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    event.stopPropagation() <span class="comment">// 阻止冒泡</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件代理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// HTML</span></span><br><span class="line"><span class="comment">/* &lt;div id=&quot;div3&quot;&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a1&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a2&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a3&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a4&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;button&gt;加载更多...&lt;/button&gt;</span></span><br><span class="line"><span class="comment">&lt;/div&gt; */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 代理绑定</span></span><br><span class="line"><span class="comment">// 就是把事件绑定到一些不好每个都去绑定事件的情况</span></span><br><span class="line"><span class="comment">// 我们把它绑定到父元素上，然后做一些判断是否为我们想要的元素</span></span><br><span class="line"><span class="comment">// 然后再做其他的一些动作</span></span><br><span class="line"><span class="keyword">const</span> div3 = <span class="built_in">document</span>.getElementById(<span class="string">&quot;div3&quot;</span>)</span><br><span class="line">bindEvent(div3, <span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    event.preventDefault()</span><br><span class="line">    <span class="keyword">const</span> target = event.target</span><br><span class="line">    <span class="keyword">if</span> (target.nodeName === <span class="string">&quot;A&quot;</span>) &#123;</span><br><span class="line">        alert(target.innerHTML)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h2><ul>
+<li>代码简洁</li>
+<li>减少浏览器内存占用（如果 a 标签非常多的话，每个 a 标签都去挂一个事件，数量过多会非常耗费内存，但是我们只在父元素挂一次事件就不会耗费那么多内存）</li>
+<li>但是，不要滥用（在瀑布流、结构复杂不好每一个都绑定事件的这种情况下去用）</li>
+</ul>
+<h2 id="通用的事件绑定函数-重点"><a href="#通用的事件绑定函数-重点" class="headerlink" title="通用的事件绑定函数(重点)"></a>通用的事件绑定函数(重点)</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, selector, fn</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入参数个数</span></span><br><span class="line">    <span class="keyword">if</span> (fn == <span class="literal">null</span>) &#123;</span><br><span class="line">        fn = selector</span><br><span class="line">        selector = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    elem.addEventListener(type, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> target = event.target</span><br><span class="line">        <span class="keyword">if</span> (selector) &#123;</span><br><span class="line">            <span class="comment">// 需要代理绑定</span></span><br><span class="line">            <span class="comment">// 判断一个 DOM 元素是不是符合一个 CSS 选择器</span></span><br><span class="line">            <span class="keyword">if</span> (target.matches(selector)) &#123;</span><br><span class="line">                fn.call(target, event)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; eles &#123;</span><br><span class="line">            <span class="comment">// 不需要代理绑定</span></span><br><span class="line">            fn.call(target, event)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
+<li><p>编写一个通用的事件监听函数</p>
+<p>参考上面代码</p>
+</li>
+</ul>
+<ul>
+<li><p>描述事件冒泡的流程</p>
+<p>1.基于 DOM 树形结构</p>
+<p>2.事件会顺着触发元素往上冒泡</p>
+<p>3.应用场景：代理</p>
+</li>
+</ul>
+<ul>
+<li><p>无限下拉的图片列表，如何监听每个图片的点击</p>
+<p>1.事件代理</p>
+<p>2.用 event.target 获取触发元素</p>
+<p>3.用 matches 来判断是否触发元素</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>JS-Web-API-BOM</tag>
       </tags>
   </entry>
   <entry>
@@ -475,58 +527,6 @@
       </tags>
   </entry>
   <entry>
-    <title>前端面试题总结-JS-Web-API-事件</title>
-    <url>/2020/12/04/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E4%BA%8B%E4%BB%B6/</url>
-    <content><![CDATA[<p>事件不会，等于残废，必考！！！</p>
-<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p><strong>知识点</strong></p>
-<ul>
-<li>事件绑定</li>
-<li>事件冒泡</li>
-<li>事件代理</li>
-</ul>
-<a id="more"></a>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件绑定</span></span><br><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">&quot;btn1&quot;</span>)</span><br><span class="line">btn.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;clicked&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件冒泡</span></span><br><span class="line"><span class="comment">// 当子元素触发点击后，其父元素，或其所在的向上层级元素，都会截获点击事件</span></span><br><span class="line"><span class="keyword">const</span> body = <span class="built_in">document</span>.body</span><br><span class="line">bindEvent(body, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;body clicked&#x27;</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(event.target) <span class="comment">// 获取触发的元素</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阻止冒泡</span></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">bindEvent(p1, <span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">    event.stopPropagation() <span class="comment">// 阻止冒泡</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;p1&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 事件代理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// HTML</span></span><br><span class="line"><span class="comment">/* &lt;div id=&quot;div3&quot;&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a1&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a2&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a3&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;#&quot;&gt;a4&lt;/a&gt;&lt;br&gt;</span></span><br><span class="line"><span class="comment">    &lt;button&gt;加载更多...&lt;/button&gt;</span></span><br><span class="line"><span class="comment">&lt;/div&gt; */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, fn</span>) </span>&#123;</span><br><span class="line">    elem.addEventListener(type, fn)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 代理绑定</span></span><br><span class="line"><span class="comment">// 就是把事件绑定到一些不好每个都去绑定事件的情况</span></span><br><span class="line"><span class="comment">// 我们把它绑定到父元素上，然后做一些判断是否为我们想要的元素</span></span><br><span class="line"><span class="comment">// 然后再做其他的一些动作</span></span><br><span class="line"><span class="keyword">const</span> div3 = <span class="built_in">document</span>.getElementById(<span class="string">&quot;div3&quot;</span>)</span><br><span class="line">bindEvent(div3, <span class="string">&quot;click&quot;</span>, <span class="function">(<span class="params">event</span>) =&gt;</span> &#123;</span><br><span class="line">    event.preventDefault()</span><br><span class="line">    <span class="keyword">const</span> target = event.target</span><br><span class="line">    <span class="keyword">if</span> (target.nodeName === <span class="string">&quot;A&quot;</span>) &#123;</span><br><span class="line">        alert(target.innerHTML)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="事件代理"><a href="#事件代理" class="headerlink" title="事件代理"></a>事件代理</h2><ul>
-<li>代码简洁</li>
-<li>减少浏览器内存占用（如果 a 标签非常多的话，每个 a 标签都去挂一个事件，数量过多会非常耗费内存，但是我们只在父元素挂一次事件就不会耗费那么多内存）</li>
-<li>但是，不要滥用（在瀑布流、结构复杂不好每一个都绑定事件的这种情况下去用）</li>
-</ul>
-<h2 id="通用的事件绑定函数-重点"><a href="#通用的事件绑定函数-重点" class="headerlink" title="通用的事件绑定函数(重点)"></a>通用的事件绑定函数(重点)</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, selector, fn</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入参数个数</span></span><br><span class="line">    <span class="keyword">if</span> (fn == <span class="literal">null</span>) &#123;</span><br><span class="line">        fn = selector</span><br><span class="line">        selector = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    elem.addEventListener(type, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> target = event.target</span><br><span class="line">        <span class="keyword">if</span> (selector) &#123;</span><br><span class="line">            <span class="comment">// 需要代理绑定</span></span><br><span class="line">            <span class="comment">// 判断一个 DOM 元素是不是符合一个 CSS 选择器</span></span><br><span class="line">            <span class="keyword">if</span> (target.matches(selector)) &#123;</span><br><span class="line">                fn.call(target, event)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; eles &#123;</span><br><span class="line">            <span class="comment">// 不需要代理绑定</span></span><br><span class="line">            fn.call(target, event)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
-<li><p>编写一个通用的事件监听函数</p>
-<p>参考上面代码</p>
-</li>
-</ul>
-<ul>
-<li><p>描述事件冒泡的流程</p>
-<p>1.基于 DOM 树形结构</p>
-<p>2.事件会顺着触发元素往上冒泡</p>
-<p>3.应用场景：代理</p>
-</li>
-</ul>
-<ul>
-<li><p>无限下拉的图片列表，如何监听每个图片的点击</p>
-<p>1.事件代理</p>
-<p>2.用 event.target 获取触发元素</p>
-<p>3.用 matches 来判断是否触发元素</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>JS-Web-API-BOM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>前端面试题总结-JS-Web-API-存储</title>
     <url>/2020/12/08/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS-Web-API-%E5%AD%98%E5%82%A8/</url>
     <content><![CDATA[<h1 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h1><p>知识点</p>
@@ -574,6 +574,162 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>JS-Web-API-Ajax</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-JS之异步进阶1</title>
+    <url>/2020/12/02/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E4%B9%8B%E5%BC%82%E6%AD%A5%E8%BF%9B%E9%98%B61/</url>
+    <content><![CDATA[<p>想进互联网大厂，就会有更多的异步问题…</p>
+<p>在这一块，一线大厂面试官经常会玩着花样的去考，所以务必要会！</p>
+<h1 id="event-loop-（事件循环-事件轮询）"><a href="#event-loop-（事件循环-事件轮询）" class="headerlink" title="event loop （事件循环 / 事件轮询）"></a>event loop （事件循环 / 事件轮询）</h1><a id="more"></a>
+
+<p>这一块非常重要！</p>
+<p>首先</p>
+<ul>
+<li>JS 是单线程运行的</li>
+<li>异步要基于回调来实现</li>
+<li>event loop 就是异步回调的实现原理</li>
+</ul>
+<p>这一块需要了解一下 JS 是如何执行的</p>
+<ul>
+<li>JS 代码是从前到后，一行一行执行的</li>
+<li>如果某一行执行错误，则停止下面代码的执行</li>
+<li>先把同步代码执行完，再执行异步</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 先看一个示例</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;Hi&quot;</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">cb1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;cb1&quot;</span>) <span class="comment">// cb 即为 callback</span></span><br><span class="line">&#125;, <span class="number">5000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;Bye&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><em>注： 学习 event loop 这一块不要扣细节，不要扩大范围，核心就是 event loop 的过程</em></p>
+<p><strong>执行第一行代码</strong></p>
+<img src="image-20201202090054370.png" alt="image-20201202090054370" style="zoom: 25%;" />
+
+
+
+<p><strong>执行第二行代码</strong></p>
+<p>setTimeout 是一个函数，函数第一个参数是一个 function，第二个参数是 5s，此时浏览器 console 行不会打印任何东西，暂时执行不到 console.log(‘cb1’) , 推入调用栈并执行 setTimeout 函数时，由于 setTimeout 函数是浏览器定义的（也就是在 Web APIs 这块定义的），它不是 es6 的一个内容，所以我们执行这个函数的时候，这个函数的背后其实是把它的第一个参数 cb1 给它放到一个定时器里面，定时器的定时是 5s，5s 之后把 cb1 放入 Callback Queue 里面，这样 setTimeout 这三行代码就执行结束了，然后再次将调用栈清空，但是此时定时器还在，不会清空。简单来说，setTimeout 执行的产出就是将 cb1 放入到一个定时器里面。</p>
+<img src="image-20201202092527861.png" alt="image-20201202092527861" style="zoom: 25%;" />
+
+
+
+<p><strong>执行第三行代码</strong></p>
+<img src="image-20201202093122044.png" alt="image-20201202093122044" style="zoom: 25%;" />
+
+<p>执行完第三行后，此时这个定时器还会在，因为从第一行执行到最后一行的时间极短。</p>
+<p><strong>整个主线的同步代码（两个 log，一个 setTimeout）全部执行完后，此时没有任何代码将要推到 Call Stack 中执行，也就是 Call Stack 空了，这个时候会启动 Event Loop 机制（浏览器内核启动），这个机制会一遍一遍的做循环，每次循环回到 Callback Queue （也就是异步函数回调）里面去找还有没有函数，如果有函数就拿过来推入到 Call Stack 调用栈里面去执行。</strong></p>
+<p>1、Callback Queue 为空的</p>
+<img src="image-20201202094217599.png" alt="image-20201202094217599" style="zoom: 25%;" />
+
+<p>2、5s 后，定时器把 cb1 推到 Callback Queue 里面</p>
+<img src="image-20201202094241074.png" alt="image-20201202094241074" style="zoom: 25%;" />
+
+<p>3、 Event Loop 触发的时候会发现 cb1 的函数，就立马将这个函数推到 Call Stack  里面，并且将 Callback Queue 清空</p>
+<img src="image-20201202094304243.png" alt="image-20201202094304243" style="zoom: 25%;" />
+
+<p>4、 有了函数放到 Call Stack 里面，就会立马触发这个函数的执行，由于这个函数有一个函数体 console.log(‘cb1’) ，所以定位到 setTimeout 里面的 console.log(‘cb1’) 行，然后将这行推入到调用栈里面，调用栈执行，在浏览器 console 区打印 cb1</p>
+<img src="image-20201202094856278.png" alt="image-20201202094856278" style="zoom: 25%;" />
+
+<p>当打印语句执行完后，就会在调用栈里面将其清空</p>
+<img src="image-20201202094950795.png" alt="image-20201202094950795" style="zoom: 25%;" />
+
+<p>当打印语句执行完毕后，也就代表着 setTimeout 执行完毕，所以也将 cb1 函数从调用栈中清除</p>
+<img src="image-20201202095104446.png" alt="image-20201202095104446" style="zoom:25%;" />
+
+<h2 id="总结-Event-Loop-过程-1"><a href="#总结-Event-Loop-过程-1" class="headerlink" title="总结 Event Loop 过程 1"></a>总结 Event Loop 过程 1</h2><ul>
+<li>同步代码，一行一行放在 Call Stack 中执行</li>
+<li>遇到异步，会先 “记录” 下，等待时机（定时，网络请求等，时机一到就会放入到 Callback Queue 里面）</li>
+</ul>
+<h2 id="总结-Event-Loop-过程-2"><a href="#总结-Event-Loop-过程-2" class="headerlink" title="总结 Event Loop 过程 2"></a>总结 Event Loop 过程 2</h2><ul>
+<li>如 Call Stack 为空（即同步代码执行完毕），Event Loop 开始工作</li>
+<li>轮询查找 Callback Queue ，如有则移动到 Call Stack 执行</li>
+<li>然后继续轮询查找（如setInterval永动机一样）</li>
+</ul>
+<h2 id="DOM-事件与-Event-Loop"><a href="#DOM-事件与-Event-Loop" class="headerlink" title="DOM 事件与 Event Loop"></a>DOM 事件与 Event Loop</h2><p>DOM 事件也使用回调，基于 Event Loop，触发时机与定时器不同，是浏览器控制的，监听用户的点击事件，但 DOM 事件不是异步</p>
+<img src="image-20201202101219328.png" alt="image-20201202101219328" style="zoom: 33%;" />
+
+<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><ul>
+<li>三种状态</li>
+<li>状态的表现和变化</li>
+<li>then 和 catch 对状态的影响</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 通过 Promise 实现加载一张图片</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// pending...</span></span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img)  <span class="comment">// resolved</span></span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err)  <span class="comment">// rejected</span></span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> urll = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="comment">// 通过链式调用避免 Callback hell</span></span><br><span class="line">loadImg(urll)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.width)</span><br><span class="line">        <span class="comment">// 返回一个普通对象</span></span><br><span class="line">        <span class="keyword">return</span> img1</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.height)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="三种状态"><a href="#三种状态" class="headerlink" title="三种状态"></a>三种状态</h2><ul>
+<li>pending（在过程中，还没结果）、resolved（已经成功解决了，<strong>又称Fulfilled</strong>）、rejected（已经失败了）</li>
+</ul>
+<h2 id="状态的变化"><a href="#状态的变化" class="headerlink" title="状态的变化"></a>状态的变化</h2><ul>
+<li>pending -&gt; resolved     或者     pending -&gt; rejected</li>
+<li>这种变化是不可逆的</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码演示</span></span><br><span class="line"><span class="comment">// pending</span></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123; &#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;p1&quot;</span>, p1)  <span class="comment">// promise 为 pending 状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// resolve/fulfilled</span></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 模拟一个异步</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;p2&quot;</span>, p2) <span class="comment">// 点开后 promise 为 resolve/fulfilled 状态</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&quot;p2-setTimeout&quot;</span>, p2)) <span class="comment">// resolve/fulfilled 状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// rejected</span></span><br><span class="line"><span class="keyword">const</span> p3 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 模拟一个异步</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        reject()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&quot;p3-setTimeout&quot;</span>, p3)) <span class="comment">// rejected状态</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="状态的表现"><a href="#状态的表现" class="headerlink" title="状态的表现"></a>状态的表现</h2><ul>
+<li>pending 状态，不会触发 then 和 catch</li>
+<li>resolved 状态，会触发后续的 then 回调函数</li>
+<li>rejected 状态，会触发后续的 catch 回调函数</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">Promise</span>.resolve(<span class="number">100</span>) <span class="comment">// resolved</span></span><br><span class="line"><span class="comment">// console.log(&quot;p1&quot;, p1)</span></span><br><span class="line">p1.then(<span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data1&quot;</span>, data1)</span><br><span class="line">&#125;).catch(<span class="function">(<span class="params">err1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;err1&quot;</span>, err1) <span class="comment">// 不会触发，因为 p1 是 resolved 状态</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="built_in">Promise</span>.reject(<span class="string">&quot;error2&quot;</span>) <span class="comment">// rejected</span></span><br><span class="line"><span class="comment">// console.log(&quot;p2&quot;, p2)</span></span><br><span class="line">p2.then(<span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data2&quot;</span>, data2)</span><br><span class="line">&#125;).catch(<span class="function">(<span class="params">err2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;err2&quot;</span>, err2)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="then-和-catch-改变状态"><a href="#then-和-catch-改变状态" class="headerlink" title="then 和 catch 改变状态"></a>then 和 catch 改变状态</h2><ul>
+<li>then 正常返回 resolved，里面有报错则返回 rejected</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">100</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// console.log(&quot;p1&quot;, p1) // resolved 触发后续 then 的回调</span></span><br><span class="line">p1.then(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="number">123</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;then error&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// console.log(&quot;p2&quot;, p2) // rejected 触发后续 catch 的回调</span></span><br><span class="line">p2.then(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="number">456</span>)).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&quot;err100&quot;</span>, err))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>catch 正常返回 resolved，里面有报错则返回 rejected</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p3 = <span class="built_in">Promise</span>.reject(<span class="string">&quot;my error1&quot;</span>).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;p3&quot;</span>, p3) <span class="comment">// resolved or fulfilled 注意！ 触发 then 回调</span></span><br><span class="line">p3.then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p4 = <span class="built_in">Promise</span>.reject(<span class="string">&quot;my error&quot;</span>).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;my error2&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;p4&quot;</span>, p4) <span class="comment">// rejected  触发 catch 回调</span></span><br><span class="line">p4.catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Promise-catch-连接-then"><a href="#Promise-catch-连接-then" class="headerlink" title="Promise catch 连接 then"></a>Promise catch 连接 then</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 一些小题目</span></span><br><span class="line"><span class="comment">// 第一题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">&#125;).catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 1 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;erro1&#x27;</span>)</span><br><span class="line">&#125;).catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 1 2 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;erro1&#x27;</span>)</span><br><span class="line">&#125;).catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;).catch(<span class="function">() =&gt;</span> &#123; <span class="comment">// 注意这里是 catch</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 1 2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Promise-总结"><a href="#Promise-总结" class="headerlink" title="Promise 总结"></a>Promise 总结</h2><ul>
+<li>三种状态，状态的表现和变化</li>
+<li>then 和 catch 对状态的影响（重要）</li>
+<li>then 和 catch 的链式调用</li>
+</ul>
+<h1 id="async-await"><a href="#async-await" class="headerlink" title="async / await"></a>async / await</h1><p>async / await 是同步语法，彻底消灭回调函数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码演示</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// pending...</span></span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img) <span class="comment">// resolved</span></span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err) <span class="comment">// rejected</span></span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> src1 = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="keyword">const</span> src2 = <span class="string">&quot;./2.jpg&quot;</span></span><br><span class="line"><span class="comment">// 通常在立即执行函数前面加一个 ！ 来避免 ...() 执行的歧义</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 同步的写法</span></span><br><span class="line">    <span class="comment">// 获取 img1</span></span><br><span class="line">    <span class="keyword">const</span> img1 = <span class="keyword">await</span> loadImg(src1)</span><br><span class="line">    <span class="built_in">console</span>.log(img1.height, img1.width)</span><br><span class="line">    <span class="comment">// 获取 img2</span></span><br><span class="line">    <span class="keyword">const</span> img2 = <span class="keyword">await</span> loadImg(src2)</span><br><span class="line">    <span class="built_in">console</span>.log(img2.height, img2.width)</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+
+<h2 id="async-await-和-Promise-的关系"><a href="#async-await-和-Promise-的关系" class="headerlink" title="async / await 和 Promise 的关系"></a>async / await 和 Promise 的关系</h2><ul>
+<li>async / await 是消灭异步回调的终极武器</li>
+<li>但和 Promise 并不互斥</li>
+<li>反而两者相辅相成</li>
+</ul>
+<p>两者结合，总结来说</p>
+<ul>
+<li>执行 async 函数，返回的是 Promise 对象</li>
+<li>await 相当于 Promise 的 then</li>
+<li>try…catch 可捕获异常，代替了 Promise 的 catch</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 执行 async 函数，返回的是 Promise 对象</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">100</span> <span class="comment">// 相当于 return Promise.resolve(100)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> res1 = fn1() <span class="comment">// 执行 async 函数返回的是一个 Promise 对象</span></span><br><span class="line"><span class="built_in">console</span>.log(res1) <span class="comment">// Promise 对象</span></span><br><span class="line">res1.then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data&quot;</span>, data) <span class="comment">// 100</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// await 相当于 Promise 的 then</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p1 = <span class="built_in">Promise</span>.resolve(<span class="number">300</span>)</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> p1 <span class="comment">// await 相当于 Promise 的 then</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data&quot;</span>, data)</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="comment">// await 后面跟的不是一个 Promise 对象</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data1 = <span class="keyword">await</span> <span class="number">400</span> <span class="comment">// 相当于封装成 await Promise.resolve(400)</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data1&quot;</span>, data1)</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// try...catch 相当于 Promise 的 catch</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p4 = <span class="built_in">Promise</span>.reject(<span class="string">&quot;err&quot;</span>) <span class="comment">// rejected 状态</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> p4</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ex) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(ex)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="异步的本质"><a href="#异步的本质" class="headerlink" title="异步的本质"></a>异步的本质</h1><ul>
+<li><p>async / await 是消灭异步回调的终极武器</p>
+</li>
+<li><p>JS 还是单线程，还得是有异步，还是得基于 event loop</p>
+</li>
+<li><p>async / await 只是一个基于 Promise 的语法糖，但这颗糖是真的香！</p>
+<p>它让我们可以使用同步的方式写异步代码</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 真题示例1</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 start&quot;</span>) <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">await</span> async2() <span class="comment">// undefined</span></span><br><span class="line">    <span class="comment">// await 后面，都可以看做是 callback 里的内容，即异步</span></span><br><span class="line">    <span class="comment">// 类似，event loop ，setTimeout(cb1)</span></span><br><span class="line">    <span class="comment">// setTimeout(function () &#123; console.log(&#x27;async end) &#125;)</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 end&quot;</span>) <span class="comment">// 5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async2&quot;</span>) <span class="comment">// 3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script start&quot;</span>) <span class="comment">// 1</span></span><br><span class="line">async1()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script end&quot;</span>) <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 真题示例2</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 start&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> async2()</span><br><span class="line">    <span class="comment">// 下面三行都是异步回调 callback 的内容</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 end&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> async3()</span><br><span class="line">    <span class="comment">// 下面一行是异步回调的内容</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 end 2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async3&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script start&quot;</span>)</span><br><span class="line">async1()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script end&quot;</span>)</span><br><span class="line"><span class="comment">// script start -&gt; async1 start -&gt; async2 -&gt; script end -&gt; async1 end -&gt; async3 -&gt; async1 end 2</span></span><br></pre></td></tr></table></figure>
+
+<p><em>注：首先定义函数不执行不用管，其次异步函数执行要立马执行函数体，await 下面的代码都是异步内容，当同步代码执行完毕，参考 event loop 的机制，启动异步代码的执行</em></p>
+<p><strong>异步的本质是，JS 是单线程的，JS 的异步需要回调，哪怕我们有 async / await 这种比较高级的语法，是 Promise 的语法糖。异步要基于 event loop 去实现。</strong></p>
+<h1 id="for…of-（重要）"><a href="#for…of-（重要）" class="headerlink" title="for…of  （重要）"></a>for…of  （重要）</h1><ul>
+<li>类似于 for…in (以及 forEach、for ) 是常规的同步遍历</li>
+<li>for…of 常用于异步的遍历</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">muti</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(num * num)</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="comment">// // forEach 为同步的遍历，不会等待，会在一瞬间执行完成</span></span><br><span class="line"><span class="comment">// // 所以同时出现 1   4   9</span></span><br><span class="line"><span class="comment">// nums.forEach(async (i) =&gt; &#123;</span></span><br><span class="line"><span class="comment">//     const res = await muti(i)</span></span><br><span class="line"><span class="comment">//     console.log(res)</span></span><br><span class="line"><span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 想要做出排队一样的效果就需要用到 for...of</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> nums) &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> muti(i)</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>JS基础</tag>
+        <tag>知识点总结</tag>
+        <tag>异步进阶</tag>
       </tags>
   </entry>
   <entry>
@@ -767,159 +923,47 @@
       </tags>
   </entry>
   <entry>
-    <title>前端面试题总结-JS之异步进阶1</title>
-    <url>/2020/12/02/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E4%B9%8B%E5%BC%82%E6%AD%A5%E8%BF%9B%E9%98%B61/</url>
-    <content><![CDATA[<p>想进互联网大厂，就会有更多的异步问题…</p>
-<p>在这一块，一线大厂面试官经常会玩着花样的去考，所以务必要会！</p>
-<h1 id="event-loop-（事件循环-事件轮询）"><a href="#event-loop-（事件循环-事件轮询）" class="headerlink" title="event loop （事件循环 / 事件轮询）"></a>event loop （事件循环 / 事件轮询）</h1><a id="more"></a>
-
-<p>这一块非常重要！</p>
-<p>首先</p>
-<ul>
-<li>JS 是单线程运行的</li>
-<li>异步要基于回调来实现</li>
-<li>event loop 就是异步回调的实现原理</li>
+    <title>前端面试题总结-JS基础之单线程和异步</title>
+    <url>/2020/12/01/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%BC%82%E6%AD%A5/</url>
+    <content><![CDATA[<p>三座大山之三，必考！</p>
+<h1 id="单线程和异步"><a href="#单线程和异步" class="headerlink" title="单线程和异步"></a>单线程和异步</h1><ul>
+<li>JS 是单线程语言，只能同时做一件事</li>
+<li>浏览器和 nodejs 已经支持 JS启动进程，如 Web Worker</li>
+<li>JS 和 DOM 渲染共用一个线程，因为 JS 可以修改 DOM 结构</li>
 </ul>
-<p>这一块需要了解一下 JS 是如何执行的</p>
-<ul>
-<li>JS 代码是从前到后，一行一行执行的</li>
-<li>如果某一行执行错误，则停止下面代码的执行</li>
-<li>先把同步代码执行完，再执行异步</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 先看一个示例</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;Hi&quot;</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> <span class="title">cb1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;cb1&quot;</span>) <span class="comment">// cb 即为 callback</span></span><br><span class="line">&#125;, <span class="number">5000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;Bye&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p><em>注： 学习 event loop 这一块不要扣细节，不要扩大范围，核心就是 event loop 的过程</em></p>
-<p><strong>执行第一行代码</strong></p>
-<img src="image-20201202090054370.png" alt="image-20201202090054370" style="zoom: 25%;" />
-
-
-
-<p><strong>执行第二行代码</strong></p>
-<p>setTimeout 是一个函数，函数第一个参数是一个 function，第二个参数是 5s，此时浏览器 console 行不会打印任何东西，暂时执行不到 console.log(‘cb1’) , 推入调用栈并执行 setTimeout 函数时，由于 setTimeout 函数是浏览器定义的（也就是在 Web APIs 这块定义的），它不是 es6 的一个内容，所以我们执行这个函数的时候，这个函数的背后其实是把它的第一个参数 cb1 给它放到一个定时器里面，定时器的定时是 5s，5s 之后把 cb1 放入 Callback Queue 里面，这样 setTimeout 这三行代码就执行结束了，然后再次将调用栈清空，但是此时定时器还在，不会清空。简单来说，setTimeout 执行的产出就是将 cb1 放入到一个定时器里面。</p>
-<img src="image-20201202092527861.png" alt="image-20201202092527861" style="zoom: 25%;" />
-
-
-
-<p><strong>执行第三行代码</strong></p>
-<img src="image-20201202093122044.png" alt="image-20201202093122044" style="zoom: 25%;" />
-
-<p>执行完第三行后，此时这个定时器还会在，因为从第一行执行到最后一行的时间极短。</p>
-<p><strong>整个主线的同步代码（两个 log，一个 setTimeout）全部执行完后，此时没有任何代码将要推到 Call Stack 中执行，也就是 Call Stack 空了，这个时候会启动 Event Loop 机制（浏览器内核启动），这个机制会一遍一遍的做循环，每次循环回到 Callback Queue （也就是异步函数回调）里面去找还有没有函数，如果有函数就拿过来推入到 Call Stack 调用栈里面去执行。</strong></p>
-<p>1、Callback Queue 为空的</p>
-<img src="image-20201202094217599.png" alt="image-20201202094217599" style="zoom: 25%;" />
-
-<p>2、5s 后，定时器把 cb1 推到 Callback Queue 里面</p>
-<img src="image-20201202094241074.png" alt="image-20201202094241074" style="zoom: 25%;" />
-
-<p>3、 Event Loop 触发的时候会发现 cb1 的函数，就立马将这个函数推到 Call Stack  里面，并且将 Callback Queue 清空</p>
-<img src="image-20201202094304243.png" alt="image-20201202094304243" style="zoom: 25%;" />
-
-<p>4、 有了函数放到 Call Stack 里面，就会立马触发这个函数的执行，由于这个函数有一个函数体 console.log(‘cb1’) ，所以定位到 setTimeout 里面的 console.log(‘cb1’) 行，然后将这行推入到调用栈里面，调用栈执行，在浏览器 console 区打印 cb1</p>
-<img src="image-20201202094856278.png" alt="image-20201202094856278" style="zoom: 25%;" />
-
-<p>当打印语句执行完后，就会在调用栈里面将其清空</p>
-<img src="image-20201202094950795.png" alt="image-20201202094950795" style="zoom: 25%;" />
-
-<p>当打印语句执行完毕后，也就代表着 setTimeout 执行完毕，所以也将 cb1 函数从调用栈中清除</p>
-<img src="image-20201202095104446.png" alt="image-20201202095104446" style="zoom:25%;" />
-
-<h2 id="总结-Event-Loop-过程-1"><a href="#总结-Event-Loop-过程-1" class="headerlink" title="总结 Event Loop 过程 1"></a>总结 Event Loop 过程 1</h2><ul>
-<li>同步代码，一行一行放在 Call Stack 中执行</li>
-<li>遇到异步，会先 “记录” 下，等待时机（定时，网络请求等，时机一到就会放入到 Callback Queue 里面）</li>
-</ul>
-<h2 id="总结-Event-Loop-过程-2"><a href="#总结-Event-Loop-过程-2" class="headerlink" title="总结 Event Loop 过程 2"></a>总结 Event Loop 过程 2</h2><ul>
-<li>如 Call Stack 为空（即同步代码执行完毕），Event Loop 开始工作</li>
-<li>轮询查找 Callback Queue ，如有则移动到 Call Stack 执行</li>
-<li>然后继续轮询查找（如setInterval永动机一样）</li>
-</ul>
-<h2 id="DOM-事件与-Event-Loop"><a href="#DOM-事件与-Event-Loop" class="headerlink" title="DOM 事件与 Event Loop"></a>DOM 事件与 Event Loop</h2><p>DOM 事件也使用回调，基于 Event Loop，触发时机与定时器不同，是浏览器控制的，监听用户的点击事件，但 DOM 事件不是异步</p>
-<img src="image-20201202101219328.png" alt="image-20201202101219328" style="zoom: 33%;" />
-
-<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><ul>
-<li>三种状态</li>
-<li>状态的表现和变化</li>
-<li>then 和 catch 对状态的影响</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 通过 Promise 实现加载一张图片</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// pending...</span></span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img)  <span class="comment">// resolved</span></span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err)  <span class="comment">// rejected</span></span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> urll = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="comment">// 通过链式调用避免 Callback hell</span></span><br><span class="line">loadImg(urll)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.width)</span><br><span class="line">        <span class="comment">// 返回一个普通对象</span></span><br><span class="line">        <span class="keyword">return</span> img1</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.height)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="三种状态"><a href="#三种状态" class="headerlink" title="三种状态"></a>三种状态</h2><ul>
-<li>pending（在过程中，还没结果）、resolved（已经成功解决了，<strong>又称Fulfilled</strong>）、rejected（已经失败了）</li>
-</ul>
-<h2 id="状态的变化"><a href="#状态的变化" class="headerlink" title="状态的变化"></a>状态的变化</h2><ul>
-<li>pending -&gt; resolved     或者     pending -&gt; rejected</li>
-<li>这种变化是不可逆的</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码演示</span></span><br><span class="line"><span class="comment">// pending</span></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123; &#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;p1&quot;</span>, p1)  <span class="comment">// promise 为 pending 状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// resolve/fulfilled</span></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 模拟一个异步</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        resolve()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;p2&quot;</span>, p2) <span class="comment">// 点开后 promise 为 resolve/fulfilled 状态</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&quot;p2-setTimeout&quot;</span>, p2)) <span class="comment">// resolve/fulfilled 状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// rejected</span></span><br><span class="line"><span class="keyword">const</span> p3 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 模拟一个异步</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        reject()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&quot;p3-setTimeout&quot;</span>, p3)) <span class="comment">// rejected状态</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="状态的表现"><a href="#状态的表现" class="headerlink" title="状态的表现"></a>状态的表现</h2><ul>
-<li>pending 状态，不会触发 then 和 catch</li>
-<li>resolved 状态，会触发后续的 then 回调函数</li>
-<li>rejected 状态，会触发后续的 catch 回调函数</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">Promise</span>.resolve(<span class="number">100</span>) <span class="comment">// resolved</span></span><br><span class="line"><span class="comment">// console.log(&quot;p1&quot;, p1)</span></span><br><span class="line">p1.then(<span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data1&quot;</span>, data1)</span><br><span class="line">&#125;).catch(<span class="function">(<span class="params">err1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;err1&quot;</span>, err1) <span class="comment">// 不会触发，因为 p1 是 resolved 状态</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="built_in">Promise</span>.reject(<span class="string">&quot;error2&quot;</span>) <span class="comment">// rejected</span></span><br><span class="line"><span class="comment">// console.log(&quot;p2&quot;, p2)</span></span><br><span class="line">p2.then(<span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data2&quot;</span>, data2)</span><br><span class="line">&#125;).catch(<span class="function">(<span class="params">err2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;err2&quot;</span>, err2)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="then-和-catch-改变状态"><a href="#then-和-catch-改变状态" class="headerlink" title="then 和 catch 改变状态"></a>then 和 catch 改变状态</h2><ul>
-<li>then 正常返回 resolved，里面有报错则返回 rejected</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p1 = <span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">100</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// console.log(&quot;p1&quot;, p1) // resolved 触发后续 then 的回调</span></span><br><span class="line">p1.then(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="number">123</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p2 = <span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;then error&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// console.log(&quot;p2&quot;, p2) // rejected 触发后续 catch 的回调</span></span><br><span class="line">p2.then(<span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="number">456</span>)).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&quot;err100&quot;</span>, err))</span><br></pre></td></tr></table></figure>
+<p>因此</p>
+<a id="more"></a>
 
 <ul>
-<li>catch 正常返回 resolved，里面有报错则返回 rejected</li>
+<li>遇到等待（网络请求、定时任务）不能卡住</li>
+<li>需要异步（解决单线程等待的这种问题）</li>
+<li>异步是基于 callback 函数形式</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> p3 = <span class="built_in">Promise</span>.reject(<span class="string">&quot;my error1&quot;</span>).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;p3&quot;</span>, p3) <span class="comment">// resolved or fulfilled 注意！ 触发 then 回调</span></span><br><span class="line">p3.then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p4 = <span class="built_in">Promise</span>.reject(<span class="string">&quot;my error&quot;</span>).catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;my error2&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;p4&quot;</span>, p4) <span class="comment">// rejected  触发 catch 回调</span></span><br><span class="line">p4.catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 异步 通过 callback 函数，这里是 () =&gt; &#123; console.log(200) &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">alert(<span class="number">200</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
 
-<h2 id="Promise-catch-连接-then"><a href="#Promise-catch-连接-then" class="headerlink" title="Promise catch 连接 then"></a>Promise catch 连接 then</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 一些小题目</span></span><br><span class="line"><span class="comment">// 第一题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">&#125;).catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 1 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;erro1&#x27;</span>)</span><br><span class="line">&#125;).catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 1 2 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第三题</span></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;erro1&#x27;</span>)</span><br><span class="line">&#125;).catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>)</span><br><span class="line">&#125;).catch(<span class="function">() =&gt;</span> &#123; <span class="comment">// 注意这里是 catch</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 1 2</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Promise-总结"><a href="#Promise-总结" class="headerlink" title="Promise 总结"></a>Promise 总结</h2><ul>
-<li>三种状态，状态的表现和变化</li>
-<li>then 和 catch 对状态的影响（重要）</li>
-<li>then 和 catch 的链式调用</li>
+<h2 id="异步的应用场景"><a href="#异步的应用场景" class="headerlink" title="异步的应用场景"></a>异步的应用场景</h2><ul>
+<li>网络请求，如 Ajax、图片加载</li>
+<li>定时任务，如 setTimeout</li>
 </ul>
-<h1 id="async-await"><a href="#async-await" class="headerlink" title="async / await"></a>async / await</h1><p>async / await 是同步语法，彻底消灭回调函数</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码演示</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// pending...</span></span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img) <span class="comment">// resolved</span></span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err) <span class="comment">// rejected</span></span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> src1 = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="keyword">const</span> src2 = <span class="string">&quot;./2.jpg&quot;</span></span><br><span class="line"><span class="comment">// 通常在立即执行函数前面加一个 ！ 来避免 ...() 执行的歧义</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 同步的写法</span></span><br><span class="line">    <span class="comment">// 获取 img1</span></span><br><span class="line">    <span class="keyword">const</span> img1 = <span class="keyword">await</span> loadImg(src1)</span><br><span class="line">    <span class="built_in">console</span>.log(img1.height, img1.width)</span><br><span class="line">    <span class="comment">// 获取 img2</span></span><br><span class="line">    <span class="keyword">const</span> img2 = <span class="keyword">await</span> loadImg(src2)</span><br><span class="line">    <span class="built_in">console</span>.log(img2.height, img2.width)</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ajax</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line">$.get(<span class="string">&quot;./data.json&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;end&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 图片加载</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;loaded&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(end)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setTimeout</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setInterval</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
 
-<h2 id="async-await-和-Promise-的关系"><a href="#async-await-和-Promise-的关系" class="headerlink" title="async / await 和 Promise 的关系"></a>async / await 和 Promise 的关系</h2><ul>
-<li>async / await 是消灭异步回调的终极武器</li>
-<li>但和 Promise 并不互斥</li>
-<li>反而两者相辅相成</li>
+<h1 id="callback-hell"><a href="#callback-hell" class="headerlink" title="callback hell"></a>callback hell</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// callback hell (回调地狱)</span></span><br><span class="line"><span class="comment">// 获取第一份数据</span></span><br><span class="line">$.get(url1, <span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data1)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取第二份数据</span></span><br><span class="line">    $.get(url2, <span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取第三份数据</span></span><br><span class="line">        $.get(url3, <span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data3)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 还可能获取更多的数据</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Promise 主要解决的是 callback hell 的问题</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url,</span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">                resolve(data)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="title">error</span>(<span class="params">err</span>)</span> &#123;</span><br><span class="line">                reject(err)</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url1 = <span class="string">&quot;./data1.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./data2.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url3 = <span class="string">&quot;./data3.json&quot;</span></span><br><span class="line">getData(url1)</span><br><span class="line">    .then(<span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data1)</span><br><span class="line">        <span class="keyword">return</span> getData(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line">        <span class="keyword">return</span> getData(url3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.error(err))</span><br></pre></td></tr></table></figure>
+
+<h1 id="同步与异步的区别"><a href="#同步与异步的区别" class="headerlink" title="同步与异步的区别"></a>同步与异步的区别</h1><ul>
+<li>异步是基于 JS 是单线程语言</li>
+<li>异步不会阻塞代码执行</li>
+<li>同步会阻塞代码执行</li>
 </ul>
-<p>两者结合，总结来说</p>
-<ul>
-<li>执行 async 函数，返回的是 Promise 对象</li>
-<li>await 相当于 Promise 的 then</li>
-<li>try…catch 可捕获异常，代替了 Promise 的 catch</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 执行 async 函数，返回的是 Promise 对象</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">100</span> <span class="comment">// 相当于 return Promise.resolve(100)</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> res1 = fn1() <span class="comment">// 执行 async 函数返回的是一个 Promise 对象</span></span><br><span class="line"><span class="built_in">console</span>.log(res1) <span class="comment">// Promise 对象</span></span><br><span class="line">res1.then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data&quot;</span>, data) <span class="comment">// 100</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// await 相当于 Promise 的 then</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p1 = <span class="built_in">Promise</span>.resolve(<span class="number">300</span>)</span><br><span class="line">    <span class="keyword">const</span> data = <span class="keyword">await</span> p1 <span class="comment">// await 相当于 Promise 的 then</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data&quot;</span>, data)</span><br><span class="line">&#125;)()</span><br><span class="line"><span class="comment">// await 后面跟的不是一个 Promise 对象</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> data1 = <span class="keyword">await</span> <span class="number">400</span> <span class="comment">// 相当于封装成 await Promise.resolve(400)</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;data1&quot;</span>, data1)</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// try...catch 相当于 Promise 的 catch</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p4 = <span class="built_in">Promise</span>.reject(<span class="string">&quot;err&quot;</span>) <span class="comment">// rejected 状态</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> p4</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ex) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(ex)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="异步的本质"><a href="#异步的本质" class="headerlink" title="异步的本质"></a>异步的本质</h1><ul>
-<li><p>async / await 是消灭异步回调的终极武器</p>
-</li>
-<li><p>JS 还是单线程，还得是有异步，还是得基于 event loop</p>
-</li>
-<li><p>async / await 只是一个基于 Promise 的语法糖，但这颗糖是真的香！</p>
-<p>它让我们可以使用同步的方式写异步代码</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 真题示例1</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 start&quot;</span>) <span class="comment">// 2</span></span><br><span class="line">    <span class="keyword">await</span> async2() <span class="comment">// undefined</span></span><br><span class="line">    <span class="comment">// await 后面，都可以看做是 callback 里的内容，即异步</span></span><br><span class="line">    <span class="comment">// 类似，event loop ，setTimeout(cb1)</span></span><br><span class="line">    <span class="comment">// setTimeout(function () &#123; console.log(&#x27;async end) &#125;)</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 end&quot;</span>) <span class="comment">// 5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async2&quot;</span>) <span class="comment">// 3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script start&quot;</span>) <span class="comment">// 1</span></span><br><span class="line">async1()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script end&quot;</span>) <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 真题示例2</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 start&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> async2()</span><br><span class="line">    <span class="comment">// 下面三行都是异步回调 callback 的内容</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 end&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> async3()</span><br><span class="line">    <span class="comment">// 下面一行是异步回调的内容</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async1 end 2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async2&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">async3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;async3&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script start&quot;</span>)</span><br><span class="line">async1()</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;script end&quot;</span>)</span><br><span class="line"><span class="comment">// script start -&gt; async1 start -&gt; async2 -&gt; script end -&gt; async1 end -&gt; async3 -&gt; async1 end 2</span></span><br></pre></td></tr></table></figure>
-
-<p><em>注：首先定义函数不执行不用管，其次异步函数执行要立马执行函数体，await 下面的代码都是异步内容，当同步代码执行完毕，参考 event loop 的机制，启动异步代码的执行</em></p>
-<p><strong>异步的本质是，JS 是单线程的，JS 的异步需要回调，哪怕我们有 async / await 这种比较高级的语法，是 Promise 的语法糖。异步要基于 event loop 去实现。</strong></p>
-<h1 id="for…of-（重要）"><a href="#for…of-（重要）" class="headerlink" title="for…of  （重要）"></a>for…of  （重要）</h1><ul>
-<li>类似于 for…in (以及 forEach、for ) 是常规的同步遍历</li>
-<li>for…of 常用于异步的遍历</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">muti</span>(<span class="params">num</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(num * num)</span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="comment">// // forEach 为同步的遍历，不会等待，会在一瞬间执行完成</span></span><br><span class="line"><span class="comment">// // 所以同时出现 1   4   9</span></span><br><span class="line"><span class="comment">// nums.forEach(async (i) =&gt; &#123;</span></span><br><span class="line"><span class="comment">//     const res = await muti(i)</span></span><br><span class="line"><span class="comment">//     console.log(res)</span></span><br><span class="line"><span class="comment">// &#125;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 想要做出排队一样的效果就需要用到 for...of</span></span><br><span class="line">!(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">of</span> nums) &#123;</span><br><span class="line">        <span class="keyword">const</span> res = <span class="keyword">await</span> muti(i)</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>]]></content>
+<h1 id="手写-Promise-加载两张图片"><a href="#手写-Promise-加载两张图片" class="headerlink" title="手写 Promise 加载两张图片"></a>手写 Promise 加载两张图片</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err)</span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> urll = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./2.jpg&quot;</span></span><br><span class="line">loadImg(urll)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.width)</span><br><span class="line">        <span class="comment">// 返回一个普通对象</span></span><br><span class="line">        <span class="keyword">return</span> img1</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.height)</span><br><span class="line">        <span class="comment">// 返回一个 Promise 实例</span></span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.width)</span><br><span class="line">        <span class="keyword">return</span> img2</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.height)</span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>前端面试题</category>
       </categories>
       <tags>
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
-        <tag>异步进阶</tag>
+        <tag>变量类型和计算</tag>
       </tags>
   </entry>
   <entry>
@@ -1029,161 +1073,6 @@
         <tag>JS基础</tag>
         <tag>知识点总结</tag>
         <tag>原型和原型链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题总结-JS基础之单线程和异步</title>
-    <url>/2020/12/01/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%95%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%BC%82%E6%AD%A5/</url>
-    <content><![CDATA[<p>三座大山之三，必考！</p>
-<h1 id="单线程和异步"><a href="#单线程和异步" class="headerlink" title="单线程和异步"></a>单线程和异步</h1><ul>
-<li>JS 是单线程语言，只能同时做一件事</li>
-<li>浏览器和 nodejs 已经支持 JS启动进程，如 Web Worker</li>
-<li>JS 和 DOM 渲染共用一个线程，因为 JS 可以修改 DOM 结构</li>
-</ul>
-<p>因此</p>
-<a id="more"></a>
-
-<ul>
-<li>遇到等待（网络请求、定时任务）不能卡住</li>
-<li>需要异步（解决单线程等待的这种问题）</li>
-<li>异步是基于 callback 函数形式</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 异步 通过 callback 函数，这里是 () =&gt; &#123; console.log(200) &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line">alert(<span class="number">200</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="异步的应用场景"><a href="#异步的应用场景" class="headerlink" title="异步的应用场景"></a>异步的应用场景</h2><ul>
-<li>网络请求，如 Ajax、图片加载</li>
-<li>定时任务，如 setTimeout</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ajax</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line">$.get(<span class="string">&quot;./data.json&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;end&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 图片加载</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&quot;start&quot;</span>)</span><br><span class="line"><span class="keyword">let</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;loaded&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(end)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setTimeout</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// setInterval</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">100</span>)</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">200</span>)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">300</span>)</span><br></pre></td></tr></table></figure>
-
-<h1 id="callback-hell"><a href="#callback-hell" class="headerlink" title="callback hell"></a>callback hell</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// callback hell (回调地狱)</span></span><br><span class="line"><span class="comment">// 获取第一份数据</span></span><br><span class="line">$.get(url1, <span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(data1)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取第二份数据</span></span><br><span class="line">    $.get(url2, <span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取第三份数据</span></span><br><span class="line">        $.get(url3, <span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data3)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 还可能获取更多的数据</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Promise 主要解决的是 callback hell 的问题</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url,</span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">                resolve(data)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="title">error</span>(<span class="params">err</span>)</span> &#123;</span><br><span class="line">                reject(err)</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> url1 = <span class="string">&quot;./data1.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./data2.json&quot;</span></span><br><span class="line"><span class="keyword">const</span> url3 = <span class="string">&quot;./data3.json&quot;</span></span><br><span class="line">getData(url1)</span><br><span class="line">    .then(<span class="function">(<span class="params">data1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data1)</span><br><span class="line">        <span class="keyword">return</span> getData(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data2)</span><br><span class="line">        <span class="keyword">return</span> getData(url3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data3</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(data3)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> <span class="built_in">console</span>.error(err))</span><br></pre></td></tr></table></figure>
-
-<h1 id="同步与异步的区别"><a href="#同步与异步的区别" class="headerlink" title="同步与异步的区别"></a>同步与异步的区别</h1><ul>
-<li>异步是基于 JS 是单线程语言</li>
-<li>异步不会阻塞代码执行</li>
-<li>同步会阻塞代码执行</li>
-</ul>
-<h1 id="手写-Promise-加载两张图片"><a href="#手写-Promise-加载两张图片" class="headerlink" title="手写 Promise 加载两张图片"></a>手写 Promise 加载两张图片</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> img = <span class="built_in">document</span>.createElement(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">        img.onload = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`图片加载失败！<span class="subst">$&#123;src&#125;</span>`</span>)</span><br><span class="line">            reject(err)</span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> urll = <span class="string">&quot;./1.jpg&quot;</span></span><br><span class="line"><span class="keyword">const</span> url2 = <span class="string">&quot;./2.jpg&quot;</span></span><br><span class="line">loadImg(urll)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.width)</span><br><span class="line">        <span class="comment">// 返回一个普通对象</span></span><br><span class="line">        <span class="keyword">return</span> img1</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img1</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img1.height)</span><br><span class="line">        <span class="comment">// 返回一个 Promise 实例</span></span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.width)</span><br><span class="line">        <span class="keyword">return</span> img2</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">img2</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(img2.height)</span><br><span class="line">        <span class="keyword">return</span> loadImg(url2)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.error(err)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>JS基础</tag>
-        <tag>知识点总结</tag>
-        <tag>变量类型和计算</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>前端面试题总结-开发环境</title>
-    <url>/2020/12/09/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>不会这些，你就会被认定是菜鸟小白，没做过项目</p>
-<h1 id="关于开发环境"><a href="#关于开发环境" class="headerlink" title="关于开发环境"></a>关于开发环境</h1><ul>
-<li>面试官想通过开发环境了解候选人的实际工作情况</li>
-<li>开发环境的工具，能体现工作产出的效率</li>
-<li>会以聊天形式为主，不会问具体的问题</li>
-</ul>
-<a id="more"></a>
-
-<p><strong>开发环境</strong></p>
-<ul>
-<li>git</li>
-<li>调试工具</li>
-<li>抓包</li>
-<li>webpack、babel</li>
-<li>linux 常用命令</li>
-</ul>
-<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><ul>
-<li>最常用的代码版本管理工具</li>
-<li>大型项目需要多人协作开发，必须熟用 git</li>
-<li>如果不知道或者之前不用git，不会通过面试</li>
-<li>Mac os 自带 git 命令， windows 可去官网下载安装</li>
-<li>git 服务端常见的有 github、coding. net 等</li>
-<li>大公司会搭建自己的内网 git 服务</li>
-</ul>
-<h2 id="常用的-git-命令"><a href="#常用的-git-命令" class="headerlink" title="常用的 git 命令"></a>常用的 git 命令</h2><ul>
-<li>git add .</li>
-<li>git checkout xxx </li>
-<li>git commit -m “xxx” </li>
-<li>git push origin master </li>
-<li>git pull origin master</li>
-<li>git branch</li>
-<li>git checkout -b xxx</li>
-<li>git merge xxx</li>
-<li>git diff</li>
-<li>git log</li>
-<li>git fetch</li>
-<li>git stash</li>
-<li>git reset –hard id</li>
-<li>git stash</li>
-<li>git stash pop</li>
-</ul>
-<p><a href="https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单（单击访问）</a></p>
-<p><strong>Git 思维导图</strong></p>
-<p><img src="https://img-blog.csdn.net/20180808170716549?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTA4NTk2NTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<h2 id="chrome-调试工具"><a href="#chrome-调试工具" class="headerlink" title="chrome 调试工具"></a>chrome 调试工具</h2><ul>
-<li>Elements</li>
-<li>Console</li>
-<li>Network</li>
-<li>debugger（需在代码片段中引入该断点命令）</li>
-<li>Application</li>
-</ul>
-<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><ul>
-<li>移动端 h5 页，查看网络请求，需要用工具抓包</li>
-<li>windows 一般用 fiddler </li>
-<li>Mac os 一般用 charles</li>
-</ul>
-<p><strong>移动端</strong>（<a href="https://www.cnblogs.com/yyhh/p/5140852.html">Fiddler抓包工具总结</a>）</p>
-<ul>
-<li>手机和电脑连同一个局域网</li>
-<li>将手机代理到电脑上</li>
-<li>手机浏览网页，即可抓包</li>
-</ul>
-<h2 id="webpack-和-babel"><a href="#webpack-和-babel" class="headerlink" title="webpack 和 babel"></a>webpack 和 babel</h2><ul>
-<li>ES6 模块化，浏览器暂不支持</li>
-<li>ES6 语法，浏览器并不完全支持</li>
-<li>压缩代码，整合代码，以让网页加载更快</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码演示（需nodejs）</span></span><br><span class="line"><span class="comment">// 根目录 npm init -y</span></span><br><span class="line"><span class="comment">// 接着命令行安装（此处借助淘宝代理） cnpm install webpack webpack-cli -D</span></span><br><span class="line"><span class="comment">// 根目录新建 src 文件夹及子文件 index.js（里面内容随便打印个就可）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 根目录新建文件 webpack.config.js ， 内容如下</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&quot;development&quot;</span>, <span class="comment">// production</span></span><br><span class="line">    entry: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.js&quot;</span>), <span class="comment">// 文件入口</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">&quot;bundle.js&quot;</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">&quot;dist&quot;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 然后可尝试运行（可在 package.json 文件中的 script 里面加入 &quot;build&quot;: &quot;webpack&quot; 简化执行操作）</span></span><br><span class="line"><span class="comment">// 根目录命令行 npm run build</span></span><br><span class="line"><span class="comment">// 打包完毕，根目录会生成 dist 文件夹及子文件 bundle.js</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在网页中显示</span></span><br><span class="line"><span class="comment">// src 文件夹下新建 index.html ,随便生成个 html 框架（无需引入 index.js）</span></span><br><span class="line"><span class="comment">// 命令行安装插件（解析 html） cnpm install html-webpack-plugin -D</span></span><br><span class="line"><span class="comment">// 命令行安装插件（启动服务的插件） cnpm install webpack-dev-server -D</span></span><br><span class="line"><span class="comment">// 安装完成后可在 package.json 的 devDependencies 中查看安装信息</span></span><br><span class="line"><span class="comment">// webpack.config.js 代码</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> htmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">&quot;html-webpack-plugin&quot;</span>) <span class="comment">// 引入插件</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&quot;development&quot;</span>, <span class="comment">// production</span></span><br><span class="line">    entry: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.js&quot;</span>), <span class="comment">// 文件入口</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">&quot;bundle.js&quot;</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">&quot;dist&quot;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 配置插件</span></span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> htmlWebpackPlugin(&#123;</span><br><span class="line">            template: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.html&quot;</span>), <span class="comment">// 找到已有的 index.html</span></span><br><span class="line">            filename: <span class="string">&quot;index.html&quot;</span>, <span class="comment">// 产出文件名</span></span><br><span class="line">        &#125;),</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// 启动本地服务</span></span><br><span class="line">    devServer: &#123;</span><br><span class="line">        port: <span class="number">3000</span>, <span class="comment">// 端口</span></span><br><span class="line">        contentBase: path.join(__dirname, <span class="string">&quot;dist&quot;</span>), <span class="comment">// 当前目录</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 最终在 package.json 的 scripts 中添加代码： &quot;dev&quot;: &quot;webpack-dev-server&quot;</span></span><br><span class="line"><span class="comment">// 成功之后可在浏览器中访问 http://localhost:3000/index.html 即可</span></span><br><span class="line"><span class="comment">// 能加载出来原因是因为引入了 bundle.js 文件，并且其中包括了 index.js 的代码</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 关于版本报错问题，可尝试下列版本，nodejs 版本过高也可能导致报错</span></span><br><span class="line"><span class="string">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;html-webpack-plugin&quot;</span>: <span class="string">&quot;^4.5.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack&quot;</span>: <span class="string">&quot;^4.41.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack-cli&quot;</span>: <span class="string">&quot;^3.3.9&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack-dev-server&quot;</span>: <span class="string">&quot;^3.8.2&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>ES6</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 如果在 index.js 中写一个箭头函数，当打包之后，在 bundle.js 中还是一个 ES6 的箭头函数，此时就需要 babel 的编译</span></span><br><span class="line"><span class="comment">// 需要安装 babel ：(@符号为组的意思)</span></span><br><span class="line"><span class="comment">// npm install @babel/core @babel/preset-env babel-loader -D --registry=https://registry.npm.taobao.org    </span></span><br><span class="line"><span class="comment">// 在根目录新建文件 .babelrc 文件，代码如下</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;presets&quot;</span>: [<span class="string">&quot;@babel/preset-env&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 module.exports 里面加入代码：</span></span><br><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">            test: <span class="regexp">/\.js$/</span>, <span class="comment">// 只要是 .js 结尾的都走 babel-loader</span></span><br><span class="line">            loader: [<span class="string">&quot;babel-loader&quot;</span>],</span><br><span class="line">            include: path.join(__dirname, <span class="string">&quot;src&quot;</span>), <span class="comment">// 包含哪些目录需要走这个 loader</span></span><br><span class="line">            exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    ],</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// npm run dev 之后在 bundle.js 里面的箭头函数就会被转译为 ES5 语法</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="ES6-模块化"><a href="#ES6-模块化" class="headerlink" title="ES6 模块化"></a>ES6 模块化</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刚才在上个文件的 src 目录下新建 a.js ,代码如下：</span></span><br><span class="line"><span class="comment">// 单个导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(fn)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name = <span class="string">&quot;a&quot;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zhangsan&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 一块导出简写</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;fn&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> name = <span class="string">&quot;a&quot;</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zhangsan&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">exports</span> &#123;</span><br><span class="line">    fn, <span class="comment">// ES5 中需写成 fn: fn ,ES6 中 key 与 value 值一样则可省略 value</span></span><br><span class="line">    name,</span><br><span class="line">    obj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 然后在 index.js 文件下的头部引入并输出）</span></span><br><span class="line"><span class="keyword">import</span> &#123; fn, name, obj &#125; <span class="keyword">from</span> <span class="string">&quot;./a&quot;</span>  <span class="comment">// 解构赋值</span></span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(name)</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者，但是这种方法没办法用解构赋值，只能挨个导入</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zs&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    obj,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="如何配置-webpack-生产环境"><a href="#如何配置-webpack-生产环境" class="headerlink" title="如何配置 webpack 生产环境"></a>如何配置 webpack 生产环境</h2><p>根目录下新建 webpack.prod.js （一共两个配置文件，一个开发环境下的，一个生产环境下的）</p>
-<p><strong>1</strong>.可先复制一份 webpack.config.js 然后将里面的 mode 修改 production</p>
-<p><strong>2</strong>.将 devServer 配置项全部删掉</p>
-<p><strong>3</strong>.将 output 中的 filename 改为 “bundle.[contenthash].js”</p>
-<p>  - 根据代码内容算出哈希的值，如果内容变了，这个哈希值也会跟着变，内容不变则不会变</p>
-<p><strong>4</strong>.改 package.json 里面的 build ，之前默认的是启动服务，但此时不需要所以改变为 </p>
-<p> - “build”: “webpack –config webpack.prod.js”</p>
-<p>此时再次 npm run build</p>
-<p>dist 文件夹下的 bundle.js 文件名称跟着长串字符（配置的 [contenthash] ），这个长串字符就是内容变则变，内容不变则不变</p>
-<p>目地是最大程度命中 http 的缓存，让页面加载的更快</p>
-<p>内容也是经过压缩，体积小、执行快、下载快</p>
-<h2 id="Linux-命令"><a href="#Linux-命令" class="headerlink" title="Linux 命令"></a>Linux 命令</h2><ul>
-<li>公司的线上机器一般都是 linux （参考阿里云）</li>
-<li>测试机也要保持一致，用 linux</li>
-<li>测试机或者线上机出了问题，本地有不能复现，需要去排查（非常常见）</li>
-</ul>
-<p><a href="https://www.runoob.com/linux/linux-command-manual.html">Linux 命令大全</a></p>
-]]></content>
-      <categories>
-        <category>前端面试题</category>
-      </categories>
-      <tags>
-        <tag>知识点总结</tag>
-        <tag>前端开发环境</tag>
       </tags>
   </entry>
   <entry>
@@ -1447,69 +1336,114 @@
       </tags>
   </entry>
   <entry>
-    <title>将hexo博客部署到github或gitee</title>
-    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
-    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
-<ul>
-<li>全是静态文件，访问速度快；</li>
-<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
-<li>可以绑定自己的域名；</li>
-<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
-<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
-<li>= =</li>
+    <title>前端面试题总结-开发环境</title>
+    <url>/2020/12/09/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>不会这些，你就会被认定是菜鸟小白，没做过项目</p>
+<h1 id="关于开发环境"><a href="#关于开发环境" class="headerlink" title="关于开发环境"></a>关于开发环境</h1><ul>
+<li>面试官想通过开发环境了解候选人的实际工作情况</li>
+<li>开发环境的工具，能体现工作产出的效率</li>
+<li>会以聊天形式为主，不会问具体的问题</li>
 </ul>
 <a id="more"></a>
 
-<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
-<li>优点：部署比较简单，且不用频繁的更新部署</li>
-<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
+<p><strong>开发环境</strong></p>
+<ul>
+<li>git</li>
+<li>调试工具</li>
+<li>抓包</li>
+<li>webpack、babel</li>
+<li>linux 常用命令</li>
 </ul>
-<p>登录github后，点击右上角的＋，然后点击new repository</p>
-<p><img src="newrepository.jpg"></p>
-<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
-<p><img src="newsave.jpg"></p>
-<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
-<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
-<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
-<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
-<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
-<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
-<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
-<li>优点：访问速度快，中文页面友好</li>
-<li>缺点：每次部署后都需要服务中点击更新部署</li>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><ul>
+<li>最常用的代码版本管理工具</li>
+<li>大型项目需要多人协作开发，必须熟用 git</li>
+<li>如果不知道或者之前不用git，不会通过面试</li>
+<li>Mac os 自带 git 命令， windows 可去官网下载安装</li>
+<li>git 服务端常见的有 github、coding. net 等</li>
+<li>大公司会搭建自己的内网 git 服务</li>
 </ul>
-<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
-<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
-<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
-<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
-<p>npm install –save hexo-deployer-git</p>
-<p>插件安装完成后，可以通过命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<h2 id="常用的-git-命令"><a href="#常用的-git-命令" class="headerlink" title="常用的 git 命令"></a>常用的 git 命令</h2><ul>
+<li>git add .</li>
+<li>git checkout xxx </li>
+<li>git commit -m “xxx” </li>
+<li>git push origin master </li>
+<li>git pull origin master</li>
+<li>git branch</li>
+<li>git checkout -b xxx</li>
+<li>git merge xxx</li>
+<li>git diff</li>
+<li>git log</li>
+<li>git fetch</li>
+<li>git stash</li>
+<li>git reset –hard id</li>
+<li>git stash</li>
+<li>git stash pop</li>
+</ul>
+<p><a href="https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html">常用 Git 命令清单（单击访问）</a></p>
+<p><strong>Git 思维导图</strong></p>
+<p><img src="https://img-blog.csdn.net/20180808170716549?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTA4NTk2NTA=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h2 id="chrome-调试工具"><a href="#chrome-调试工具" class="headerlink" title="chrome 调试工具"></a>chrome 调试工具</h2><ul>
+<li>Elements</li>
+<li>Console</li>
+<li>Network</li>
+<li>debugger（需在代码片段中引入该断点命令）</li>
+<li>Application</li>
+</ul>
+<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><ul>
+<li>移动端 h5 页，查看网络请求，需要用工具抓包</li>
+<li>windows 一般用 fiddler </li>
+<li>Mac os 一般用 charles</li>
+</ul>
+<p><strong>移动端</strong>（<a href="https://www.cnblogs.com/yyhh/p/5140852.html">Fiddler抓包工具总结</a>）</p>
+<ul>
+<li>手机和电脑连同一个局域网</li>
+<li>将手机代理到电脑上</li>
+<li>手机浏览网页，即可抓包</li>
+</ul>
+<h2 id="webpack-和-babel"><a href="#webpack-和-babel" class="headerlink" title="webpack 和 babel"></a>webpack 和 babel</h2><ul>
+<li>ES6 模块化，浏览器暂不支持</li>
+<li>ES6 语法，浏览器并不完全支持</li>
+<li>压缩代码，整合代码，以让网页加载更快</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 代码演示（需nodejs）</span></span><br><span class="line"><span class="comment">// 根目录 npm init -y</span></span><br><span class="line"><span class="comment">// 接着命令行安装（此处借助淘宝代理） cnpm install webpack webpack-cli -D</span></span><br><span class="line"><span class="comment">// 根目录新建 src 文件夹及子文件 index.js（里面内容随便打印个就可）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 根目录新建文件 webpack.config.js ， 内容如下</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&quot;development&quot;</span>, <span class="comment">// production</span></span><br><span class="line">    entry: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.js&quot;</span>), <span class="comment">// 文件入口</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">&quot;bundle.js&quot;</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">&quot;dist&quot;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 然后可尝试运行（可在 package.json 文件中的 script 里面加入 &quot;build&quot;: &quot;webpack&quot; 简化执行操作）</span></span><br><span class="line"><span class="comment">// 根目录命令行 npm run build</span></span><br><span class="line"><span class="comment">// 打包完毕，根目录会生成 dist 文件夹及子文件 bundle.js</span></span><br></pre></td></tr></table></figure>
 
-<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
-<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
-<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
-<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
-<p><img src="MyblogAdress.jpg"></p>
-<p>注意：每次执行完命令</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在网页中显示</span></span><br><span class="line"><span class="comment">// src 文件夹下新建 index.html ,随便生成个 html 框架（无需引入 index.js）</span></span><br><span class="line"><span class="comment">// 命令行安装插件（解析 html） cnpm install html-webpack-plugin -D</span></span><br><span class="line"><span class="comment">// 命令行安装插件（启动服务的插件） cnpm install webpack-dev-server -D</span></span><br><span class="line"><span class="comment">// 安装完成后可在 package.json 的 devDependencies 中查看安装信息</span></span><br><span class="line"><span class="comment">// webpack.config.js 代码</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> htmlWebpackPlugin = <span class="built_in">require</span>(<span class="string">&quot;html-webpack-plugin&quot;</span>) <span class="comment">// 引入插件</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&quot;development&quot;</span>, <span class="comment">// production</span></span><br><span class="line">    entry: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.js&quot;</span>), <span class="comment">// 文件入口</span></span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: <span class="string">&quot;bundle.js&quot;</span>,</span><br><span class="line">        path: path.join(__dirname, <span class="string">&quot;dist&quot;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 配置插件</span></span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> htmlWebpackPlugin(&#123;</span><br><span class="line">            template: path.join(__dirname, <span class="string">&quot;src&quot;</span>, <span class="string">&quot;index.html&quot;</span>), <span class="comment">// 找到已有的 index.html</span></span><br><span class="line">            filename: <span class="string">&quot;index.html&quot;</span>, <span class="comment">// 产出文件名</span></span><br><span class="line">        &#125;),</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// 启动本地服务</span></span><br><span class="line">    devServer: &#123;</span><br><span class="line">        port: <span class="number">3000</span>, <span class="comment">// 端口</span></span><br><span class="line">        contentBase: path.join(__dirname, <span class="string">&quot;dist&quot;</span>), <span class="comment">// 当前目录</span></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 最终在 package.json 的 scripts 中添加代码： &quot;dev&quot;: &quot;webpack-dev-server&quot;</span></span><br><span class="line"><span class="comment">// 成功之后可在浏览器中访问 http://localhost:3000/index.html 即可</span></span><br><span class="line"><span class="comment">// 能加载出来原因是因为引入了 bundle.js 文件，并且其中包括了 index.js 的代码</span></span><br></pre></td></tr></table></figure>
 
-<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
-<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 关于版本报错问题，可尝试下列版本，nodejs 版本过高也可能导致报错</span></span><br><span class="line"><span class="string">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;html-webpack-plugin&quot;</span>: <span class="string">&quot;^4.5.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack&quot;</span>: <span class="string">&quot;^4.41.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack-cli&quot;</span>: <span class="string">&quot;^3.3.9&quot;</span>,</span><br><span class="line">  <span class="string">&quot;webpack-dev-server&quot;</span>: <span class="string">&quot;^3.8.2&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ES6</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 如果在 index.js 中写一个箭头函数，当打包之后，在 bundle.js 中还是一个 ES6 的箭头函数，此时就需要 babel 的编译</span></span><br><span class="line"><span class="comment">// 需要安装 babel ：(@符号为组的意思)</span></span><br><span class="line"><span class="comment">// npm install @babel/core @babel/preset-env babel-loader -D --registry=https://registry.npm.taobao.org    </span></span><br><span class="line"><span class="comment">// 在根目录新建文件 .babelrc 文件，代码如下</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;presets&quot;</span>: [<span class="string">&quot;@babel/preset-env&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 module.exports 里面加入代码：</span></span><br><span class="line"><span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">            test: <span class="regexp">/\.js$/</span>, <span class="comment">// 只要是 .js 结尾的都走 babel-loader</span></span><br><span class="line">            loader: [<span class="string">&quot;babel-loader&quot;</span>],</span><br><span class="line">            include: path.join(__dirname, <span class="string">&quot;src&quot;</span>), <span class="comment">// 包含哪些目录需要走这个 loader</span></span><br><span class="line">            exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    ],</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// npm run dev 之后在 bundle.js 里面的箭头函数就会被转译为 ES5 语法</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="ES6-模块化"><a href="#ES6-模块化" class="headerlink" title="ES6 模块化"></a>ES6 模块化</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刚才在上个文件的 src 目录下新建 a.js ,代码如下：</span></span><br><span class="line"><span class="comment">// 单个导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(fn)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name = <span class="string">&quot;a&quot;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zhangsan&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 一块导出简写</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;fn&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> name = <span class="string">&quot;a&quot;</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zhangsan&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">exports</span> &#123;</span><br><span class="line">    fn, <span class="comment">// ES5 中需写成 fn: fn ,ES6 中 key 与 value 值一样则可省略 value</span></span><br><span class="line">    name,</span><br><span class="line">    obj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 然后在 index.js 文件下的头部引入并输出）</span></span><br><span class="line"><span class="keyword">import</span> &#123; fn, name, obj &#125; <span class="keyword">from</span> <span class="string">&quot;./a&quot;</span>  <span class="comment">// 解构赋值</span></span><br><span class="line">fn()</span><br><span class="line"><span class="built_in">console</span>.log(name)</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者，但是这种方法没办法用解构赋值，只能挨个导入</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    name: <span class="string">&quot;zs&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    obj,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="如何配置-webpack-生产环境"><a href="#如何配置-webpack-生产环境" class="headerlink" title="如何配置 webpack 生产环境"></a>如何配置 webpack 生产环境</h2><p>根目录下新建 webpack.prod.js （一共两个配置文件，一个开发环境下的，一个生产环境下的）</p>
+<p><strong>1</strong>.可先复制一份 webpack.config.js 然后将里面的 mode 修改 production</p>
+<p><strong>2</strong>.将 devServer 配置项全部删掉</p>
+<p><strong>3</strong>.将 output 中的 filename 改为 “bundle.[contenthash].js”</p>
+<p>  - 根据代码内容算出哈希的值，如果内容变了，这个哈希值也会跟着变，内容不变则不会变</p>
+<p><strong>4</strong>.改 package.json 里面的 build ，之前默认的是启动服务，但此时不需要所以改变为 </p>
+<p> - “build”: “webpack –config webpack.prod.js”</p>
+<p>此时再次 npm run build</p>
+<p>dist 文件夹下的 bundle.js 文件名称跟着长串字符（配置的 [contenthash] ），这个长串字符就是内容变则变，内容不变则不变</p>
+<p>目地是最大程度命中 http 的缓存，让页面加载的更快</p>
+<p>内容也是经过压缩，体积小、执行快、下载快</p>
+<h2 id="Linux-命令"><a href="#Linux-命令" class="headerlink" title="Linux 命令"></a>Linux 命令</h2><ul>
+<li>公司的线上机器一般都是 linux （参考阿里云）</li>
+<li>测试机也要保持一致，用 linux</li>
+<li>测试机或者线上机出了问题，本地有不能复现，需要去排查（非常常见）</li>
+</ul>
+<p><a href="https://www.runoob.com/linux/linux-command-manual.html">Linux 命令大全</a></p>
 ]]></content>
       <categories>
-        <category>从0搭建博客及美化</category>
+        <category>前端面试题</category>
       </categories>
       <tags>
-        <tag>部署博客到远端</tag>
+        <tag>知识点总结</tag>
+        <tag>前端开发环境</tag>
       </tags>
   </entry>
   <entry>
@@ -1706,6 +1640,198 @@
       <tags>
         <tag>知识点总结</tag>
         <tag>前端运行环境</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>前端面试题总结-第一阶段完成小结</title>
+    <url>/2020/12/11/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E5%AE%8C%E6%88%90%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="知识体系思维导图"><a href="#知识体系思维导图" class="headerlink" title="知识体系思维导图"></a>知识体系思维导图</h1><a id="more"></a>
+
+<img src="前端面试课-思维导图-知识体系.png" alt="前端面试课-思维导图-知识体系" style="zoom: 150%;" />
+
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><h2 id="HTML-面试题"><a href="#HTML-面试题" class="headerlink" title="HTML 面试题"></a>HTML 面试题</h2><ul>
+<li>如何理解 HTML 语义化</li>
+<li>默认情况下，哪些 HTML 标签是块级元素、哪些是內联元素</li>
+</ul>
+<h2 id="CSS-布局（1）"><a href="#CSS-布局（1）" class="headerlink" title="CSS - 布局（1）"></a>CSS - 布局（1）</h2><ul>
+<li>盒子模型的宽度如何计算</li>
+<li>margin 纵向重叠的问题</li>
+<li>margin 负值的问题</li>
+</ul>
+<h2 id="CSS-布局（2）"><a href="#CSS-布局（2）" class="headerlink" title="CSS - 布局（2）"></a>CSS - 布局（2）</h2><ul>
+<li>BFC 理解和应用</li>
+<li>float 布局的问题，以及 clearfix </li>
+<li>flex 画色子</li>
+</ul>
+<h2 id="CSS-定位"><a href="#CSS-定位" class="headerlink" title="CSS - 定位"></a>CSS - 定位</h2><ul>
+<li>absolute 和 relative 分别依据什么定位</li>
+<li>居中对齐有哪些实现方式</li>
+</ul>
+<h2 id="CSS-图文样式"><a href="#CSS-图文样式" class="headerlink" title="CSS - 图文样式"></a>CSS - 图文样式</h2><ul>
+<li>line-height的继承问题</li>
+</ul>
+<h2 id="CSS-响应式"><a href="#CSS-响应式" class="headerlink" title="CSS - 响应式"></a>CSS - 响应式</h2><ul>
+<li>rem 是什么</li>
+<li>如何实现响应式</li>
+</ul>
+<h2 id="变量类型和计算"><a href="#变量类型和计算" class="headerlink" title="变量类型和计算"></a>变量类型和计算</h2><ul>
+<li>typeof 能判断哪些类型</li>
+<li>何时使用 === 何时使用 ==</li>
+<li>值类型和引用类型的区别</li>
+<li>手写深拷贝</li>
+</ul>
+<h2 id="原型和原型链"><a href="#原型和原型链" class="headerlink" title="原型和原型链"></a>原型和原型链</h2><ul>
+<li>如何准确判断一个变量是不是数组</li>
+<li>手写一个简易的 jQuery，考虑插件和扩展性</li>
+<li>class 的原型本质，怎么理解</li>
+</ul>
+<h2 id="作用域和闭包"><a href="#作用域和闭包" class="headerlink" title="作用域和闭包"></a>作用域和闭包</h2><ul>
+<li>this的不同应用场景，如何取值</li>
+<li>手写bind函数</li>
+<li>实际开发中闭包的应用场景，举例说明</li>
+<li>循环定义生成十个 a 标签，弹出的 i 是多少</li>
+</ul>
+<h2 id="异步和单线程"><a href="#异步和单线程" class="headerlink" title="异步和单线程"></a>异步和单线程</h2><ul>
+<li>同步和异步的区别是什么</li>
+<li>手写用 Promise 加载一张图片</li>
+<li>前端使用异步的场景有哪些</li>
+<li>异步执行顺序问题</li>
+</ul>
+<h2 id="JS-异步进阶"><a href="#JS-异步进阶" class="headerlink" title="JS 异步进阶"></a>JS 异步进阶</h2><ul>
+<li>请描述 event loop（事件循环/事件轮询）的机制，可画图</li>
+<li>什么是宏任务和微任务，两者有什么区别</li>
+<li>Promise 有哪三种状态？如何变化</li>
+<li>promise、then 和 catch 的连接</li>
+<li>async / await 的语法</li>
+<li>promise 和 setTimeout 的顺序</li>
+<li>外加 async / await 的顺序问题</li>
+</ul>
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><ul>
+<li>DOM 是哪种数据结构</li>
+<li>DOM 操作的常用 API </li>
+<li>attr 和 property 的区别</li>
+<li>一次性插入多个 DOM 节点，考虑性能</li>
+</ul>
+<h2 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h2><ul>
+<li>如何识别浏览器的类型</li>
+<li>分析拆解 url 各个部分</li>
+</ul>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><ul>
+<li>编写一个通用的事件监听函数</li>
+<li>描述事件冒泡的流程</li>
+<li>无限下拉的图片列表，如何监听每个图片的点击</li>
+</ul>
+<h2 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h2><ul>
+<li>手写一个简易的 ajax</li>
+<li>跨域的常用实现方式</li>
+</ul>
+<h2 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h2><ul>
+<li>描述 cookie、localStorage、sessionStorage 区别</li>
+</ul>
+<h2 id="页面加载过程"><a href="#页面加载过程" class="headerlink" title="页面加载过程"></a>页面加载过程</h2><ul>
+<li>从输入 url 到渲染出页面的整个过程</li>
+<li>window.onload 和 DOMContentloaded 的区别</li>
+</ul>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><ul>
+<li>前端常见性能优化方案</li>
+<li>手写节流和防抖（体验优化）</li>
+</ul>
+<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h2><ul>
+<li>Web 前端常见的安全攻击方式及预防</li>
+</ul>
+<h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><ul>
+<li>http 常见的状态码有哪些</li>
+<li>http 常见的 header 有哪些</li>
+<li>什么是 Restful api</li>
+<li>描述一下 http 的缓存机制（重要）</li>
+</ul>
+<h1 id="面试技巧"><a href="#面试技巧" class="headerlink" title="面试技巧"></a>面试技巧</h1><ul>
+<li><p>关于简历</p>
+<p>1.简洁明了，突出个人技能和项目经验</p>
+<p>2.可以把个人博客、开源作品放在简历中（但博客要有内容）</p>
+<p>3.不要造假，保证能力上的真实性（斟酌用词，如精通xxx，写了解，最多写个熟练）</p>
+</li>
+<li><p>面试过程中注意事项</p>
+<p>1.如何看待加班：像借钱，救急不救穷</p>
+<p>2.千万不要挑战面试官，反考面试官</p>
+<p>3.学会给面试官惊喜，证明你能想到更多，做的更好，但不要太多</p>
+<p>4.遇到不会的问题，说出你知道的部分即可，但别岔开话题</p>
+<p>5.谈谈你的缺点：说一下你最近在学什么即可</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>前端面试题</category>
+      </categories>
+      <tags>
+        <tag>知识点总结</tag>
+        <tag>小结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将hexo博客部署到github或gitee</title>
+    <url>/2020/11/18/%E5%B0%86hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github%E6%88%96gitee/</url>
+    <content><![CDATA[<p>使用github/gitee pages服务搭建博客的好处有： </p>
+<ul>
+<li>全是静态文件，访问速度快；</li>
+<li>免费方便，不用花一分钱就可以搭建一个自由的个人博客，不需要服务器不需要后台；</li>
+<li>可以绑定自己的域名；</li>
+<li>数据安全，基于github的版本管理，想恢复到哪个历史版本都行；</li>
+<li>博客内容可以轻松打包、转移、发布到其它平台；</li>
+<li>= =</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="部署到远端"><a href="#部署到远端" class="headerlink" title="部署到远端"></a>部署到远端</h1><h2 id="github部署的方式"><a href="#github部署的方式" class="headerlink" title="github部署的方式"></a>github部署的方式</h2><ul>
+<li>优点：部署比较简单，且不用频繁的更新部署</li>
+<li>缺点：访问速度相对于gitee较慢，每次hexo d比较慢。</li>
+</ul>
+<p>登录github后，点击右上角的＋，然后点击new repository</p>
+<p><img src="newrepository.jpg"></p>
+<p>说明：下面这张图片中出现红色是因为我之前已经用这个地址申请过一个仓库，波浪线处尽量与前面的名字一样，后面的.github.io固定。然后拉到底部点击create repository</p>
+<p><img src="newsave.jpg"></p>
+<p><img src="%E9%83%A8%E7%BD%B211.jpg"></p>
+<p>复制仓库地址后后打开站点配置文件，找到deploy字段，按下图操作。</p>
+<p><img src="%E9%83%A8%E7%BD%B2222.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p> 就可以部署到github，此时打开仓库就会有内容了。</p>
+<p>直接把你的网址中下面图片中蓝色部分拿出来，输入到浏览器中即可访问你的静态博客页面。</p>
+<p><img src="%E8%AE%BF%E9%97%AE11.jpg"></p>
+<p>注：1. 刷新不出博客页面稍等两分钟即可   2.每次部署可以：hexo d -m “提交的说明”</p>
+<h2 id="gitee（码云）部署到远端"><a href="#gitee（码云）部署到远端" class="headerlink" title="gitee（码云）部署到远端"></a>gitee（码云）部署到远端</h2><ul>
+<li>优点：访问速度快，中文页面友好</li>
+<li>缺点：每次部署后都需要服务中点击更新部署</li>
+</ul>
+<p>与github部署方式大同小异，登录gitee后点击右上角的加号，新建仓库</p>
+<p><img src="gitee%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA.jpg"></p>
+<p>仓库建好后，复制仓库地址到站点配置文件_config.yml中</p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%90%8E%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.jpg"></p>
+<p>此时我们需要在博客根目录下打开命令行，装一个部署git的插件(已经切换到淘宝镜像源的可用cnpm命令)</p>
+<p>npm install –save hexo-deployer-git</p>
+<p>插件安装完成后，可以通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完毕后，刷新仓库页面，此时仓库就会有内容，点击仓库的服务</p>
+<p><img src="gitee%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1.jpg"></p>
+<p><img src="gitee%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90.jpg"></p>
+<p>这个地址就是你的个人静态博客地址，也可以打开博客部署到的仓库查看地址，点击可直接访问。</p>
+<p><img src="MyblogAdress.jpg"></p>
+<p>注意：每次执行完命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d -m &quot;提交说明&quot; </span><br></pre></td></tr></table></figure>
+
+<p>需要到仓库服务中点开Gitee Pages，然后点击更新等一两分钟才能更新静态博客。</p>
+<p> 如果有什么问题或者技术交流，欢迎在下方发布渠道二维码联系我或者文章底部留言。 </p>
+]]></content>
+      <categories>
+        <category>从0搭建博客及美化</category>
+      </categories>
+      <tags>
+        <tag>部署博客到远端</tag>
       </tags>
   </entry>
   <entry>
