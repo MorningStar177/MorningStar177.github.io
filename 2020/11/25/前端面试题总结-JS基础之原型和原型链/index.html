@@ -23,19 +23,19 @@
     var CONFIG = {"hostname":"morningstar175.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="三座大山之一，必考！！！ JS本身是一个基于原型基层的语言，ES6之前，写继承的时候只能通过原型来继承，ES6出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。">
+  <meta name="description" content="三座大山之一，必考！！！ JS 本身是一个基于原型基层的语言，ES6 之前，写继承的时候只能通过原型来继承，ES6 出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端面试题总结-JS基础之原型和原型链">
 <meta property="og:url" content="https://morningstar175.gitee.io/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/index.html">
 <meta property="og:site_name" content="Chao&#39;s Blog · 专注技术分享">
-<meta property="og:description" content="三座大山之一，必考！！！ JS本身是一个基于原型基层的语言，ES6之前，写继承的时候只能通过原型来继承，ES6出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。">
+<meta property="og:description" content="三座大山之一，必考！！！ JS 本身是一个基于原型基层的语言，ES6 之前，写继承的时候只能通过原型来继承，ES6 出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://morningstar175.gitee.io/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/1606225829665.png">
 <meta property="og:image" content="https://morningstar175.gitee.io/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/1606262732500.png">
 <meta property="og:image" content="https://morningstar175.gitee.io/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/1606264497414.png">
 <meta property="og:image" content="https://morningstar175.gitee.io/2020/11/25/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93-JS%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/1606264497414.png">
 <meta property="article:published_time" content="2020-11-25T02:10:24.000Z">
-<meta property="article:modified_time" content="2020-11-25T02:15:24.000Z">
+<meta property="article:modified_time" content="2020-12-15T07:16:48.185Z">
 <meta property="article:author" content="Morningstar">
 <meta property="article:tag" content="JS基础">
 <meta property="article:tag" content="知识点总结">
@@ -146,17 +146,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">24</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">25</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -231,10 +231,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-25 10:10:24 / 修改时间：10:15:24" itemprop="dateCreated datePublished" datetime="2020-11-25T10:10:24+08:00">2020-11-25</time>
+              <time title="创建时间：2020-11-25 10:10:24" itemprop="dateCreated datePublished" datetime="2020-11-25T10:10:24+08:00">2020-11-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-15 15:16:48" itemprop="dateModified" datetime="2020-12-15T15:16:48+08:00">2020-12-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -278,10 +284,10 @@
 
       
         <p><strong>三座大山之一，必考！！！</strong></p>
-<p>JS本身是一个基于原型基层的语言，ES6之前，写继承的时候只能通过原型来继承，ES6出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。</p>
+<p>JS 本身是一个基于原型基层的语言，ES6 之前，写继承的时候只能通过原型来继承，ES6 出来之后引入了 class 语法，可以通过 class 继承，但是基于对 class 的剖解来看，class 真正上的继承还是原型上的继承。</p>
 <a id="more"></a>
 
-<h1 id="如何用Class实现继承"><a href="#如何用Class实现继承" class="headerlink" title="如何用Class实现继承"></a>如何用Class实现继承</h1><h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>class 本质上就类似于一个模版，我们可以通过模版去构建一些东西。</p>
+<h1 id="如何用-Class-实现继承"><a href="#如何用-Class-实现继承" class="headerlink" title="如何用 Class 实现继承"></a>如何用 Class 实现继承</h1><h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><p>class 本质上就类似于一个模版，我们可以通过模版去构建一些东西。</p>
 <ul>
 <li>constructor</li>
 <li>属性</li>
@@ -324,7 +330,7 @@
 </ul>
 <h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">People</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(Student.prototype.__proto__)</span><br><span class="line"><span class="built_in">console</span>.log(People.prototype)</span><br><span class="line"><span class="built_in">console</span>.log(People.prototype === Student.prototype.__proto__)  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
-<p>首先，左下角三个图的关系对应上一张图。但这里的 Student 的显式原型（Student.prototype）还会有一个隐式原型，指向了 People 的显式原型（People.prototype）,People原型里面有 eat 方法。</p>
+<p>首先，左下角三个图的关系对应上一张图。但这里的 Student 的显式原型（Student.prototype）还会有一个隐式原型，指向了 People 的显式原型（People.prototype）,People 原型里面有 eat 方法。</p>
 <p>逻辑上来讲，实例 s1 是通过 Student new 出来的，所以 s1 的隐式原型指向 Student 的显式原型。其次可以理解为 Student 的显式原型对象（Student.prototype）是通过 People new 出来的，所以 Student.prototype 的隐式原型指向 People 的显式原型（People.prototype）,</p>
 <img src="1606262732500.png" alt="1606262732500" style="zoom: 80%;" />
 
@@ -502,7 +508,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8Class%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF"><span class="nav-number">1.</span> <span class="nav-text">如何用Class实现继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#class"><span class="nav-number">1.1.</span> <span class="nav-text">class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">1.2.</span> <span class="nav-text">继承</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD"><span class="nav-number">2.</span> <span class="nav-text">类型判断</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JS%E5%8E%9F%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">JS原型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E5%85%B3%E7%B3%BB"><span class="nav-number">3.1.</span> <span class="nav-text">原型关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%8E%9F%E5%9E%8B%E7%9A%84%E6%89%A7%E8%A1%8C%E8%A7%84%E5%88%99"><span class="nav-number">3.2.</span> <span class="nav-text">基于原型的执行规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="nav-number">3.3.</span> <span class="nav-text">原型链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E7%9C%8B-instanceof"><span class="nav-number">3.3.1.</span> <span class="nav-text">再看 instanceof</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%8F%90%E7%A4%BA%EF%BC%81%EF%BC%81%EF%BC%81"><span class="nav-number">3.4.</span> <span class="nav-text">重要提示！！！</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">题目</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8-Class-%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF"><span class="nav-number">1.</span> <span class="nav-text">如何用 Class 实现继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#class"><span class="nav-number">1.1.</span> <span class="nav-text">class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">1.2.</span> <span class="nav-text">继承</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD"><span class="nav-number">2.</span> <span class="nav-text">类型判断</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JS%E5%8E%9F%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">JS原型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E5%85%B3%E7%B3%BB"><span class="nav-number">3.1.</span> <span class="nav-text">原型关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%8E%9F%E5%9E%8B%E7%9A%84%E6%89%A7%E8%A1%8C%E8%A7%84%E5%88%99"><span class="nav-number">3.2.</span> <span class="nav-text">基于原型的执行规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="nav-number">3.3.</span> <span class="nav-text">原型链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E7%9C%8B-instanceof"><span class="nav-number">3.3.1.</span> <span class="nav-text">再看 instanceof</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%8F%90%E7%A4%BA%EF%BC%81%EF%BC%81%EF%BC%81"><span class="nav-number">3.4.</span> <span class="nav-text">重要提示！！！</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">4.</span> <span class="nav-text">题目</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -518,20 +524,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -594,12 +600,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">91k</span>
+    <span title="站点总字数">110k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:22</span>
+    <span title="站点阅读时长">1:40</span>
 </div>
 
         

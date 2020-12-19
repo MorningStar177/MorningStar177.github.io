@@ -31,7 +31,7 @@
 <meta property="og:description" content="事件不会，等于残废，必考！！！ 事件知识点  事件绑定 事件冒泡 事件代理">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-04T11:48:14.000Z">
-<meta property="article:modified_time" content="2020-12-04T11:49:50.897Z">
+<meta property="article:modified_time" content="2020-12-18T04:38:51.092Z">
 <meta property="article:author" content="Morningstar">
 <meta property="article:tag" content="JS基础">
 <meta property="article:tag" content="知识点总结">
@@ -141,17 +141,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">33</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">5</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">24</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">25</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -226,10 +226,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-04 19:48:14 / 修改时间：19:49:50" itemprop="dateCreated datePublished" datetime="2020-12-04T19:48:14+08:00">2020-12-04</time>
+              <time title="创建时间：2020-12-04 19:48:14" itemprop="dateCreated datePublished" datetime="2020-12-04T19:48:14+08:00">2020-12-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-18 12:38:51" itemprop="dateModified" datetime="2020-12-18T12:38:51+08:00">2020-12-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -253,7 +259,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2k</span>
+              <span>2.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -290,7 +296,7 @@
 <li>减少浏览器内存占用（如果 a 标签非常多的话，每个 a 标签都去挂一个事件，数量过多会非常耗费内存，但是我们只在父元素挂一次事件就不会耗费那么多内存）</li>
 <li>但是，不要滥用（在瀑布流、结构复杂不好每一个都绑定事件的这种情况下去用）</li>
 </ul>
-<h2 id="通用的事件绑定函数-重点"><a href="#通用的事件绑定函数-重点" class="headerlink" title="通用的事件绑定函数(重点)"></a>通用的事件绑定函数(重点)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, selector, fn</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入参数个数</span></span><br><span class="line">    <span class="keyword">if</span> (fn == <span class="literal">null</span>) &#123;</span><br><span class="line">        fn = selector</span><br><span class="line">        selector = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    elem.addEventListener(type, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> target = event.target</span><br><span class="line">        <span class="keyword">if</span> (selector) &#123;</span><br><span class="line">            <span class="comment">// 需要代理绑定</span></span><br><span class="line">            <span class="comment">// 判断一个 DOM 元素是不是符合一个 CSS 选择器</span></span><br><span class="line">            <span class="keyword">if</span> (target.matches(selector)) &#123;</span><br><span class="line">                fn.call(target, event)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; eles &#123;</span><br><span class="line">            <span class="comment">// 不需要代理绑定</span></span><br><span class="line">            fn.call(target, event)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通用的事件绑定函数-重点"><a href="#通用的事件绑定函数-重点" class="headerlink" title="通用的事件绑定函数(重点)"></a>通用的事件绑定函数(重点)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通用的事件绑定函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bindEvent</span>(<span class="params">elem, type, selector, fn</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断传入参数个数</span></span><br><span class="line">    <span class="keyword">if</span> (fn == <span class="literal">null</span>) &#123;</span><br><span class="line">        fn = selector</span><br><span class="line">        selector = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    elem.addEventListener(type, <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> target = event.target</span><br><span class="line">        <span class="keyword">if</span> (selector) &#123;</span><br><span class="line">            <span class="comment">// 需要代理绑定</span></span><br><span class="line">            <span class="comment">// 判断一个 DOM 元素是不是符合一个 CSS 选择器</span></span><br><span class="line">            <span class="keyword">if</span> (target.matches(selector)) &#123;</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">               let result = element.matches(selectorString);</span></span><br><span class="line"><span class="comment">				result 的值为 true 或 false.</span></span><br><span class="line"><span class="comment">				selectorString 是个 css 选择器字符串.</span></span><br><span class="line"><span class="comment">               */</span></span><br><span class="line">                <span class="comment">// 若不用 call 这里的 this 则指向 window</span></span><br><span class="line">                fn.call(target, event)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; eles &#123;</span><br><span class="line">            <span class="comment">// 不需要代理绑定</span></span><br><span class="line">            fn.call(target, event)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> div3 = <span class="built_in">document</span>.getElementById(<span class="string">&quot;div3&quot;</span>)</span><br><span class="line">bindEvent(div3, <span class="string">&quot;click&quot;</span>, <span class="string">&quot;a&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">    event.preventDefault()</span><br><span class="line">    alert(<span class="built_in">this</span>.innerHTML)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><ul>
 <li><p>编写一个通用的事件监听函数</p>
@@ -456,20 +462,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -532,12 +538,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">91k</span>
+    <span title="站点总字数">110k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:22</span>
+    <span title="站点阅读时长">1:40</span>
 </div>
 
         
