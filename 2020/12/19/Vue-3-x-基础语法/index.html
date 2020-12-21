@@ -23,16 +23,16 @@
     var CONFIG = {"hostname":"morningstar175.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Vue 3.x-beta基本语法 MVVM">
+  <meta name="description" content="Vue 3.x基本语法 MVVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue 3.x 基础语法">
 <meta property="og:url" content="https://morningstar175.gitee.io/2020/12/19/Vue-3-x-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/index.html">
 <meta property="og:site_name" content="Chao&#39;s Blog · 专注技术分享">
-<meta property="og:description" content="Vue 3.x-beta基本语法 MVVM">
+<meta property="og:description" content="Vue 3.x基本语法 MVVM">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://morningstar175.gitee.io/2020/12/19/Vue-3-x-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/lifecycle%20.png">
 <meta property="article:published_time" content="2020-12-19T01:45:41.000Z">
-<meta property="article:modified_time" content="2020-12-19T01:55:11.234Z">
+<meta property="article:modified_time" content="2020-12-21T13:53:41.357Z">
 <meta property="article:author" content="Morningstar">
 <meta property="article:tag" content="vue3.x">
 <meta property="article:tag" content="基本语法">
@@ -142,17 +142,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">35</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">37</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">25</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -227,10 +227,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-19 09:45:41 / 修改时间：09:55:11" itemprop="dateCreated datePublished" datetime="2020-12-19T09:45:41+08:00">2020-12-19</time>
+              <time title="创建时间：2020-12-19 09:45:41" itemprop="dateCreated datePublished" datetime="2020-12-19T09:45:41+08:00">2020-12-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-21 21:53:41" itemprop="dateModified" datetime="2020-12-21T21:53:41+08:00">2020-12-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -273,7 +279,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Vue-3-x-beta"><a href="#Vue-3-x-beta" class="headerlink" title="Vue 3.x-beta"></a>Vue 3.x-beta</h1><p><strong>基本语法</strong></p>
+        <h1 id="Vue-3-x"><a href="#Vue-3-x" class="headerlink" title="Vue 3.x"></a>Vue 3.x</h1><p><strong>基本语法</strong></p>
 <h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><a id="more"></a>
 
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://unpkg.com/vue@next&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="comment">// createApp 表示创建一个 Vue 应用, 存储到 app 变量中</span></span><br><span class="line"><span class="comment">// 传入的参数表示，这个应用最外层的组件，应该如何展示</span></span><br><span class="line"><span class="comment">// MVVM 设计模式，M -&gt; Model 数据， V -&gt; View 视图， VM -&gt; ViewModel 视图数据连接层(vue 组件做的)</span></span><br><span class="line"><span class="keyword">const</span> app = Vue.createApp(&#123;</span><br><span class="line">    <span class="comment">// M 层（数据）</span></span><br><span class="line">  <span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      message: <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// V 层（视图）</span></span><br><span class="line">  template: <span class="string">&quot;&lt;div&gt;&#123;&#123;message&#125;&#125;&lt;/div&gt;&quot;</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// vm （视图数据连接层）代表的就是 Vue 应用的根组件</span></span><br><span class="line"><span class="keyword">const</span> vm = app.mount(<span class="string">&#x27;#root&#x27;</span>);</span><br></pre></td></tr></table></figure>
@@ -431,7 +437,10 @@
     <a href="/2020/12/13/%E5%89%8D%E7%AB%AF%E7%AE%80%E5%8E%86-%E9%9D%A2%E8%AF%95%E5%87%86%E5%A4%87%E5%8F%8A%E6%8A%80%E5%B7%A7/" rel="prev" title="前端简历-面试准备及技巧">
       <i class="fa fa-chevron-left"></i> 前端简历-面试准备及技巧
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/21/Vue%E7%BB%84%E4%BB%B6%E7%9A%84%E7%90%86%E5%BF%B5/" rel="next" title="Vue 组件的理念">
+      Vue 组件的理念 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -495,7 +504,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-3-x-beta"><span class="nav-number">1.</span> <span class="nav-text">Vue 3.x-beta</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM"><span class="nav-number">1.1.</span> <span class="nav-text">MVVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-3-x-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">Vue 3.x 生命周期函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">动态绑定属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this-%E6%8C%87%E5%90%91"><span class="nav-number">1.4.</span> <span class="nav-text">this 指向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#computed-%E4%B8%8E-methods-%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.</span> <span class="nav-text">computed 与 methods 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#watch-%E7%9B%91%E5%90%AC%E5%99%A8"><span class="nav-number">1.6.</span> <span class="nav-text">watch 监听器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class-%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.7.</span> <span class="nav-text">class 定义样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%88%B6%E7%BB%84%E4%BB%B6%E5%8C%BA%E5%88%86"><span class="nav-number">1.8.</span> <span class="nav-text">子组件与父组件区分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E5%86%85%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.9.</span> <span class="nav-text">行内样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E7%BB%91%E5%AE%9A"><span class="nav-number">1.10.</span> <span class="nav-text">样式绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if-%E4%B8%8E-v-show"><span class="nav-number">1.11.</span> <span class="nav-text">v-if 与 v-show</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-for"><span class="nav-number">1.12.</span> <span class="nav-text">v-for</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-v-for-%E4%B8%AD%E5%8A%A0%E5%85%A5-key-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.13.</span> <span class="nav-text">在 v-for 中加入 :key 的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E6%9B%B4%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">1.14.</span> <span class="nav-text">变更数组的三种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E5%AF%B9%E8%B1%A1%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9"><span class="nav-number">1.15.</span> <span class="nav-text">为对象添加内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%B3%E8%A6%81%E4%B8%8D%E5%B1%95%E7%A4%BA%E6%9F%90%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.16.</span> <span class="nav-text">想要不展示某个对象的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A"><span class="nav-number">1.17.</span> <span class="nav-text">事件绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.18.</span> <span class="nav-text">事件修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%89%E9%94%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.19.</span> <span class="nav-text">按键修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.20.</span> <span class="nav-text">鼠标修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B2%BE%E7%A1%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.21.</span> <span class="nav-text">精确修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E4%B8%AD%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.22.</span> <span class="nav-text">表单中双向绑定指令的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.22.1.</span> <span class="nav-text">修饰符</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-3-x"><span class="nav-number">1.</span> <span class="nav-text">Vue 3.x</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM"><span class="nav-number">1.1.</span> <span class="nav-text">MVVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-3-x-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">Vue 3.x 生命周期函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">动态绑定属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this-%E6%8C%87%E5%90%91"><span class="nav-number">1.4.</span> <span class="nav-text">this 指向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#computed-%E4%B8%8E-methods-%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.</span> <span class="nav-text">computed 与 methods 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#watch-%E7%9B%91%E5%90%AC%E5%99%A8"><span class="nav-number">1.6.</span> <span class="nav-text">watch 监听器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class-%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.7.</span> <span class="nav-text">class 定义样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%88%B6%E7%BB%84%E4%BB%B6%E5%8C%BA%E5%88%86"><span class="nav-number">1.8.</span> <span class="nav-text">子组件与父组件区分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E5%86%85%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.9.</span> <span class="nav-text">行内样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E7%BB%91%E5%AE%9A"><span class="nav-number">1.10.</span> <span class="nav-text">样式绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-if-%E4%B8%8E-v-show"><span class="nav-number">1.11.</span> <span class="nav-text">v-if 与 v-show</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-for"><span class="nav-number">1.12.</span> <span class="nav-text">v-for</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-v-for-%E4%B8%AD%E5%8A%A0%E5%85%A5-key-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.13.</span> <span class="nav-text">在 v-for 中加入 :key 的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E6%9B%B4%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">1.14.</span> <span class="nav-text">变更数组的三种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E5%AF%B9%E8%B1%A1%E6%B7%BB%E5%8A%A0%E5%86%85%E5%AE%B9"><span class="nav-number">1.15.</span> <span class="nav-text">为对象添加内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%B3%E8%A6%81%E4%B8%8D%E5%B1%95%E7%A4%BA%E6%9F%90%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.16.</span> <span class="nav-text">想要不展示某个对象的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A"><span class="nav-number">1.17.</span> <span class="nav-text">事件绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.18.</span> <span class="nav-text">事件修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%89%E9%94%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.19.</span> <span class="nav-text">按键修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BC%A0%E6%A0%87%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.20.</span> <span class="nav-text">鼠标修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B2%BE%E7%A1%AE%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.21.</span> <span class="nav-text">精确修饰符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E4%B8%AD%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.22.</span> <span class="nav-text">表单中双向绑定指令的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.22.1.</span> <span class="nav-text">修饰符</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -511,20 +520,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -587,12 +596,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">110k</span>
+    <span title="站点总字数">134k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:40</span>
+    <span title="站点阅读时长">2:02</span>
 </div>
 
         
