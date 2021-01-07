@@ -3844,4 +3844,108 @@
         <tag>TypeScript</tag>
       </tags>
   </entry>
+  <entry>
+    <title>数据结构与算法简介</title>
+    <url>/2021/01/07/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>数据结构预算法能够体现一个程序员的能力（程序员界的九阳真经），同时也是为了冲击一线大厂而努力！</p>
+<a id="more"></a>
+
+<h1 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h1><p>数据结构</p>
+<ul>
+<li>有序：栈、队列、链表</li>
+<li>无序：集合、字典</li>
+<li>连接关系：树、堆、图</li>
+</ul>
+<p>进阶算法</p>
+<ul>
+<li>链表：遍历链表、删除链表节点</li>
+<li>树、图：深度/广度优先遍历</li>
+<li>数组：冒泡/选择/插入/归并/快速排序、顺序/二分搜索</li>
+</ul>
+<p>算法设计思想</p>
+<ul>
+<li>分而治之</li>
+<li>动态规划</li>
+<li>贪心</li>
+<li>回溯</li>
+</ul>
+<p><strong>重点关注：数据结构与算法的特点、应用场景、JS 实现、时间/空间复杂度。</strong></p>
+<h1 id="刷题"><a href="#刷题" class="headerlink" title="刷题"></a>刷题</h1><ul>
+<li>刷题网站：<a href="https://leetcode-cn.com/problemset/all/">LeetCode</a></li>
+<li>刷题顺序：推荐按照类型刷题，相当于集中训练</li>
+<li>重点关注：通用套路、时间/空间复杂度分析和优化</li>
+</ul>
+<h1 id="数据结构与算法简介"><a href="#数据结构与算法简介" class="headerlink" title="数据结构与算法简介"></a>数据结构与算法简介</h1><h2 id="数据结构与算法是什么"><a href="#数据结构与算法是什么" class="headerlink" title="数据结构与算法是什么"></a>数据结构与算法是什么</h2><ul>
+<li>数据结构：计算机存储、组织数据的方式，就像锅碗瓢盆</li>
+<li>算法：一系列解决问题的清晰指令，就像食谱</li>
+</ul>
+<h2 id="数据结构与算法的关系"><a href="#数据结构与算法的关系" class="headerlink" title="数据结构与算法的关系"></a>数据结构与算法的关系</h2><ul>
+<li>程序 = 数据结构 + 算法</li>
+<li>数据结构为算法提供服务，算法围绕数据结构操作</li>
+</ul>
+<h1 id="如何刷-LeetCode"><a href="#如何刷-LeetCode" class="headerlink" title="如何刷 LeetCode"></a>如何刷 LeetCode</h1><ul>
+<li>LeetCode 是一个专注于程序员技术成长和企业技术人才服务的品牌</li>
+<li>功能：题库、社区、竞赛、模拟面试等等</li>
+</ul>
+<h2 id="在题库搜题"><a href="#在题库搜题" class="headerlink" title="在题库搜题"></a>在题库搜题</h2><ul>
+<li>通过题号搜索</li>
+<li>通过难度、状态、列表、标签搜索</li>
+<li>通过企业搜索（需要付费）</li>
+</ul>
+<h2 id="如何做题"><a href="#如何做题" class="headerlink" title="如何做题"></a>如何做题</h2><ul>
+<li>查看题目描述、评论、题解、提交记录</li>
+<li>设置语言、编辑器选项</li>
+<li>执行代码、提交代码</li>
+<li>使用笔记本、查看做题进展</li>
+</ul>
+<h1 id="时间复杂度计算"><a href="#时间复杂度计算" class="headerlink" title="时间复杂度计算"></a>时间复杂度计算</h1><p>时间复杂度</p>
+<ul>
+<li>一个函数，用大 O 表示，比如 O(1)、O(n)、O(logN)……</li>
+<li>定性描述该算法的运行时间(大概运行时间，并非具体)</li>
+</ul>
+<img src="https://bkimg.cdn.bcebos.com/pic/dcc451da81cb39db86d6cf67dd160924ab1830e8?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U4MA==,g_7,xp_5,yp_5" style="zoom: 80%;" />
+
+<p>只需要关注 1、log<sub>2</sub>n、n、n<sup>2</sup></p>
+<h2 id="O-1"><a href="#O-1" class="headerlink" title="O(1)"></a>O(1)</h2><p>O(1) 的时间复杂度代码，每次执行该代码这两行代码永远只会被执行一次，没有任何循环</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="O-n"><a href="#O-n" class="headerlink" title="O(n)"></a>O(n)</h2><p>O(n) 的时间复杂度代码，循环共 n 次，里面代码执行了 n 次</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>计算时间复杂度时，如果两个时间复杂度先后排列就把他们相加，<strong>取增长趋势最快的那个复杂度</strong></p>
+<p>O(1) + O(n) = O(n)  （当 n 足够大时 1 可忽略不计）</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">i += <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="O-n-2"><a href="#O-n-2" class="headerlink" title="O(n^2)"></a>O(n^2)</h2><p>O(n) * O(n) = O(n^2)，循环嵌套，代码共执行 n^2 次</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(i, j)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="O-logN"><a href="#O-logN" class="headerlink" title="O(logN)"></a>O(logN)</h2><p>当 i = 1 时，while 语句中 i * 2 相当于 2 的递增次方，代码共执行了 log(N) 次  (假设 n 为  ( 2<sup>4</sup> )，则代码需执行 4 次才能结束)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> (i &lt; n) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i)</span><br><span class="line">    i *= <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="空间复杂度计算"><a href="#空间复杂度计算" class="headerlink" title="空间复杂度计算"></a>空间复杂度计算</h1><p>空间复杂度</p>
+<ul>
+<li>一个函数，用大 O 表示，比如 O(1)、O(n)、O(n<sup>2</sup>)……</li>
+<li>算法在运行过程中临时占用存储空间大小的量度（就是衡量写的代码占用内存空间多不多，占用空间越小，代码就越好）</li>
+</ul>
+<h2 id="O-1-1"><a href="#O-1-1" class="headerlink" title="O(1)"></a>O(1)</h2><p>下面两行代码的空间复杂度为 O(1) ，因为其只声明了单个变量，单个变量占用的内存永远是 1，恒定的内存</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="O-n-1"><a href="#O-n-1" class="headerlink" title="O(n)"></a>O(n)</h2><p>下面两行代码的空间复杂度为 O(n) ，声明了一个数组，为数组里面添加了 n 个值，相当于占用了 n 个内存单元，所以为 O(n) </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> list = []</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    list.push(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="O-n-2-1"><a href="#O-n-2-1" class="headerlink" title="O(n^2)"></a>O(n^2)</h2><p>下面两行代码的空间复杂度为 O(n^2)，就是一个矩阵，嵌套了两层数组，存储了 n^2 个变量，所以为 O(n^2)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> matrix = []</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n; i += <span class="number">1</span>) &#123;</span><br><span class="line">    matrix.push([])</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; n; j += <span class="number">1</span>) &#123;</span><br><span class="line">        matrix[i].push(j)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构与算法简介</tag>
+        <tag>LeetCode</tag>
+        <tag>时间复杂度</tag>
+        <tag>空间复杂度</tag>
+      </tags>
+  </entry>
 </search>
