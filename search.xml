@@ -4180,4 +4180,132 @@
         <tag>链表</tag>
       </tags>
   </entry>
+  <entry>
+    <title>数据结构之集合、字典</title>
+    <url>/2021/01/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E9%9B%86%E5%90%88%E3%80%81%E5%AD%97%E5%85%B8/</url>
+    <content><![CDATA[<h1 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h1><h2 id="集合的定义"><a href="#集合的定义" class="headerlink" title="集合的定义"></a>集合的定义</h2><ul>
+<li>一种<strong>无序且唯一</strong>的数据结构</li>
+<li>ES6 中有集合，名为 Set</li>
+<li>集合的常用操作：去重、判断某元素是否在集合中、求交集</li>
+</ul>
+<a id="more"></a>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 去重</span></span><br><span class="line"><span class="keyword">const</span> arr1 = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>]</span><br><span class="line"><span class="keyword">const</span> arr2 = [...new <span class="built_in">Set</span>(arr1)]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断元素是否在集合中</span></span><br><span class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>(arr1)</span><br><span class="line"><span class="keyword">const</span> has = set.has(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 求交集(set 未提供，只能先转化为数组)</span></span><br><span class="line"><span class="keyword">const</span> set2 = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="keyword">const</span> set3 = <span class="keyword">new</span> <span class="built_in">Set</span>([...set].filter(<span class="function">(<span class="params">item</span>) =&gt;</span> set2.has(item)))</span><br></pre></td></tr></table></figure>
+
+<h2 id="LeetCode-算法题之两个数组的交集"><a href="#LeetCode-算法题之两个数组的交集" class="headerlink" title="LeetCode 算法题之两个数组的交集"></a>LeetCode 算法题之两个数组的交集</h2><p>349.两个数组的交集</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定两个数组，编写一个函数来计算它们的交集。</span><br><span class="line">示例 1：</span><br><span class="line">输入：nums1 &#x3D; [1,2,2,1], nums2 &#x3D; [2,2]</span><br><span class="line">输出：[2]</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>求交集且无序唯一</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>用集合对 nums1 去重</li>
+<li>遍历 nums1，筛选出 nums2 也包含的值</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums1</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums2</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> intersection = <span class="function"><span class="keyword">function</span>(<span class="params">nums1, nums2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [...new <span class="built_in">Set</span>(nums1)].filter(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Set</span>(nums2).has(item)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 优化（用 includes）</span></span><br><span class="line"><span class="keyword">var</span> intersection = <span class="function"><span class="keyword">function</span>(<span class="params">nums1, nums2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> [...new <span class="built_in">Set</span>(nums1)].filter(<span class="function"><span class="params">item</span> =&gt;</span> </span><br><span class="line">        nums2.includes(item)</span><br><span class="line">    )</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(m*n)，includes、fileter 都是循环遍历操作，m 为去重后 nums1 长度，n 为 nums2 的长度</p>
+<p>空间复杂度：O(m)，m 为去重后 nums1 长度</p>
+<h2 id="前端与集合：使用-ES6-的-Set"><a href="#前端与集合：使用-ES6-的-Set" class="headerlink" title="前端与集合：使用 ES6 的 Set"></a>前端与集合：使用 ES6 的 Set</h2><h3 id="Set-操作"><a href="#Set-操作" class="headerlink" title="Set 操作"></a>Set 操作</h3><ul>
+<li><p>使用 Set 对象：new、add、 delete、has、size</p>
+</li>
+<li><p>迭代 Set：多种迭代方法、Set 与 Array 互转、求交集/差集</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> mySet = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line"></span><br><span class="line">mySet.add(<span class="number">1</span>);</span><br><span class="line">mySet.add(<span class="number">5</span>);</span><br><span class="line">mySet.add(<span class="number">5</span>); <span class="comment">// 会被去重</span></span><br><span class="line">mySet.add(<span class="string">&#x27;some text&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> o = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span> &#125;;</span><br><span class="line">mySet.add(o);</span><br><span class="line">mySet.add(&#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span> &#125;); <span class="comment">// 不会被去重，对象内容一致，但是内存地址完全不同</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> has = mySet.has(o);</span><br><span class="line">mySet.size();</span><br><span class="line">mySet.delete(<span class="number">5</span>);</span><br><span class="line">mySet.size();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> [key, value] <span class="keyword">of</span> mySet.entries()) <span class="built_in">console</span>.log(key, value); <span class="comment">// 迭代</span></span><br><span class="line"><span class="keyword">const</span> myArr = <span class="built_in">Array</span>.from(mySet); <span class="comment">// 转化为数组</span></span><br><span class="line"><span class="keyword">const</span> mySet2 = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]); <span class="comment">// 数组转化为 set</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> intersection = <span class="keyword">new</span> <span class="built_in">Set</span>([...mySet].filter(<span class="function"><span class="params">x</span> =&gt;</span> mySet2.has(x))); <span class="comment">// 求交集</span></span><br><span class="line"><span class="keyword">const</span> difference = <span class="keyword">new</span> <span class="built_in">Set</span>([...mySet].filter(<span class="function"><span class="params">x</span> =&gt;</span> !mySet2.has(x)));  <span class="comment">// 求差集</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h1><h2 id="字典的定义"><a href="#字典的定义" class="headerlink" title="字典的定义"></a>字典的定义</h2><ul>
+<li>与集合类似，字典也是一种存储唯一值的数据结构，但它是以<strong>键值对</strong>的形式来存储</li>
+<li>ES6 中有字典，名为 Map</li>
+<li>字典的常用操作：键值对的增删改查</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 增(键值对)</span></span><br><span class="line">m.set(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line">m.set(<span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;bbb&#x27;</span>)</span><br><span class="line">m.set(<span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;ccc&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删</span></span><br><span class="line">m.delete(<span class="string">&#x27;c&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(m)</span><br><span class="line"><span class="comment">// m.clear() // 删除所有</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 改(直接覆盖)</span></span><br><span class="line">m.set(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;aa&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(m)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查</span></span><br><span class="line">m.get(<span class="string">&#x27;a&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上诉操作方法时间复杂度均为 O(1)</p>
+<h2 id="LeetCode-算法题之两个数组的交集-1"><a href="#LeetCode-算法题之两个数组的交集-1" class="headerlink" title="LeetCode 算法题之两个数组的交集"></a>LeetCode 算法题之两个数组的交集</h2><p>349.两个数组的交集</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定两个数组，编写一个函数来计算它们的交集。</span><br><span class="line">示例 1：</span><br><span class="line">输入：nums1 &#x3D; [1,2,2,1], nums2 &#x3D; [2,2]</span><br><span class="line">输出：[2]</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>求 nums1 和 nums2 都有的值</li>
+<li>用字典建立一个映射关系，记录 nums1 里有的值</li>
+<li>遍历 nums2，找出 nums1 里也有的值</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>新建一个字典，遍历 nums1，填充字典</li>
+<li>遍历 nums2，遇到字典里的值就选出，并从字典中删除</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums1</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums2</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> intersection = <span class="function"><span class="keyword">function</span>(<span class="params">nums1, nums2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">    <span class="keyword">const</span> arr = []</span><br><span class="line">    nums1.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        m.set(item, <span class="literal">true</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    nums2.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (m.get(item)) &#123;</span><br><span class="line">            arr.push(item);</span><br><span class="line">            m.delete(item);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)</p>
+<p>空间复杂度：O(n)：map 空间复杂度为常量级</p>
+<h2 id="LeetCode-算法题之有效的括号"><a href="#LeetCode-算法题之有效的括号" class="headerlink" title="LeetCode 算法题之有效的括号"></a>LeetCode 算法题之有效的括号</h2><p>20.有效的括号(优化上一篇文章中的代码)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个只包括 &#39;(&#39;，&#39;)&#39;，&#39;&#123;&#39;，&#39;&#125;&#39;，&#39;[&#39;，&#39;]&#39; 的字符串，判断字符串是否有效。</span><br><span class="line"></span><br><span class="line">有效字符串需满足：</span><br><span class="line"></span><br><span class="line">左括号必须用相同类型的右括号闭合。</span><br><span class="line">左括号必须以正确的顺序闭合。</span><br><span class="line">注意空字符串可被认为是有效字符串。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;boolean&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> isValid = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s.length % <span class="number">2</span> === <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">const</span> stack = [];</span><br><span class="line">    <span class="keyword">const</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">    m.set(<span class="string">&#x27;(&#x27;</span>, <span class="string">&#x27;)&#x27;</span>);</span><br><span class="line">    m.set(<span class="string">&#x27;&#123;&#x27;</span>, <span class="string">&#x27;&#125;&#x27;</span>);</span><br><span class="line">    m.set(<span class="string">&#x27;[&#x27;</span>, <span class="string">&#x27;]&#x27;</span>);</span><br><span class="line">    <span class="function"><span class="title">for</span>(<span class="params"><span class="keyword">let</span> i = <span class="number">0</span>; i &lt; s.length; i++</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> c = s[i];</span><br><span class="line">        <span class="keyword">if</span> (m.has(c)) &#123;</span><br><span class="line">            stack.push(c);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> top = stack[stack.length -<span class="number">1</span>];</span><br><span class="line">            <span class="function"><span class="title">if</span>(<span class="params">m.get(top) === c</span>)</span> &#123;</span><br><span class="line">                stack.pop();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> stack.length === <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)</p>
+<p>空间复杂度：O(n)</p>
+<h2 id="LeetCode-算法题之两数之和"><a href="#LeetCode-算法题之两数之和" class="headerlink" title="LeetCode 算法题之两数之和"></a>LeetCode 算法题之两数之和</h2><p>1.两数之和</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 的那 两个 整数，并返回它们的数组下标。</span><br><span class="line"></span><br><span class="line">你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</span><br><span class="line"></span><br><span class="line">你可以按任意顺序返回答案。</span><br><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：nums &#x3D; [2,7,11,15], target &#x3D; 9</span><br><span class="line">输出：[0,1]</span><br><span class="line">解释：因为 nums[0] + nums[1] &#x3D;&#x3D; 9 ，返回 [0, 1]</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>把 nums 想象成相亲者</li>
+<li>把 target 想象成匹配条件</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">target</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> twoSum = <span class="function"><span class="keyword">function</span>(<span class="params">nums, target</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i =<span class="number">0</span>; i &lt; nums.length; i+=<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> n = nums[i];</span><br><span class="line">        <span class="keyword">const</span> n2 = target - n;</span><br><span class="line">        <span class="keyword">if</span> (m.has(n2)) &#123;</span><br><span class="line">            <span class="keyword">return</span> [m.get(n2), i];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            m.set(n, i);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)</p>
+<p>空间复杂度：O(n)</p>
+<h2 id="LeetCode-算法题之无重复字符的最长子串"><a href="#LeetCode-算法题之无重复字符的最长子串" class="headerlink" title="LeetCode 算法题之无重复字符的最长子串"></a>LeetCode 算法题之无重复字符的最长子串</h2><p>3.无重复字符的最长子串</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个字符串，请你找出其中不含有重复字符的 最长子串的长度。</span><br><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入: s &#x3D; &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>先找出所有的不包含重复字符的子串</li>
+<li>找出长度最大那个子串，返回其长度即可</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>用双指针维护一个滑动窗口，用来剪切子串</li>
+<li>不断移动右指针，遇到重复字符，就把左指针移动到重复字符的下一位</li>
+<li>过程中，记录所有窗口的长度，并返回最大值</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> lengthOfLongestSubstring = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> l = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">const</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">    <span class="keyword">let</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> r = <span class="number">0</span>; r &lt; s.length; r += <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (map.has(s[r]) &amp;&amp; map.get(s[r]) &gt;= l) &#123;</span><br><span class="line">            l = map.get(s[r]) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        map.set(s[r], r);</span><br><span class="line">        res = <span class="built_in">Math</span>.max(res, r - l + <span class="number">1</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)</p>
+<p>空间复杂度：O(m)：m 为不重复字符串的长度</p>
+<h2 id="LeetCode-算法题之最小覆盖子串"><a href="#LeetCode-算法题之最小覆盖子串" class="headerlink" title="LeetCode 算法题之最小覆盖子串"></a>LeetCode 算法题之最小覆盖子串</h2><p>76.最小覆盖子串</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 &quot;&quot; 。</span><br><span class="line"></span><br><span class="line">注意：如果 s 中存在这样的子串，我们保证它是唯一的答案。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：s &#x3D; &quot;ADOBECODEBANC&quot;, t &#x3D; &quot;ABC&quot;</span><br><span class="line">输出：&quot;BANC&quot;</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>先找出所有的包含 T 的子串</li>
+<li>找出长度最小那个子串，返回即可</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>用双指针维护一个滑动窗口</li>
+<li>移动右指针，找到包含 T 的子串，移动左指针，尽量减少包含 T 的子串的长度</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;string&#125;</span> <span class="variable">t</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;string&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> minWindow = <span class="function"><span class="keyword">function</span>(<span class="params">s, t</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> l = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> r = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">const</span> need = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> n <span class="keyword">of</span> t) &#123;</span><br><span class="line">        need.set(n, need.has(n) ? need.get(n) + <span class="number">1</span> : <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> needType = need.size;</span><br><span class="line">    <span class="keyword">let</span> res = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="function"><span class="title">while</span>(<span class="params">r &lt; s.length</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> c = s[r];</span><br><span class="line">        <span class="keyword">if</span> (need.has(c)) &#123;</span><br><span class="line">            need.set(c, need.get(c) - <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (need.get(c) === <span class="number">0</span>) needType -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="title">while</span>(<span class="params">needType === <span class="number">0</span></span>)</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> newRes = s.substring(l, r + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (!res || newRes.length &lt; res.length) res = newRes;</span><br><span class="line">            <span class="keyword">const</span> c2 = s[l];</span><br><span class="line">            <span class="function"><span class="title">if</span>(<span class="params">need.has(c2)</span>)</span> &#123;</span><br><span class="line">                need.set(c2, need.get(c2) + <span class="number">1</span>);</span><br><span class="line">                <span class="keyword">if</span>(need.get(c2) === <span class="number">1</span>) needType += <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            l += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        r += <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>substring 为左闭右开所以 +1</p>
+<p>时间复杂度：O(m+n)，m 是 t 的长度，n 是 s 的长度</p>
+<p>空间复杂度：O(m)</p>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>LeetCode原题</tag>
+        <tag>集合</tag>
+        <tag>字典</tag>
+      </tags>
+  </entry>
 </search>
