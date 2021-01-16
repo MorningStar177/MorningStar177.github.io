@@ -4309,7 +4309,7 @@
       </tags>
   </entry>
   <entry>
-    <title>数据结构之树、图、堆</title>
+    <title>数据结构之树、树、堆</title>
     <url>/2021/01/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8B%E6%A0%91%E3%80%81%E5%9B%BE%E3%80%81%E5%A0%86/</url>
     <content><![CDATA[<h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h2 id="树的定义"><a href="#树的定义" class="headerlink" title="树的定义"></a>树的定义</h2><ul>
 <li>一种分层数据的抽象模型</li>
@@ -4317,6 +4317,8 @@
 <li>JS 中没有树，但是可以用 Object 和 Array 构建树</li>
 <li>树的常用操作：深度/广度优先遍历、（二叉树）先中后序遍历</li>
 </ul>
+<a id="more"></a>
+
 <h2 id="树的深度与广度优先遍历"><a href="#树的深度与广度优先遍历" class="headerlink" title="树的深度与广度优先遍历"></a>树的深度与广度优先遍历</h2><h3 id="深度广度优先遍历的定义"><a href="#深度广度优先遍历的定义" class="headerlink" title="深度广度优先遍历的定义"></a>深度广度优先遍历的定义</h3><ul>
 <li><p>深度优先遍历：尽可能深的搜索树的分支（访问顺序如图中数字所示）</p>
 <img src="image-20210110101350032.png" alt="image-20201202090054370" style="zoom: 33%;" />
@@ -4658,5 +4660,14 @@
 
 <p>时间复杂度为 O（n * logk）,n 为所有链表节点之和<br>空间复杂度为 O（k）</p>
 ]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>LeetCode原题</tag>
+        <tag>树</tag>
+        <tag>堆</tag>
+      </tags>
   </entry>
 </search>
