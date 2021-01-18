@@ -4840,4 +4840,319 @@
         <tag>搜索排序</tag>
       </tags>
   </entry>
+  <entry>
+    <title>算法设计思想及总结</title>
+    <url>/2021/01/18/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3%E5%8F%8A%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="分而治之"><a href="#分而治之" class="headerlink" title="分而治之"></a>分而治之</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+<li>分而治之是算法设计中的一种方法</li>
+<li>它将一个问题<strong>分</strong>成多个和原问题相似的小问题，<strong>递归解决</strong>小问题，再将结果<strong>合</strong>并以解决原来的问题</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="场景一：归并排序"><a href="#场景一：归并排序" class="headerlink" title="场景一：归并排序"></a>场景一：归并排序</h2><ul>
+<li>分：把数组从中间一分为二</li>
+<li>解：递归地对两个子数组进行归并排序</li>
+<li>合：合并有序子数组</li>
+</ul>
+<h2 id="场景二：快速排序"><a href="#场景二：快速排序" class="headerlink" title="场景二：快速排序"></a>场景二：快速排序</h2><ul>
+<li>分：选基准，按基准把数组分成两个子数组</li>
+<li>解：递归地对两个子数组进行快速排序</li>
+<li>合：对两个子数组进行合并</li>
+</ul>
+<p><em>注：下面四个 LeetCode 题都是应用分而治之思想完成</em></p>
+<h2 id="LeetCode之猜数字大小"><a href="#LeetCode之猜数字大小" class="headerlink" title="LeetCode之猜数字大小"></a>LeetCode之猜数字大小</h2><p>374.猜数字大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">猜数字游戏的规则如下：</span><br><span class="line"></span><br><span class="line">每轮游戏，我都会从 1 到 n 随机选择一个数字。 请你猜选出的是哪个数字。</span><br><span class="line">如果你猜错了，我会告诉你，你猜测的数字比我选出的数字是大了还是小了。</span><br><span class="line">你可以通过调用一个预先定义好的接口 int guess(int num) 来获取猜测结果，返回值一共有 3 种可能的情况（-1，1 或 0）：</span><br><span class="line"></span><br><span class="line">-1：我选出的数字比你猜的数字小 pick &lt; num</span><br><span class="line">1：我选出的数字比你猜的数字大 pick &gt; num</span><br><span class="line">0：我选出的数字和你猜的数字一样。恭喜！你猜对了！pick &#x3D;&#x3D; num</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>二分搜索，同样具备“分、解、合”的特性</li>
+<li>考虑选择分而治之</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>分：计算中间元素，分割数组</li>
+<li>解：递归地在较大或者较小子数组进行二分搜索</li>
+<li>合：不需要此步，因为在子数组中搜到就返回了</li>
+</ul>
+<p><em>Coding Part</em></p>
+<p>递归版（上一篇中有 while 循环体版，建议循环体版）</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> guessNumber = <span class="function"><span class="keyword">function</span> (<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> rec = <span class="function">(<span class="params">low, hight</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (low &gt; hight) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> mid = <span class="built_in">Math</span>.floor((low + hight) / <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">const</span> res = guess(mid)</span><br><span class="line">        <span class="keyword">if</span> (res === <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> mid</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (res === <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// 把它递归到一个相似的但是更小的小问题上面去解决</span></span><br><span class="line">            <span class="keyword">return</span> rec(mid + <span class="number">1</span>, hight)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> rec(<span class="number">1</span>, mid - <span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> rec(<span class="number">1</span>, n)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(logN)</p>
+<p>空间复杂度：O(logN)</p>
+<h2 id="LeetCode之翻转二叉树"><a href="#LeetCode之翻转二叉树" class="headerlink" title="LeetCode之翻转二叉树"></a>LeetCode之翻转二叉树</h2><p>226.翻转二叉树</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">翻转一棵二叉树。</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">输入：</span><br><span class="line">     4</span><br><span class="line">   &#x2F;   \</span><br><span class="line">  2     7</span><br><span class="line"> &#x2F; \   &#x2F; \</span><br><span class="line">1   3 6   9</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>先翻转左右子树，再将子树换个位置</li>
+<li>符合“<strong>分、解、合</strong>”特性</li>
+<li>考虑选择分而治之</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>分：获取左右子树</li>
+<li>解：递归地翻转左右子树</li>
+<li>合：将翻转后的左右子树换个位置放到根节点上</li>
+</ul>
+<p><em>Coding Part</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> invertTree = <span class="function"><span class="keyword">function</span> (<span class="params">root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!root) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        val: root.val,</span><br><span class="line">        left: invertTree(root.right),</span><br><span class="line">        right: invertTree(root.left),</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)，n 为节点数量</p>
+<p>空间复杂度：O(h)，h 为树的高度</p>
+<h2 id="LeetCode之相同的树"><a href="#LeetCode之相同的树" class="headerlink" title="LeetCode之相同的树"></a>LeetCode之相同的树</h2><p>100.相同的树</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定两个二叉树，编写一个函数来检验它们是否相同。</span><br><span class="line"></span><br><span class="line">如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。</span><br><span class="line"></span><br><span class="line">示例 1:</span><br><span class="line"></span><br><span class="line">输入:       1         1</span><br><span class="line">          &#x2F; \       &#x2F; \</span><br><span class="line">         2   3     2   3</span><br><span class="line"></span><br><span class="line">        [1,2,3],   [1,2,3]</span><br><span class="line"></span><br><span class="line">输出: true</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>两个树：根节点的值相同，左子树相同，右子树相同</li>
+<li>符合“<strong>分、解、合</strong>”特性</li>
+<li>考虑选择分而治之</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>分：获取两个树的左子树和右子树</li>
+<li>解：递归地判断两个树的左子树是否相同，右子树是否相同</li>
+<li>合：将上述结果合并，如果根节点的值也相同，树就相同</li>
+</ul>
+<p><em>Coding Part</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> isSameTree = <span class="function"><span class="keyword">function</span> (<span class="params">p, q</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!p &amp;&amp; !q) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">        p &amp;&amp;</span><br><span class="line">        q &amp;&amp;</span><br><span class="line">        p.val === q.val &amp;&amp;</span><br><span class="line">        isSameTree(p.left, q.left) &amp;&amp;</span><br><span class="line">        isSameTree(p.right, q.right)</span><br><span class="line">    ) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)，n 为树的节点数</p>
+<p>空间复杂度：最优均匀分布情况O(logN) 或者最坏情况O(n)，n 为树的节点数</p>
+<h2 id="LeetCode之对称二叉树"><a href="#LeetCode之对称二叉树" class="headerlink" title="LeetCode之对称二叉树"></a>LeetCode之对称二叉树</h2><p>101.对称二叉树</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个二叉树，检查它是否是镜像对称的。</span><br><span class="line"></span><br><span class="line">例如，二叉树 [1,2,2,3,4,4,3] 是对称的。</span><br><span class="line"></span><br><span class="line">    1</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   2</span><br><span class="line"> &#x2F; \ &#x2F; \</span><br><span class="line">3  4 4  3</span><br><span class="line"> </span><br><span class="line">但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:</span><br><span class="line"></span><br><span class="line">    1</span><br><span class="line">   &#x2F; \</span><br><span class="line">  2   2</span><br><span class="line">   \   \</span><br><span class="line">   3    3</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>转化为：左右子树是否镜像</li>
+<li>分解为：树 1 的左子树和树 2 的右子树是否镜像，树 1 的右子树和树 2 的左子树是否镜像</li>
+<li>符合“<strong>分、解、合</strong>”特性，考虑选择分而治之</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>分：获取两个树的左子树和右子树</li>
+<li>解：递归地判断树 1 的左子树和树 2 的右子树是否镜像，树 1 的右子树和树 2 的左子树是否镜像</li>
+<li>合：如果上述都成立，且根节点值也相同，两个树就镜像</li>
+</ul>
+<p><em>Coding Part</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> isSymmetric = <span class="function"><span class="keyword">function</span> (<span class="params">root</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!root) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    <span class="keyword">const</span> isMirror = <span class="function">(<span class="params">l, r</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!l &amp;&amp; !r) <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        <span class="keyword">if</span> (</span><br><span class="line">            l &amp;&amp;</span><br><span class="line">            r &amp;&amp;</span><br><span class="line">            l.val === r.val &amp;&amp;</span><br><span class="line">            isMirror(l.left, r.right) &amp;&amp;</span><br><span class="line">            isMirror(l.right, r.left)</span><br><span class="line">        ) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> isMirror(root.left, root.right)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)</p>
+<p>空间复杂度：O(h)，h 为树的高度（调用了一个堆栈）</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>分而治之是算法设计中的一种方法</li>
+<li>它将一个问题分成多个和原问题相似的小问题，递归解决小问题，再将结果合并以解决原来的问题</li>
+</ul>
+<h1 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h1><h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><ul>
+<li>动态规划是<strong>算法设计</strong>中的一种方法</li>
+<li>它将一个问题分解为<strong>相互重叠</strong>的子问题，通过反复求解子问题，来解决原来的问题</li>
+</ul>
+<p>比如斐波那契数列</p>
+<ul>
+<li>定义子问题：F（n）= F（n-1）+ F（n-2）</li>
+<li>反复执行：从 2 循环到 n，执行上述公式</li>
+</ul>
+<p>动态规划 vs 分而治之</p>
+<ul>
+<li>最大区别在于子问题是否独立</li>
+<li>子问题相互重叠则为动态规划（斐波那契数列：将 F(n) 分解成了 F（n-1）与 F（n-2））</li>
+<li>子问题是独立的则为分而治之（翻转二叉树：翻转左子树与翻转右子树完全独立）</li>
+</ul>
+<h2 id="LeetCode之爬楼梯"><a href="#LeetCode之爬楼梯" class="headerlink" title="LeetCode之爬楼梯"></a>LeetCode之爬楼梯</h2><p>70.爬楼梯</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">假设你正在爬楼梯。需要 n 阶你才能到达楼顶。</span><br><span class="line"></span><br><span class="line">每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</span><br><span class="line"></span><br><span class="line">注意：给定 n 是一个正整数。</span><br><span class="line"></span><br><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入： 2</span><br><span class="line">输出： 2</span><br><span class="line">解释： 有两种方法可以爬到楼顶。</span><br><span class="line">1.  1 阶 + 1 阶</span><br><span class="line">2.  2 阶</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>爬到第 n 阶可以在第 n-1 阶爬 1 个台阶，或者在第 n-2 阶爬 2 个台阶</li>
+<li>F（n）= F（n-1）+ F（n-2）</li>
+<li>使用动态规划</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>定义子问题：F（n）= F（n-1）+ F（n-2）</li>
+<li>反复执行：从 2 循环到 n，执行上述公式</li>
+</ul>
+<p><em>Coding Part</em></p>
+<p>第n个台阶只能从第n-1或者n-2个上来。到第n-1个台阶的走法 + 第n-2个台阶的走法 = 到第n个台阶的走法，已经知道了第1个和第2个台阶的走法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">n</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> climbStairs = <span class="function"><span class="keyword">function</span> (<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 用来记录第 n 阶需要多少种方法</span></span><br><span class="line">    <span class="keyword">const</span> dp = [<span class="number">1</span>, <span class="number">1</span>] <span class="comment">// 第 0 阶（假设）与第 1 阶都是 1 种方法，然后依次推入数组</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)</p>
+<p>空间复杂度：O(n)</p>
+<p><em>空间复杂度为 O(1) 的写法</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">n</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> climbStairs = <span class="function"><span class="keyword">function</span> (<span class="params">n</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (n &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 利用两个变量来不断累加</span></span><br><span class="line">    <span class="keyword">let</span> dp0 = <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> dp1 = <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> temp = dp0</span><br><span class="line">        dp0 = dp1</span><br><span class="line">        dp1 = dp1 + temp</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="LeetCode之打家劫舍"><a href="#LeetCode之打家劫舍" class="headerlink" title="LeetCode之打家劫舍"></a>LeetCode之打家劫舍</h2><p>198.打家劫舍</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</span><br><span class="line"></span><br><span class="line">给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。</span><br><span class="line"></span><br><span class="line">示例 1：</span><br><span class="line">输入：[1,2,3,1]</span><br><span class="line">输出：4</span><br><span class="line">解释：偷窃 1 号房屋 (金额 &#x3D; 1) ，然后偷窃 3 号房屋 (金额 &#x3D; 3)。</span><br><span class="line">     偷窃到的最高金额 &#x3D; 1 + 3 &#x3D; 4 </span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>f（k）= 从前 k 个房屋中能偷窃到的最大数额</li>
+<li>Ak = 第 k 个房屋的钱数</li>
+<li>f（k）=  max ( f(k-2) + Ak, f(k-1) )</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>定义子问题：f（k）=  max ( f(k-2) + Ak, f(k-1) )</li>
+<li>反复执行：从 2 循环到 n，执行上述公式</li>
+</ul>
+<p><em>Coding Part</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> rob = <span class="function"><span class="keyword">function</span> (<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nums.length === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> dp = [<span class="number">0</span>, nums[<span class="number">0</span>]] <span class="comment">// num[0] 代表前一个房屋能打劫到的金额</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= nums.length; i++) &#123;</span><br><span class="line">        dp[i] = <span class="built_in">Math</span>.max(dp[i - <span class="number">2</span>] + nums[i - <span class="number">1</span>], dp[i - <span class="number">1</span>])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[nums.length]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)</p>
+<p>空间复杂度：O(n)</p>
+<p><em>空间复杂度为 O(1) 的写法</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> rob = <span class="function"><span class="keyword">function</span> (<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (nums.length === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> dp0 = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> dp1 = nums[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= nums.length; i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> dp2 = <span class="built_in">Math</span>.max(dp0 + nums[i - <span class="number">1</span>], dp1)</span><br><span class="line">        dp0 = dp1</span><br><span class="line">        dp1 = dp2</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p>动态规划的步骤</p>
+<ul>
+<li>定义子问题</li>
+<li>反复执行</li>
+</ul>
+<h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h1><p>定义</p>
+<ul>
+<li>贪心算法是<strong>算法设计</strong>中的一种方法</li>
+<li>期盼通过每个阶段的<strong>局部最优</strong>选择，从而达到全局的最优</li>
+<li>结果并<strong>不一定是最优</strong></li>
+</ul>
+<p>比如零钱兑换问题（用最少的硬币兑换11，用贪心算法，一开始会选择最大面额的）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：coins&#x3D;[1, 2, 5]， amount &#x3D; 11</span><br><span class="line">输出：3</span><br><span class="line">解释：11 &#x3D; 5 + 5 + 1 （最终用了三个硬币，此为最优解）</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：coins&#x3D;[1, 3, 4]， amount &#x3D; 6</span><br><span class="line">输出：3</span><br><span class="line">解释：11 &#x3D; 4 + 1 + 1 （最终用了三个硬币，但是并非最优解，最优解为两个硬币）</span><br></pre></td></tr></table></figure>
+
+<p>或者贪心算法的负面例子：天龙八部中的珍珑棋局</p>
+<p>下面两道题为典型的贪心算法题目</p>
+<h2 id="LeetCode之分饼干"><a href="#LeetCode之分饼干" class="headerlink" title="LeetCode之分饼干"></a>LeetCode之分饼干</h2><p>455.分饼干</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">假设你是一位很棒的家长，想要给你的孩子们一些小饼干。但是，每个孩子最多只能给一块饼干。</span><br><span class="line"></span><br><span class="line">对每个孩子 i，都有一个胃口值 g[i]，这是能让孩子们满足胃口的饼干的最小尺寸；并且每块饼干 j，都有一个尺寸 s[j] 。如果 s[j] &gt;&#x3D; g[i]，我们可以将这个饼干 j 分配给孩子 i ，这个孩子会得到满足。你的目标是尽可能满足越多数量的孩子，并输出这个最大数值。</span><br><span class="line"></span><br><span class="line">示例 1:</span><br><span class="line">输入: g &#x3D; [1,2,3], s &#x3D; [1,1]</span><br><span class="line">输出: 1</span><br><span class="line">解释: </span><br><span class="line">你有三个孩子和两块小饼干，3个孩子的胃口值分别是：1,2,3。</span><br><span class="line">虽然你有两块小饼干，由于他们的尺寸都是1，你只能让胃口值是1的孩子满足。</span><br><span class="line">所以你应该输出1</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>局部最优：既能满足孩子，还消耗最少</li>
+<li>先将“较小的饼干”分给“胃口最小”的孩子</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>对饼千数组和胃口数组升序排序</li>
+<li>遍历饼千数组，找到能满足第一个孩子的饼干</li>
+<li>然后继续遍历饼干数组，找到满足第 n 个孩子的饼干</li>
+</ul>
+<p><em>Coding Part</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">g</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">s</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> findContentChildren = <span class="function"><span class="keyword">function</span> (<span class="params">g, s</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> sortFunc = <span class="function"><span class="keyword">function</span> (<span class="params">a, b</span>) </span>&#123; <span class="keyword">return</span> a - b &#125;</span><br><span class="line">    g.sort(sortFunc)</span><br><span class="line">    s.sort(sortFunc)</span><br><span class="line">    <span class="keyword">let</span> i = <span class="number">0</span></span><br><span class="line">    s.forEach(<span class="function">(<span class="params">n</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (n &gt;= g[i]) &#123; i += <span class="number">1</span> &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n * logN) ，涉及到 sort 排序</p>
+<p>空间复杂度：O(1)</p>
+<h2 id="LeetCode之买卖股票的最佳时机"><a href="#LeetCode之买卖股票的最佳时机" class="headerlink" title="LeetCode之买卖股票的最佳时机"></a>LeetCode之买卖股票的最佳时机</h2><p>122.买卖股票的最佳时机 Ⅱ</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</span><br><span class="line">设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。</span><br><span class="line">注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</span><br><span class="line"></span><br><span class="line">示例 1:</span><br><span class="line">输入: [7,1,5,3,6,4]</span><br><span class="line">输出: 7</span><br><span class="line">解释: 在第 2 天（股票价格 &#x3D; 1）的时候买入，在第 3 天（股票价格 &#x3D; 5）的时候卖出, 这笔交易所能获得利润 &#x3D; 5-1 &#x3D; 4 。</span><br><span class="line">     随后，在第 4 天（股票价格 &#x3D; 3）的时候买入，在第 5 天（股票价格 &#x3D; 6）的时候卖出, 这笔交易所能获得利润 &#x3D; 6-3 &#x3D; 3 </span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>前提：上帝视角，知道未来的价格</li>
+<li>局部最优：见好就收，见差就不动，不做任何长远打算</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>新建一个变量，用来统计总利润</li>
+<li>遍历价格数组，如果当前价格比昨天高，就在昨天买，今天卖，否则就不交易</li>
+<li>遍历结束后，返回所有利润之和</li>
+</ul>
+<p><em>Coding Part</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">prices</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> maxProfit = <span class="function"><span class="keyword">function</span> (<span class="params">prices</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> profit = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (prices[i] &gt; prices[i - <span class="number">1</span>]) &#123;</span><br><span class="line">            profit += prices[i] - prices[i - <span class="number">1</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> profit</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n)</p>
+<p>空间复杂度：O(1)，无任何线性增长的数组、链表、矩阵、树之类的数据结构</p>
+<h1 id="回溯算法"><a href="#回溯算法" class="headerlink" title="回溯算法"></a>回溯算法</h1><h2 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h2><ul>
+<li>回溯算法是算法设计中的一种方法</li>
+<li>回溯算法是一种渐进式（并非一步到位）寻找并构建问题解决方式的策略</li>
+<li>回溯算法会先从一个可能的动作开始解决问题，如果不行，就回溯并选择另一个动作，直到将问题解决</li>
+</ul>
+<p>如鬼吹灯中的盗墓，在探险的过程中往往会遇到岔路，一般会先选择一条路，如果走不通则会回到原点选择另一条路，直到走通为止，这种方法就是回溯</p>
+<h2 id="适合用回溯算法解决的问题"><a href="#适合用回溯算法解决的问题" class="headerlink" title="适合用回溯算法解决的问题"></a>适合用回溯算法解决的问题</h2><ul>
+<li>有很多路</li>
+<li>这些路里，有<strong>死路</strong>，也有<strong>出路</strong></li>
+<li>通常需要递归来模拟所有的路</li>
+</ul>
+<p>例如全排列问题就是一个经典的回溯问题</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">输入：[1, 2, 3]</span><br><span class="line">输出：[</span><br><span class="line">    [1, 2, 3],</span><br><span class="line">    [1, 3, 2],</span><br><span class="line">    [2, 1, 3],</span><br><span class="line">    [2, 3, 1],</span><br><span class="line">    [3, 1, 2],</span><br><span class="line">    [3, 2, 1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>利用数字进行组合，然后输出所有的排列组合，不能重复</p>
+<ul>
+<li>用递归模拟出所有情况</li>
+<li>遇到包含重复元素的情况，就回溯（阻止继续递归即可）</li>
+<li>收集所有到达递归终点的情况，并返回</li>
+</ul>
+<h2 id="LeetCode之全排列"><a href="#LeetCode之全排列" class="headerlink" title="LeetCode之全排列"></a>LeetCode之全排列</h2><p>46.全排列</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给定一个 没有重复 数字的序列，返回其所有可能的全排列。</span><br><span class="line"></span><br><span class="line">示例:</span><br><span class="line"></span><br><span class="line">输入: [1,2,3]</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3,2],</span><br><span class="line">  [2,1,3],</span><br><span class="line">  [2,3,1],</span><br><span class="line">  [3,1,2],</span><br><span class="line">  [3,2,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>要求：1、所有排列情况；2、没有重复元素</li>
+<li>有出路、有死路</li>
+<li>考虑使用回溯算法</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>用递归模拟出所有情况</li>
+<li>遇到包含重复元素的情况，就回溯</li>
+<li>收集所有到达递归终点的情况，并返回</li>
+</ul>
+<p><em>Coding Part</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[][]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> permute = <span class="function"><span class="keyword">function</span> (<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> res = []</span><br><span class="line">    <span class="keyword">const</span> backTrack = <span class="function">(<span class="params">path</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (path.length === nums.length) &#123;</span><br><span class="line">            res.push(path)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        nums.forEach(<span class="function">(<span class="params">n</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (path.includes(n)) &#123;</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line">            backTrack(path.concat(n))</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    backTrack([])</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(n!)</p>
+<p>空间复杂度：O(n)</p>
+<h2 id="LeetCode之子集"><a href="#LeetCode之子集" class="headerlink" title="LeetCode之子集"></a>LeetCode之子集</h2><p>78.子集</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">给你一个整数数组 nums ，返回该数组所有可能的子集（幂集）。解集不能包含重复的子集。</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：nums &#x3D; [1,2,3]</span><br><span class="line">输出：[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]</span><br></pre></td></tr></table></figure>
+
+<p>解题思路</p>
+<ul>
+<li>要求：1、所有子集；2、没有重复元素</li>
+<li>有出路、有死路</li>
+<li>考虑使用回溯算法</li>
+</ul>
+<p>解题步骤</p>
+<ul>
+<li>用递归模拟出所有情况</li>
+<li>保证接的数字都是后面的数字</li>
+<li>收集所有到达递归终点的情况，并返回</li>
+</ul>
+<p><em>Coding Part</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number[]&#125;</span> <span class="variable">nums</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;number[][]&#125;</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> subsets = <span class="function"><span class="keyword">function</span> (<span class="params">nums</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> res = []</span><br><span class="line">    <span class="keyword">const</span> backTrack = <span class="function">(<span class="params">path, len, start</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (path.length === len) &#123;</span><br><span class="line">            res.push(path)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = start; i &lt; nums.length; i++) &#123;</span><br><span class="line">            backTrack(path.concat(nums[i]), len, i + <span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= nums.length; i++) &#123;</span><br><span class="line">        backTrack([], i, <span class="number">0</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O（2^N），因为每个元素都有两种可能（存在或不存在）</p>
+<p>空间复杂度：O（N）</p>
+<h1 id="最终总结"><a href="#最终总结" class="headerlink" title="最终总结"></a>最终总结</h1><h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><ul>
+<li>数据结构：栈、队列、链表、集合、字典、树、图、堆</li>
+<li>算法：链表/树/图的遍历、数组的排序和搜索……</li>
+<li>算法设计思想：分而治之、动态规划、贪心、回溯</li>
+</ul>
+<h2 id="重点难点"><a href="#重点难点" class="headerlink" title="重点难点"></a>重点难点</h2><ul>
+<li>数据结构：所有数据结构都很重要，跟<strong>前端</strong>最相关的是<strong>链表</strong>和<strong>树</strong></li>
+<li>算法：链表/树/图的遍历、数组的排序和搜索（这两个经常考）…</li>
+<li>设计思想：分而治之、动态规划较常考，贪心、回溯次之</li>
+</ul>
+<h2 id="经验心得"><a href="#经验心得" class="headerlink" title="经验心得"></a>经验心得</h2><ul>
+<li>搞清楚数据结构与算法的<strong>特点</strong>和<strong>应用场景</strong></li>
+<li>用 <strong>JS 实现</strong>一遍，最好能用第二第三语言再实现一遍</li>
+<li>学会分析<strong>时间/空间复杂度</strong></li>
+<li>提炼前端和算法的结合点，用于<strong>工作实战</strong></li>
+</ul>
+<h2 id="拓展建议"><a href="#拓展建议" class="headerlink" title="拓展建议"></a>拓展建议</h2><ul>
+<li><strong>多刷题</strong>，最好能保证300道以上</li>
+<li>多<strong>总结</strong>各种套路、模板</li>
+<li>多<strong>阅读源码</strong>，比如 React、Lodash、V8…</li>
+<li>多<strong>实战</strong>，将数据结构与算法用于工作</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>算法设计思想</tag>
+        <tag>分而治之</tag>
+        <tag>动态规划</tag>
+        <tag>贪心算法</tag>
+        <tag>回溯算法</tag>
+        <tag>总结</tag>
+      </tags>
+  </entry>
 </search>
