@@ -31,7 +31,7 @@
 <meta property="og:description" content="VueCLI 的使用和单文件组件 开发环境需要  nodejs 的支持，安装好之后，如果觉得 npm 速度慢，可以在命令行中执行 npm i nrm -g 可以 nrm ls查看国内镜像源，可以用淘宝的 nrm use taobao，就可以切换到淘宝镜像源。 如果之前用过 VueCLI 可以先 uninstall 一下，然后再装最新版脚手架：npm install -g @vue&#x2F;cli，vue">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-26T07:03:14.000Z">
-<meta property="article:modified_time" content="2020-12-26T07:07:17.008Z">
+<meta property="article:modified_time" content="2021-01-23T01:44:11.971Z">
 <meta property="article:author" content="Morningstar">
 <meta property="article:tag" content="VueX">
 <meta property="article:tag" content="Vue-Router">
@@ -142,17 +142,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">76</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">77</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">16</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">17</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -227,10 +227,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-26 15:03:14 / 修改时间：15:07:17" itemprop="dateCreated datePublished" datetime="2020-12-26T15:03:14+08:00">2020-12-26</time>
+              <time title="创建时间：2020-12-26 15:03:14" itemprop="dateCreated datePublished" datetime="2020-12-26T15:03:14+08:00">2020-12-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-23 09:44:11" itemprop="dateModified" datetime="2021-01-23T09:44:11+08:00">2021-01-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -279,7 +285,7 @@
 <p>如果之前用过 VueCLI 可以先 uninstall 一下，然后再装最新版脚手架：<code>npm install -g @vue/cli</code>，<code>vue -V</code> 查看版本</p>
 <a id="more"></a>
 
-<h1 id="创建-Vue-项目"><a href="#创建-Vue-项目" class="headerlink" title="创建 Vue 项目"></a>创建 Vue 项目</h1><p>可通过 <code>vue create yourProjectName</code> 创建，通过命令提示创建（空格勾选、回车确认），最后根据提示命令来运行项目</p>
+<h1 id="创建-Vue-项目"><a href="#创建-Vue-项目" class="headerlink" title="创建 Vue 项目"></a>创建 Vue 项目</h1><p>可通过 <code>vue create yourProjectName</code> 创建（Manually select features、In dedicated config files），通过命令提示创建（空格勾选、回车确认），最后根据提示命令来运行项目</p>
 <p>首先查看创建的目录结构，一般来说作为一个工程来说，源代码都放在 src 目录下， 入口文件为 main.js</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 入口文件 main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// App 组件来自 当前目录下 App.vue 文件</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// createApp 创建一个 vue 的应用，然后挂到页面上 id=&quot;app&quot; 的 DOM 节点上</span></span><br><span class="line">createApp(App).mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
@@ -508,20 +514,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-count">77</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -584,7 +590,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">303k</span>
+    <span title="站点总字数">302k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
