@@ -25,7 +25,7 @@
 
   <meta name="description" content="CSS 基础浏览器解析 CSS 选择器是从右到左解析的，目的是为了加快浏览器解析速度，让它更快确定哪些元素是哪些元素不是 选择器分类">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端三大件之CSS基础与布局">
+<meta property="og:title" content="重温前端三大件之CSS基础与布局">
 <meta property="og:url" content="https://morningstar175.gitee.io/2021/01/29/%E9%87%8D%E6%B8%A9%E5%89%8D%E7%AB%AF%E4%B8%89%E5%A4%A7%E4%BB%B6%E4%B9%8BCSS%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%B8%83%E5%B1%80/index.html">
 <meta property="og:site_name" content="Chao&#39;s Blog · 专注技术分享">
 <meta property="og:description" content="CSS 基础浏览器解析 CSS 选择器是从右到左解析的，目的是为了加快浏览器解析速度，让它更快确定哪些元素是哪些元素不是 选择器分类">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://www.runoob.com/images/box-model.gif">
 <meta property="og:image" content="data:image/png;base64,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">
 <meta property="article:published_time" content="2021-01-29T06:57:48.000Z">
-<meta property="article:modified_time" content="2021-01-29T07:04:28.613Z">
+<meta property="article:modified_time" content="2021-01-31T01:35:42.997Z">
 <meta property="article:author" content="Morningstar">
 <meta property="article:tag" content="面试题">
 <meta property="article:tag" content="CSS">
@@ -53,7 +53,7 @@
   };
 </script>
 
-  <title>前端三大件之CSS基础与布局 | Chao's Blog · 专注技术分享</title>
+  <title>重温前端三大件之CSS基础与布局 | Chao's Blog · 专注技术分享</title>
   
 
 
@@ -143,7 +143,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">82</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -153,7 +153,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">46</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -219,7 +219,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          前端三大件之CSS基础与布局
+          重温前端三大件之CSS基础与布局
         </h1>
 
         <div class="post-meta">
@@ -228,10 +228,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-01-29 14:57:48 / 修改时间：15:04:28" itemprop="dateCreated datePublished" datetime="2021-01-29T14:57:48+08:00">2021-01-29</time>
+              <time title="创建时间：2021-01-29 14:57:48" itemprop="dateCreated datePublished" datetime="2021-01-29T14:57:48+08:00">2021-01-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-31 09:35:42" itemprop="dateModified" datetime="2021-01-31T09:35:42+08:00">2021-01-31</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -706,7 +712,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -719,7 +725,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">82</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -782,12 +788,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">331k</span>
+    <span title="站点总字数">345k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:01</span>
+    <span title="站点阅读时长">5:13</span>
 </div>
 
         
