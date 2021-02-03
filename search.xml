@@ -6114,4 +6114,132 @@
         <tag>堆</tag>
       </tags>
   </entry>
+  <entry>
+    <title>重温前端三大件之CSS工程化方案</title>
+    <url>/2021/02/03/%E9%87%8D%E6%B8%A9%E5%89%8D%E7%AB%AF%E4%B8%89%E5%A4%A7%E4%BB%B6%E4%B9%8BCSS%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h1 id="CSS-工程化"><a href="#CSS-工程化" class="headerlink" title="CSS 工程化"></a>CSS 工程化</h1><ul>
+<li>组织（代码分模块）</li>
+<li>优化（尽可能让代码更好）</li>
+<li>构建（压缩、上线）</li>
+<li>维护</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="PostCSS"><a href="#PostCSS" class="headerlink" title="PostCSS"></a>PostCSS</h1><p>CSS -&gt; PostCSS 解析转换(模块化、加前缀、兼容性等) -&gt; CSS</p>
+<ul>
+<li>Postcss 本身只有解析能力</li>
+<li>各种神奇的特性全靠插件</li>
+<li>目前至少有200多个插件</li>
+</ul>
+<p>常见插件</p>
+<ul>
+<li>import 模块合并</li>
+<li>autoprefixier 自动加前缀（非常出名，可以说 CSS 必备插件）</li>
+<li>cssnano 压缩代码</li>
+<li>cssnext 使用CSS 新特性</li>
+<li>precss 变量、mixin、循环等</li>
+</ul>
+<h1 id="PostCSS-插件的使用"><a href="#PostCSS-插件的使用" class="headerlink" title="PostCSS 插件的使用"></a>PostCSS 插件的使用</h1><p>安装：<code>npm install postcss</code> + <code>npm install postcss-cli</code></p>
+<p>使用：<code>./node_modules/.bin/postcss demo.css &gt; demo-build.css</code></p>
+<p>demo.css</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">3px</span> <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>构建完成后 demo-build.css(Postcss 本身不对 css 做修改，只是解析出来，可以利用插件对解析结果做处理)</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">3px</span> <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="autoprefixier"><a href="#autoprefixier" class="headerlink" title="autoprefixier"></a>autoprefixier</h2><p><code>npm install autoprefixer</code></p>
+<p>用法：新建 postcss.config.js 文件，代码如下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">&#x27;autoprefixer&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        autoprefixer(&#123;</span><br><span class="line">            <span class="comment">//设置百分之100的浏览器都适配</span></span><br><span class="line">            browsers: [<span class="string">&#x27;&gt;0%&#x27;</span>],</span><br><span class="line">        &#125;),</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行命令：<code>.\node_modules\.bin\postcss .\demo.css -o demo-build.css</code></p>
+<p>输出：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">-webkit-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">3px</span> <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.3</span>);</span><br><span class="line">    <span class="attribute">-moz-box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">3px</span> <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.3</span>);</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">3px</span> <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://blog.csdn.net/biao_feng/article/details/88423147">其他用法</a></p>
+<h2 id="cssnano"><a href="#cssnano" class="headerlink" title="cssnano"></a>cssnano</h2><p><code>npm install cssnano</code></p>
+<p>用法：在 postcss.config.js 文件，新增代码如下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> autoprefixer = <span class="built_in">require</span>(<span class="string">&#x27;autoprefixer&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> nano = <span class="built_in">require</span>(<span class="string">&#x27;cssnano&#x27;</span>) <span class="comment">// 引入</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        autoprefixer(&#123;</span><br><span class="line">            browsers: [<span class="string">&#x27;&gt;0%&#x27;</span>],</span><br><span class="line">        &#125;),</span><br><span class="line">        nano, <span class="comment">// 使用（压缩代码一般放到最后）</span></span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行命令：<code>.\node_modules\.bin\postcss .\demo.css -o demo-build.css</code></p>
+<p>输出：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">*&#123;<span class="attribute">padding</span>:<span class="number">0</span>;<span class="attribute">margin</span>:<span class="number">0</span>&#125;<span class="selector-class">.box</span>&#123;<span class="attribute">-webkit-box-shadow</span>:<span class="number">0</span> <span class="number">0</span> <span class="number">3px</span> <span class="built_in">hsla</span>(<span class="number">0</span>,<span class="number">0%</span>,<span class="number">100%</span>,.<span class="number">3</span>);<span class="attribute">-moz-box-shadow</span>:<span class="number">0</span> <span class="number">0</span> <span class="number">3px</span> <span class="built_in">hsla</span>(<span class="number">0</span>,<span class="number">0%</span>,<span class="number">100%</span>,.<span class="number">3</span>);<span class="attribute">box-shadow</span>:<span class="number">0</span> <span class="number">0</span> <span class="number">3px</span> <span class="built_in">hsla</span>(<span class="number">0</span>,<span class="number">0%</span>,<span class="number">100%</span>,.<span class="number">3</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.caniuse.com/">Can I use</a></p>
+<p><a href="https://blog.csdn.net/qq_41915936/article/details/107468936?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&spm=1001.2101.3001.4242">Postcss的常用插件介绍以及安装使用</a></p>
+<h2 id="cssnext"><a href="#cssnext" class="headerlink" title="cssnext"></a>cssnext</h2><p><code>npm install cssnext</code></p>
+<p>使用下个版本的css草案语法，语法见cssnext (css4)语法+</p>
+<p>demo（转换前）</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">    <span class="attribute">--text-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">var</span>(--text-color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>demo（转换后）</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h1><p><a href="https://webpack.docschina.org/">中文官网</a></p>
+<ul>
+<li>JS 是整个应用的核心入口</li>
+<li>切资源均由 JS 管理依赖</li>
+<li>一切资源均由 webpack 打包</li>
+</ul>
+<h2 id="webpack-和-CSS"><a href="#webpack-和-CSS" class="headerlink" title="webpack 和 CSS"></a>webpack 和 CSS</h2><ul>
+<li>css-loader 将 css 变成 JS</li>
+<li>style-loader 将 JS 样式插入 head</li>
+<li>ExtractTextPlugin 将 CSS 从 JS 中提取出来</li>
+<li>css modules 解决 CSS 命名冲突的问题</li>
+</ul>
+<h1 id="Vue-中的-CSS"><a href="#Vue-中的-CSS" class="headerlink" title="Vue 中的 CSS"></a>Vue 中的 CSS</h1><p>模拟 Scoped CSS</p>
+<ul>
+<li><p>方案一：随机选择器</p>
+<p>css modules</p>
+</li>
+<li><p>方案二：随机属性</p>
+<p><code>&lt;div abcdefg&gt;</code></p>
+<p><code>div[abcdefg]&#123;&#125;</code></p>
+</li>
+</ul>
+<h2 id="加自定义属性限制范围"><a href="#加自定义属性限制范围" class="headerlink" title="加自定义属性限制范围"></a>加自定义属性限制范围</h2><p>通过 scoped，模拟 scoped css 属性，即：把元素和 CSS 都加上自定义属性（<strong>Vue 默认使用 scoped 方式</strong>）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;demo&quot;</span>&gt;</span>welcome to your<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;&#125;;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-class">.demo</span> &#123;</span></span><br><span class="line">    color: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>html 此时结构如下，styles 中的类名是 <code>.demo[data-v-054b9c73]</code>，这样做就不会与别人产生干扰（即使也是 <code>.demo</code>），独一无二的类名</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;demo&quot;</span> <span class="attr">data-v-054b9c73</span>&gt;</span>welcome to<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="CSS-modules-的使用方式"><a href="#CSS-modules-的使用方式" class="headerlink" title="CSS modules 的使用方式"></a>CSS modules 的使用方式</h2><p>给样式做编译，比如把类名 demo 编译成一个随机的字符串，然后标签中使用该随机字符串</p>
+<p>通过 module，使用方式 <code>this.$style.demo</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- style 是绑定在 this 也就是 vue 实例上，但由于是模版中，省略 this --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">&quot;$style.demo&quot;</span>&gt;</span>welcome to your<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;&#125;;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">module</span>&gt;</span></span><br><span class="line"><span class="css"><span class="selector-class">.demo</span> &#123;</span></span><br><span class="line">    color: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>加上 module 属性之后，查看结构类名，变成了 <code>demo_demo_2sXkp</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;demo_demo_2sXkp&quot;</span>&gt;</span>welcome to your<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="CSS-面试真题"><a href="#CSS-面试真题" class="headerlink" title="CSS 面试真题"></a>CSS 面试真题</h1><p>CSS 工程化在面试中考的并不多</p>
+<h2 id="如何解决-CSS-模块化问题"><a href="#如何解决-CSS-模块化问题" class="headerlink" title="如何解决 CSS 模块化问题"></a>如何解决 CSS 模块化问题</h2><ul>
+<li>Less Sass 等 CSS 预处理器</li>
+<li>PostCSS 插件（postcss-import / precss 等）</li>
+<li>webpack 处理 CSS（css-loader + style-loader）</li>
+</ul>
+<h2 id="PostCSS-可以做什么"><a href="#PostCSS-可以做什么" class="headerlink" title="PostCSS 可以做什么"></a>PostCSS 可以做什么</h2><ul>
+<li>取决于插件可以做什么（PostCSS 主要是做解析 CSS）</li>
+<li>autoprefixer cssnext press 等、兼容性处理</li>
+<li>import 模块合并</li>
+<li>css 语法检查、兼容性检查</li>
+<li>压缩文件</li>
+</ul>
+<h2 id="CSS-modules-是做什么的，如何使用"><a href="#CSS-modules-是做什么的，如何使用" class="headerlink" title="CSS modules 是做什么的，如何使用"></a>CSS modules 是做什么的，如何使用</h2><ul>
+<li>解决类名冲突的问题</li>
+<li>使用 PostCSS 或者 webpack 等构建工具进行编译</li>
+<li>在 HTML 模板中使用编译过程产生的类名</li>
+</ul>
+<h2 id="为什么使用-JS-来引用、加载-CSS"><a href="#为什么使用-JS-来引用、加载-CSS" class="headerlink" title="为什么使用 JS 来引用、加载 CSS"></a>为什么使用 JS 来引用、加载 CSS</h2><ul>
+<li>JS 作为入口，管理资源有天然优势</li>
+<li>将组件的结构、样式、行为封装到一起，增强内聚，减少外部耦合</li>
+<li>可以做更多处理（webpack）</li>
+</ul>
+]]></content>
+      <categories>
+        <category>重温前端三大件</category>
+      </categories>
+      <tags>
+        <tag>面试题</tag>
+        <tag>CSS工程化</tag>
+        <tag>postcss</tag>
+      </tags>
+  </entry>
 </search>
