@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"morningstar175.gitee.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Library 的打包开发一个组件或函数库的打包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webpack 实战配置案例">
+<meta property="og:url" content="https://morningstar175.gitee.io/2021/02/07/Webpack-%E5%AE%9E%E6%88%98%E9%85%8D%E7%BD%AE%E6%A1%88%E4%BE%8B/index.html">
+<meta property="og:site_name" content="Chao&#39;s Blog · 专注技术分享">
+<meta property="og:description" content="Library 的打包开发一个组件或函数库的打包">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-02-07T00:27:15.000Z">
+<meta property="article:modified_time" content="2021-02-07T00:28:30.410Z">
+<meta property="article:author" content="Morningstar">
+<meta property="article:tag" content="webpack">
+<meta property="article:tag" content="实战配置">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://morningstar175.gitee.io/2021/02/07/Webpack-%E5%AE%9E%E6%88%98%E9%85%8D%E7%BD%AE%E6%A1%88%E4%BE%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Webpack 实战配置案例 | Chao's Blog · 专注技术分享</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <!-- fork github -->
+    <a target="_blank" rel="noopener" href="https://github.com/MorningStar177" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+      </svg></a>
+    <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <!-- fork github end -->
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">
+        Chao's Blog</br>
+        专注技术分享
+      </h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">88</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">18</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">51</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+    
+  <div class="reading-progress-bar"></div>
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://morningstar175.gitee.io/2021/02/07/Webpack-%E5%AE%9E%E6%88%98%E9%85%8D%E7%BD%AE%E6%A1%88%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Morningstar">
+      <meta itemprop="description" content="越努力越幸运">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chao's Blog · 专注技术分享">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Webpack 实战配置案例
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-07 08:27:15 / 修改时间：08:28:30" itemprop="dateCreated datePublished" datetime="2021-02-07T08:27:15+08:00">2021-02-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack-%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">webpack 学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Library-的打包"><a href="#Library-的打包" class="headerlink" title="Library 的打包"></a>Library 的打包</h1><p>开发一个组件或函数库的打包</p>
+<a id="more"></a>
+
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>library 文件夹下：<code>npm init -y</code>，帮助我们把库文件变成 node 模块</p>
+<p>library/src 下创建 math.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">minus</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a - b</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">multiply</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a * b</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">division</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a / b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>library/src 下创建 string.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">join</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + <span class="string">&#x27; &#x27;</span> + b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 src 下新建入口文件 index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> math <span class="keyword">from</span> <span class="string">&#x27;./math&#x27;</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> string <span class="keyword">from</span> <span class="string">&#x27;./string&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123; math, string &#125;</span><br></pre></td></tr></table></figure>
+
+<p>当前库如果直接给外部如浏览器是无法使用的，需要对库做一个打包</p>
+<p>执行命令：<code>npm install webpack webpack-cli --save</code></p>
+<p>创建 webpack.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&#x27;production&#x27;</span>,</span><br><span class="line">    entry: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        filename: <span class="string">&#x27;library.js&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>package.json 写个命令脚本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;build&quot;</span>: <span class="string">&quot;webpack&quot;</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>如果是一个业务代码，正常到这里就已经结束，但是写的是一个库要给别人也使用</p>
+<h2 id="配置实现外部不同引入方式"><a href="#配置实现外部不同引入方式" class="headerlink" title="配置实现外部不同引入方式"></a>配置实现外部不同引入方式</h2><p>外部引入可能的用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> library <span class="keyword">from</span> <span class="string">&#x27;library&#x27;</span> <span class="comment">// ES module</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> library = <span class="built_in">require</span>(<span class="string">&#x27;library&#x27;</span>) <span class="comment">// commonjs</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>([<span class="string">&#x27;library&#x27;</span>], <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;) <span class="comment">// AMD</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+
+<p>想要我们的库被外部可以引用，要在 output 中做配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">    filename: <span class="string">&#x27;library.js&#x27;</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 不管在 commonjs 的环境还是 amd 环境等</span></span><br><span class="line">    <span class="comment">// 加了下面 umd 代码后，都能够正确的引用到</span></span><br><span class="line">    libraryTarget: <span class="string">&#x27;umd&#x27;</span>, <span class="comment">// key value 固定写法</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>有时也希望通过 script 标签引入 js ：<code>&lt;script src=&quot;library.js&quot;&gt;&lt;/script&gt;</code>，并且通过 library 这个全局变量使用这个库，依然在 output 配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        filename: <span class="string">&#x27;library.js&#x27;</span>,</span><br><span class="line"></span><br><span class="line">        libraryTarget: <span class="string">&#x27;umd&#x27;</span>,</span><br><span class="line">        <span class="comment">// 前面的 key = library 是固定写法，后面根据自己命名</span></span><br><span class="line">        library: <span class="string">&#x27;myLibrary&#x27;</span>, <span class="comment">// 打包生成后的代码挂载到了全局变量 myLibrary 上</span></span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>初始化一个 index.html 文件，并且引入打包后的 library.js，在控制台上输入 library 会有提示，证明此事 library 变成了全局变量</p>
+<h2 id="外部扩展-externals"><a href="#外部扩展-externals" class="headerlink" title="外部扩展(externals)"></a>外部扩展(externals)</h2><p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/externals/">https://webpack.docschina.org/configuration/externals/</a></p>
+<p><strong>需求</strong>：上面 string.js 代码中是通过自己写的字符串拼接，但是想要在库里面使用 lodash 中的字符串拼接方法，如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">&#x27;lodash&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">join</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// return a + &#x27; &#x27; + b</span></span><br><span class="line">    <span class="keyword">return</span> _.join([a, b], <span class="string">&#x27; &#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时重新打包生成的代码变成了 78kb，因为库中多引入了一个 lodash 库</p>
+<p><strong>问题</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">&#x27;lodash&#x27;</span> <span class="comment">// 他在使用库的同时也可能使用了 lodash</span></span><br><span class="line"><span class="comment">// 别人可能使用库的方式</span></span><br><span class="line"><span class="keyword">import</span> library <span class="keyword">from</span> <span class="string">&#x27;library&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>他在使用库的同时也可能使用了 lodash，但是我们的 library 里面已经打包了 lodash，而现在用户的业务代码里面又打包了一次 lodash，所以在最终用户的代码里面就很容易存在两份 lodash 的代码</p>
+<p><strong>解决方法</strong>：在我们库的 webpack 配置文件中配置 externals</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    externals: [<span class="string">&#x27;lodash&#x27;</span>],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再次打包后，library.js 从 78kb 减少到了 1.6kb，这样配置 externals 打包意思是：打包过程中如果遇到了 lodash 库，就忽略这个库不打包到代码里面，但是此时别人无法直接使用我们的这个库，因为我们这个库里要用到 lodash，但是自己又没有 lodash，所以在用我的库的时候，要在业务代码最上面引入 lodash 库</p>
+<p>最终我们提供给别人使用的是打包好的 library.js，要方便他人使用还要在 package.json 中做一些配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;main&quot;</span>: <span class="string">&quot;./dist/library.js&quot;</span>,</span><br></pre></td></tr></table></figure>
+
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>1.在 npm 官方网站上注册账号并登录：<a target="_blank" rel="noopener" href="https://www.npmjs.com/">https://www.npmjs.com/</a></p>
+<p>2.命令行中：<code>npm adduser</code>（添加用户名和密码）</p>
+<p>3.添加用户名密码成功后，运行命令：<code>npm publish</code>（直接把项目发布到 npm 仓库上面，会报错，因为 library 会重名，写个独特的名字就行）</p>
+<p>4.发布成功后，别人直接命令行：<code>npm install library</code> 就能够使用打包好的库</p>
+<p>注：每个库的名字在 npm 仓库中是不能相同的</p>
+<h1 id="PWA-的打包配置"><a href="#PWA-的打包配置" class="headerlink" title="PWA 的打包配置"></a>PWA 的打包配置</h1><p>Progressive Web Application</p>
+<p>了解即可</p>
+<p>代码准备：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/13dkAc_BOU439hBpLTAj0Xg">https://pan.baidu.com/s/13dkAc_BOU439hBpLTAj0Xg</a>   提取：8g6t</p>
+<p>安装一个 <code>http-server</code> 的模块模拟后端服务器：<code>npm install http-server -D</code></p>
+<p>package.json 中增加一个 start 运行命令，表示打包后 dist 目录下的代码在一台服务器中启动</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;start&quot;</span>: <span class="string">&quot;http-server dist&quot;</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>执行该命令后，在命令行中会显示已经启动服务器，如下所示</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Starting up http-server, serving dist</span><br><span class="line">Available on:</span><br><span class="line"><span class="function">  http://192.168.0.4:8080</span></span><br><span class="line"><span class="function">  <span class="title">http</span>://192.168.38.1:8080</span></span><br><span class="line"><span class="function">  <span class="title">http</span>://192.168.23.1:8080</span></span><br><span class="line"><span class="function">  <span class="title">http</span>://127.0.0.1:8080</span></span><br></pre></td></tr></table></figure>
+
+<p>然后随便找一个进去，html 正确运行，当关闭该服务器后，在浏览器中刷新页面再次访问该域名，直接报服务器挂掉了，这就是一个传统网页方式</p>
+<p>PWA 可以实现访问一个网站，第一次访问成功，但是突然之间服务器挂掉，第二次再重新访问网站的时候，可以在本地有一份缓存，可以直接用这个缓存将页面直接展示出来，因此即使服务器挂掉依然能够正常访问</p>
+<h2 id="PWA-实现"><a href="#PWA-实现" class="headerlink" title="PWA 实现"></a>PWA 实现</h2><p>1.安装 webpack 插件：<code>npm install workbox-webpack-plugin --save-dev</code></p>
+<p>注：只有要上线的代码才做 PWA 的处理，开发环境不需要考虑服务器挂不挂掉的问题</p>
+<p>2.增加 webpack.prod.js 配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> workboxPlugin = <span class="built_in">require</span>(<span class="string">&#x27;workbox-webpack-plugin&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> prodConfig = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> workboxPlugin.GenerateSW(&#123;</span><br><span class="line">            <span class="comment">// 两个常用的配置</span></span><br><span class="line">            clientsClaim: <span class="literal">true</span>,</span><br><span class="line">            skipWaiting: <span class="literal">true</span>,</span><br><span class="line">        &#125;),</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重新打包，新生成两个文件：<code>service-worker.js workbox-6135a885.js</code>，这样就可以实现 PWA，可以理解为另类的缓存，能够让我们的页面被缓存住</p>
+<p>3.在 index.js 中还要写一些业务代码支持，应用 service-worker</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果浏览器支持该功能则使用</span></span><br><span class="line"><span class="keyword">if</span> (<span class="string">&#x27;serviceWorker&#x27;</span> <span class="keyword">in</span> navigator) &#123;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;load&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        navigator.serviceWorker</span><br><span class="line">            .register(<span class="string">&#x27;./service-worker.js&#x27;</span>)</span><br><span class="line">            .then(<span class="function">(<span class="params">registration</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;service-worker registed&#x27;</span>)</span><br><span class="line">            &#125;)</span><br><span class="line">            .catch(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;service-worker registed error&#x27;</span>)</span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>npm run build</code> + <code>npm run start</code> + 页面刷新 + 停掉服务器，此时页面刷新依然显示内容</p>
+<h1 id="TypeScript-的打包配置"><a href="#TypeScript-的打包配置" class="headerlink" title="TypeScript 的打包配置"></a>TypeScript 的打包配置</h1><h2 id="项目准备"><a href="#项目准备" class="headerlink" title="项目准备"></a>项目准备</h2><p>type-script-demo 文件夹 <code>npm init -y</code></p>
+<p>package.json 依赖及命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;build&quot;</span>: <span class="string">&quot;webpack&quot;</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="string">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;ts-loader&quot;</span>: <span class="string">&quot;^8.0.15&quot;</span>,</span><br><span class="line">    <span class="string">&quot;typescript&quot;</span>: <span class="string">&quot;^4.1.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;webpack&quot;</span>: <span class="string">&quot;^5.20.2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;webpack-cli&quot;</span>: <span class="string">&quot;^4.5.0&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>webpack.config.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    mode: <span class="string">&#x27;production&#x27;</span>,</span><br><span class="line">    entry: <span class="string">&#x27;./src/index.ts&#x27;</span>,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        rules: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.tsx?$/</span>,</span><br><span class="line">                use: <span class="string">&#x27;ts-loader&#x27;</span>,</span><br><span class="line">                exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        ],</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">        filename: <span class="string">&#x27;bundle.js&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>src/index.ts</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> </span>&#123;</span><br><span class="line">    greeting: string;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">message: string</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.greeting = message;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">greet</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello, &quot;</span> + <span class="built_in">this</span>.greeting</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> greeter = <span class="keyword">new</span> Greeter(<span class="string">&quot;world&quot;</span>);</span><br><span class="line"></span><br><span class="line">alert(greeter.greet());</span><br></pre></td></tr></table></figure>
+
+<p>此时打包会报缺少 <code>tsconfig.json</code>文件</p>
+<p><strong>注</strong>：在打包 TypeScript 的时候要在根目录创建文件<code>tsconfig.json</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;outDir&quot;</span>: <span class="string">&quot;./dist&quot;</span>,</span><br><span class="line">        <span class="comment">// 值用 es module 模块引入形式</span></span><br><span class="line">        <span class="string">&quot;module&quot;</span>: <span class="string">&quot;ES6&quot;</span>,</span><br><span class="line">        <span class="comment">// 打包成 ES5 代码</span></span><br><span class="line">        <span class="string">&quot;target&quot;</span>: <span class="string">&quot;ES5&quot;</span>,</span><br><span class="line">        <span class="comment">// 允许在 TypeScript 语法里面引入 js 模块</span></span><br><span class="line">        <span class="string">&quot;allowJs&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置好后，可以在浏览器控制台将打包后的 js 代码粘贴进去执行，可以弹框证明打包成功</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>需求：在 ts 文件中引入 lodash 库</p>
+<p>1.安装：<code>npm install lodash --save</code></p>
+<p>2.安装 lodash 对应的类型文件：<code>npm install @types/lodash -D</code>，安装好模块后，ts 就可以正确识别 lodash 里面的一些函数需要调用的哪些参数，一旦调用的不对就会报错</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.ts</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> _ <span class="keyword">from</span> <span class="string">&#x27;lodash&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Greeter</span> </span>&#123;</span><br><span class="line">    greeting: string;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">message: string</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.greeting = message;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">greet</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> _.join([<span class="string">&quot;Hello,&quot;</span>, <span class="string">&#x27; &#x27;</span>, <span class="built_in">this</span>.greeting], <span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> greeter = <span class="keyword">new</span> Greeter(<span class="string">&quot;world&quot;</span>);</span><br><span class="line"></span><br><span class="line">alert(greeter.greet());</span><br></pre></td></tr></table></figure>
+
+<p>安装类型文件查找：<a target="_blank" rel="noopener" href="https://github.com/DefinitelyTyped/DefinitelyTyped%E3%80%81https://www.typescriptlang.org/dt/search?search=">https://github.com/DefinitelyTyped/DefinitelyTyped、https://www.typescriptlang.org/dt/search?search=</a></p>
+<h1 id="使用-WebpackDevServer-实现请求转发"><a href="#使用-WebpackDevServer-实现请求转发" class="headerlink" title="使用 WebpackDevServer 实现请求转发"></a>使用 WebpackDevServer 实现请求转发</h1><p><a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/dev-server/#devserverproxy">https://webpack.docschina.org/configuration/dev-server/#devserverproxy</a></p>
+<h2 id="代码准备"><a href="#代码准备" class="headerlink" title="代码准备"></a>代码准备</h2><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1P1GU-xude9NzA3LAms9NqQ">https://pan.baidu.com/s/1P1GU-xude9NzA3LAms9NqQ</a>  提取：gli3</p>
+<p><code>npm i</code> + <code>npm run start</code>，保证代码打包无误</p>
+<h2 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h2><p>我们在写一些项目的时候经常要去发一些 ajax 请求</p>
+<p>安装 axios：<code>npm install axios --save-dev</code></p>
+<p>index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> ReactDom <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 当页面展示出 hello world 之后 componentDidMount 会被执行</span></span><br><span class="line">    <span class="function"><span class="title">componentDidMount</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 请求接口</span></span><br><span class="line">        axios</span><br><span class="line">            .get(<span class="string">&#x27;http://www.dell-lee.com/react/api/header.json&#x27;</span>)</span><br><span class="line">            .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(res)</span><br><span class="line">            &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDom.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此时是在 localhost 下请求另外一个域名的接口，正常应该是跨域，但是请求却成功了，这是因为对方服务器允许做跨域请求，所以能够正常拿到结果</p>
+<p>在我们做开发的时候，前端的代码有可能是在开发环境下运行的，也有可能是在线上环境运行，两者请求的接口有可能是不一样的，所以如果在请求接口中将域名写死，那么请求的永远都是线上的服务器，所以一般做 ajax 请求接口时不会用绝对路径形式，而是会采用相对路径的形式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 请求接口 （相对路径，去掉了 http://www.dell-lee.com）</span></span><br><span class="line">axios</span><br><span class="line">    .get(<span class="string">&#x27;/react/api/header.json&#x27;</span>)</span><br><span class="line">    .then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(res)</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>但是现在无法请求，需要在 webpack 配置文件中做配置（<a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/dev-server/#devserverproxy">proxy 官方配置说明</a>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">proxy: &#123;</span><br><span class="line">    <span class="comment">// 当请求 react 下 api 路径所有内容时</span></span><br><span class="line">    <span class="comment">// 将其代理到 http://www.dell-lee.com 服务器上</span></span><br><span class="line">    <span class="string">&#x27;/react/api&#x27;</span>: <span class="string">&#x27;http://www.dell-lee.com&#x27;</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>重新 run start 一下，请求成功，此时浏览器控制台 netword 下的 header.json 文件显示的请求的是 <code>localhost:8080/react/api/header.json</code>下的数据，正常情况下，这个数据是不存在的，之所以有数据返回就是因为配置了 proxy 代理，有了这个配置，当我们在代码里请求 <code>/react/api/</code> 开头的接口时，proxy 就会将其代理到 <code>http://www.dell-lee.com</code></p>
+<p>通过这种 proxy 再做开发环境的联调就比较简单了</p>
+<p>在实际开发中有可能遇到的场景：假设后端 header.json 端口暂时没法使用，但是可以先用一下 demo.json 的假数据测试接口，所以对于前端来说 header.json 是最终要请求的接口，但目前需要临时使用 demo.json </p>
+<p>问题：对于上述场景不能直接在 axios 直接修改相对路径的请求地址，这样一旦忘记修改直接上线就会出现问题</p>
+<p>解决：把它始终写成 header.json，不变动，在 webpack 配置中可以完成 header 与 demo 的转换</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">proxy: &#123;</span><br><span class="line">    <span class="comment">// 可以是一个对象类型</span></span><br><span class="line">    <span class="string">&#x27;/react/api&#x27;</span>: &#123;</span><br><span class="line">    <span class="comment">// 代理到该地址</span></span><br><span class="line">    target: <span class="string">&#x27;http://www.dell-lee.com&#x27;</span>,</span><br><span class="line">    pathRewrite: &#123;</span><br><span class="line">        <span class="comment">// 临时 将 header.json 用 demo.json 代替</span></span><br><span class="line">        <span class="string">&#x27;header.json&#x27;</span>: <span class="string">&#x27;demo.json&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>重新 run start 一下，请求成功，实现完毕，当后端 header.json 写好了直接将 <code>&#39;header.json&#39;: &#39;demo.json&#39;</code>注释掉</p>
+<p>有时候转发的网址是 https，这时候还要做一步配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">proxy: &#123;</span><br><span class="line">    <span class="string">&#x27;/react/api&#x27;</span>: &#123;</span><br><span class="line">    target: <span class="string">&#x27;http://www.dell-lee.com&#x27;</span>,</span><br><span class="line">    <span class="comment">// secure: false, // https 则加入该项</span></span><br><span class="line">    pathRewrite: &#123;</span><br><span class="line">        <span class="string">&#x27;header.json&#x27;</span>: <span class="string">&#x27;demo.json&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>注意：这里的 proxy 是 devServer 的 proxy 只有在开发环境才生效，因为只有在开发环境下才会用 webpackdevServer，线上不存在 webpackdevServer</p>
+<h2 id="解决-orgin-的限制"><a href="#解决-orgin-的限制" class="headerlink" title="解决 orgin 的限制"></a>解决 orgin 的限制</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">proxy: &#123;</span><br><span class="line">    <span class="string">&#x27;/react/api&#x27;</span>: &#123;</span><br><span class="line">    target: <span class="string">&#x27;http://www.dell-lee.com&#x27;</span>,</span><br><span class="line">    <span class="comment">// secure: false, // https 则加入该项</span></span><br><span class="line">    pathRewrite: &#123;</span><br><span class="line">        <span class="string">&#x27;header.json&#x27;</span>: <span class="string">&#x27;demo.json&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    changeOrigin: <span class="literal">true</span> <span class="comment">// 始终加上就行</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h1 id="WebpackDevServer-解决单页面应用路由问题"><a href="#WebpackDevServer-解决单页面应用路由问题" class="headerlink" title="WebpackDevServer 解决单页面应用路由问题"></a>WebpackDevServer 解决单页面应用路由问题</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter, Route &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDom <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">&#x27;./home.js&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> List <span class="keyword">from</span> <span class="string">&#x27;./list.js&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">render</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> (</span><br><span class="line">			&lt;BrowserRouter&gt;</span><br><span class="line">				&lt;div&gt;</span><br><span class="line">					&lt;Route path=<span class="string">&#x27;/&#x27;</span> exact component=&#123;Home&#125;/&gt;</span><br><span class="line">					&lt;Route path=<span class="string">&#x27;/list&#x27;</span> component=&#123;List&#125;/&gt;</span><br><span class="line">				&lt;/div&gt;</span><br><span class="line">			&lt;/BrowserRouter&gt;</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDom.render(<span class="xml"><span class="tag">&lt;<span class="name">App</span> /&gt;</span></span>, <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>写好不同地址对应展示不同内容后，如果不做配置，则在浏览器地址中的根路径下切换其他地址是无法访问到的</p>
+<p>原因：当直接访问网址的时候，后端是 webpackdevServer，会以为访问的是后端的一个页面，但是网页中只有一个 index.html，并没有其他页面，因此会提示页面不存在</p>
+<p>这就是在做前端单页面应用经常遇到的问题</p>
+<p>解决方法：<a target="_blank" rel="noopener" href="https://webpack.docschina.org/configuration/dev-server/#devserverhistoryapifallback">historyApiFallback</a></p>
+<p>在 devServer 配置 historyApiFallback 即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    historyApiFallback: <span class="literal">true</span> <span class="comment">// 将请求全部转换到根路径的请求</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>解决完成</p>
+<h1 id="EsLint-在-Webpack-中的配置"><a href="#EsLint-在-Webpack-中的配置" class="headerlink" title="EsLint 在 Webpack 中的配置"></a>EsLint 在 Webpack 中的配置</h1><p>引入 EsLint 约束代码编写规范，官网：<a target="_blank" rel="noopener" href="https://eslint.org/">https://eslint.org/</a></p>
+<h2 id="代码准备-1"><a href="#代码准备-1" class="headerlink" title="代码准备"></a>代码准备</h2><p><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1M1B4zvmGdVKfDztp4RrgiA">https://pan.baidu.com/s/1M1B4zvmGdVKfDztp4RrgiA</a> 提取：jh0y</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>1.项目目录安装 EsLint 工具：<code>npm install --save-dev</code></p>
+<p>2.配置文件，通过命令快速生成：<code>npx eslint --init</code>，按需选项（<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ainsliaea/p/12980398.html">参考</a>， <a target="_blank" rel="noopener" href="https://www.cnblogs.com/HanJie0824/p/12022521.html">各项配置说明</a>）</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">√ How would you like to use ESLint? · problems    </span><br><span class="line">√ What <span class="built_in">type</span> of modules does your project use? · esm</span><br><span class="line">√ Which framework does your project use? · none</span><br><span class="line">√ Does your project use TypeScript? · No / Yes</span><br><span class="line">√ Where does your code run? · browser</span><br><span class="line">√ What <span class="built_in">format</span> <span class="keyword">do</span> you want your config file to be <span class="keyword">in</span>? · JavaScript</span><br></pre></td></tr></table></figure>
+
+<p>完成后根目录下会生成一个 <code>.eslintrc.js</code>文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="string">&quot;env&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;browser&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="string">&quot;es2021&quot;</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;extends&quot;</span>: <span class="string">&quot;eslint:recommended&quot;</span>,</span><br><span class="line">    <span class="string">&quot;parserOptions&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;ecmaVersion&quot;</span>: <span class="number">12</span>,</span><br><span class="line">        <span class="string">&quot;sourceType&quot;</span>: <span class="string">&quot;module&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;rules&quot;</span>: &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>3.<code>npm install eslint@latest -D</code></p>
+<p>需求：src 目录下的文件代码格式是否符合前端规范要求</p>
+<p>方法：<code>npx eslint src</code>，意为通过 eslint 工具检查 src 文件夹下文件的代码是否符合要求</p>
+<p>输出</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">D:\<span class="title">Others</span>\桌面\<span class="title">EsLint</span>-<span class="title">demo</span>\<span class="title">src</span>\<span class="title">home.js</span></span></span><br><span class="line"><span class="function">  5:10  <span class="title">error</span>  <span class="title">Parsing</span> <span class="title">error</span>: <span class="title">Unexpected</span> <span class="title">token</span> &lt;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">Others</span>\桌面\<span class="title">EsLint</span>-<span class="title">demo</span>\<span class="title">src</span>\<span class="title">index.js</span></span></span><br><span class="line"><span class="function">  10:13  <span class="title">error</span>  <span class="title">Parsing</span> <span class="title">error</span>: <span class="title">Unexpected</span> <span class="title">token</span> &lt;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">Others</span>\桌面\<span class="title">EsLint</span>-<span class="title">demo</span>\<span class="title">src</span>\<span class="title">list.js</span></span></span><br><span class="line"><span class="function">  5:10  <span class="title">error</span>  <span class="title">Parsing</span> <span class="title">error</span>: <span class="title">Unexpected</span> <span class="title">token</span> &lt;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">✖ 3 <span class="title">problems</span> (3 <span class="title">errors</span>, 0 <span class="title">warnings</span>)</span></span><br></pre></td></tr></table></figure>
+
+<p>目前代码里面包括 react 代码，因此需要对 eslint 做一些额外配置</p>
+<p>打开 <a target="_blank" rel="noopener" href="https://eslint.org/docs/user-guide/configuring">网页</a>（可能会被墙），搜索 parser，并且配置 parser</p>
+<p>安装：<code>npm install babel-eslint --save-dev</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    env: &#123;</span><br><span class="line">        browser: <span class="literal">true</span>,</span><br><span class="line">        es2021: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">extends</span>: <span class="string">&#x27;eslint:recommended&#x27;</span>,</span><br><span class="line">    parserOptions: &#123;</span><br><span class="line">        ecmaVersion: <span class="number">12</span>,</span><br><span class="line">        sourceType: <span class="string">&#x27;module&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    rules: &#123;&#125;,</span><br><span class="line">    parser: <span class="string">&#x27;babel-eslint&#x27;</span>, <span class="comment">// 加入该项</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以根据 vscode 的 eslint 插件更改</p>
+<p>上面这种方式比较麻烦</p>
+<h2 id="优化解决方式"><a href="#优化解决方式" class="headerlink" title="优化解决方式"></a>优化解决方式</h2><p>上面项依然需要</p>
+<p>结合 webpack 实现，借助 webpack 的 loader，eslint loader</p>
+<p>安装：<code>npm install eslint-loader -D</code></p>
+<p>使用方式，在 webpack.config.js（一般要检测的都是 js 代码，所以放在 js 模块打包之前做检测）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	test: <span class="regexp">/\.js$/</span>,</span><br><span class="line">	exclude: <span class="regexp">/node_modules/</span>,</span><br><span class="line">	use: [<span class="string">&#x27;babel-loader&#x27;</span>, <span class="string">&#x27;eslint-loader&#x27;</span>], <span class="comment">// 顺序不能混</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>做一次项目打包，会自动执行一次 eslint-loader，并且提示错误地方</p>
+<p>在 webpackdevServer 里面可以配置参数 overlay</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    overlay: <span class="literal">true</span>, <span class="comment">// 做打包过程一旦出现问题，会在浏览器弹出提示层</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当全部修改好后，提示层就会消失，做到了即使没有 eslint 的插件也可以很快的定位错误</p>
+<p>最新版（eslint-loader 已经废弃）：<a target="_blank" rel="noopener" href="https://webpack.docschina.org/plugins/eslint-webpack-plugin/">https://webpack.docschina.org/plugins/eslint-webpack-plugin/</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果文章对您有帮助，您可以鼓励一下作者.</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Morningstar 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Morningstar 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i> webpack</a>
+              <a href="/tags/%E5%AE%9E%E6%88%98%E9%85%8D%E7%BD%AE/" rel="tag"><i class="fa fa-tag"></i> 实战配置</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/06/Webpack-%E7%9A%84%E9%AB%98%E7%BA%A7%E6%A6%82%E5%BF%B5/" rel="prev" title="Webpack 的高级概念">
+      <i class="fa fa-chevron-left"></i> Webpack 的高级概念
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81MTgzOC8yODMxOQ=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Library-%E7%9A%84%E6%89%93%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">Library 的打包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AE%9E%E7%8E%B0%E5%A4%96%E9%83%A8%E4%B8%8D%E5%90%8C%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">配置实现外部不同引入方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E6%89%A9%E5%B1%95-externals"><span class="nav-number">1.3.</span> <span class="nav-text">外部扩展(externals)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83"><span class="nav-number">1.4.</span> <span class="nav-text">发布</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PWA-%E7%9A%84%E6%89%93%E5%8C%85%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">PWA 的打包配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PWA-%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.1.</span> <span class="nav-text">PWA 实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeScript-%E7%9A%84%E6%89%93%E5%8C%85%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">TypeScript 的打包配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%87%86%E5%A4%87"><span class="nav-number">3.1.</span> <span class="nav-text">项目准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-WebpackDevServer-%E5%AE%9E%E7%8E%B0%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91"><span class="nav-number">4.</span> <span class="nav-text">使用 WebpackDevServer 实现请求转发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%87%86%E5%A4%87"><span class="nav-number">4.1.</span> <span class="nav-text">代码准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-1"><span class="nav-number">4.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3-orgin-%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">4.3.</span> <span class="nav-text">解决 orgin 的限制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebpackDevServer-%E8%A7%A3%E5%86%B3%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8%E8%B7%AF%E7%94%B1%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">WebpackDevServer 解决单页面应用路由问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EsLint-%E5%9C%A8-Webpack-%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">EsLint 在 Webpack 中的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%87%86%E5%A4%87-1"><span class="nav-number">6.1.</span> <span class="nav-text">代码准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">6.2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F"><span class="nav-number">6.3.</span> <span class="nav-text">优化解决方式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Morningstar"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Morningstar</p>
+  <div class="site-description" itemprop="description">越努力越幸运</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/MorningStar177" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;MorningStar177" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuchao199412@126.com" title="E-Mail → mailto:liuchao199412@126.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/6067229777" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;6067229777" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://gitee.com/morningstar175" title="https:&#x2F;&#x2F;gitee.com&#x2F;morningstar175" rel="noopener" target="_blank">My-Gitee</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+      <div id="music163player">
+          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=0&id=2812748874&auto=0&height=32"></iframe>
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Morningstar</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">415k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:18</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  
+</body>
+
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
